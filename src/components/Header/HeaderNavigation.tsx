@@ -96,18 +96,7 @@ const HeaderNavigation = () => {
                 <NavMenu>
                   <UploadStudyLink to="/uploadStudy">공고 등록</UploadStudyLink>
                 </NavMenu>
-                <GpsContainer
-                  widthProp={NavMenuWidth.gps}
-                  onMouseEnter={() => {
-                    setGpsIsOpen(true);
-                  }}
-                  onMouseLeave={() => setGpsIsOpen(false)}
-                  onClick={() => setGpsIsOpen(true)}
-                >
-                  <GpsIcon />
-                </GpsContainer>
               </CategoryBlock>
-
               <UserBlock>
                 <MyPageMenu
                   widthProp={NavMenuWidth.myPage}
@@ -120,7 +109,6 @@ const HeaderNavigation = () => {
                   <MyPageList myPageIsOpen={myPageIsOpen} />
                 </MyPageMenu>
                 <LoginButton onClick={handleOpenModal}>로그인</LoginButton>
-                <LoginButton onClick={handleOpenModal2}>회원가입</LoginButton>
               </UserBlock>
             </WrapRightNav>
           </Wrapper>

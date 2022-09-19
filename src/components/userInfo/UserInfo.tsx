@@ -15,7 +15,11 @@ import Breadcrumb from '../breadCrumb/Breadcrumb';
 import { UserInfoBlock, ButtonBlock, Wrapper, TempBlock } from './UserInfo.styles';
 
 const UserInfo = () => {
-  const { form, changeInput, multiSelectChange } = useInput();
+  const { form, changeInput, multiSelectChange } = useInput({
+    profile: '',
+    nickname: '',
+    techStackDtos: [],
+  });
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     debugger;

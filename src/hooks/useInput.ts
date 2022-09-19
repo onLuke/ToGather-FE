@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { userInputAtom } from './../contexts/RegisterAtom';
 
 const useInput = (initailValue: any) => {
   const [form, setForm] = useState(initailValue);

@@ -14,7 +14,6 @@ const RegisterModal = () => {
   const [authToken, setAuthToken] = useRecoilState(authAtom);
   const { form, changeInput, multiSelectChange } = useInput({});
 
-
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     console.log(form);

@@ -20,8 +20,6 @@ const AuthRedirect = () => {
     let token;
     switch (social) {
       case 'google':
-        token = location.state as string;
-        break;
       case 'kakao':
       case 'github':
         token = new URL(window.location.href).searchParams.get('code') as string;

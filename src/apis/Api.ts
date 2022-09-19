@@ -20,7 +20,7 @@ Api.interceptors.response.use(
       console.error(e);
     }
     // access token이 만료되어 발생하는 경우
-    if ((error.message === '' || errResStatus === 401) && !originalRequest.retry) {
+    if (errResStatus === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
       const prevRefreshToken = localStorage.getItem('refreshToken');
       if (prevRefreshToken) {

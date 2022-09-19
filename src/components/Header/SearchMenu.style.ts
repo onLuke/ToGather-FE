@@ -5,7 +5,6 @@ import FontSizes from '../../constants/FontSizes';
 import { css, keyframes } from '@emotion/react';
 import { theme } from '@emotion/react';
 
-
 interface isOpen {
   [key: string]: boolean;
 }
@@ -13,7 +12,6 @@ interface isOpen {
 interface isOn {
   [key: string]: boolean;
 }
-
 
 interface isScrollOver {
   [key: string]: boolean;
@@ -31,7 +29,6 @@ const slowHidden = keyframes(
     }
   `
 );
-
 
 const SearchContainer = styled.div`
   display: ${({ isOpen }: isOpen) => (isOpen ? 'block' : 'none')};
@@ -79,6 +76,4 @@ const TechBtn = styled.button`
   }
 `;
 
-
 export { SearchContainer, TechsContainer, TechBtn };
-
