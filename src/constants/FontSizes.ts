@@ -5,6 +5,8 @@ const FontSizes = {
   Study_Deadline_FontWeight: 400,
   Study_Title_Fontsize: '24px',
   Study_Author_Fontsize: '18px',
-}
+  Study_Upload_Fontsize: '24px',
+  Study_Upload_FontWeight: 700,
+};
 
 export default FontSizes;
