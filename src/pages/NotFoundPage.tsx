@@ -1,7 +1,8 @@
 import React from 'react';
+import NotFound from 'src/components/error/NotFound';
 
 const NotFoundPage = () => {
-  return <div>404 Error 페이지가 존재하지 않습니다.</div>;
+  return <NotFound />;
 };
 
 export default NotFoundPage;
