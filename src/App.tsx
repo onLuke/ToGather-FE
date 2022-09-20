@@ -8,6 +8,7 @@ import ChatPage from './pages/ChatPage';
 import MyPage from './pages/MyPage';
 import NotFoundPage from './pages/NotFoundPage';
 import HeaderNavigation from './components/Header/HeaderNavigation';
+import UploadStudy from './components/UploadStudy/UploadStudy';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/oauth/:social" element={<AuthRedirectPage />} />
           <Route path="/*" element={<NotFoundPage />} />
+          <Route path="/uploadStudy" element={<UploadStudy />} />
         </Routes>
       </ModalProvider>
     </BrowserRouter>
