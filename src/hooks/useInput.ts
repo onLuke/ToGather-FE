@@ -31,7 +31,13 @@ const useInput = (initailValue: any) => {
     }
   };
 
-  return { form, changeInput, selectChange, multiSelectChange };
+  const datePickerChange = (date: Date) => {
+    const name = 'deadline';
+    const dateValue = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    setForm({ ...form, [name]: dateValue });
+  };
+
+  return { form, changeInput, selectChange, multiSelectChange, datePickerChange };
 };
 
 export default useInput;
