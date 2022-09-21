@@ -11,6 +11,9 @@ interface SearchMenuProps {
   isHidden: [boolean, Dispatch<SetStateAction<boolean>>];
 }
 
+interface BtnStateType {
+  [key: string]: boolean;
+}
 const SearchMenu = ({ searchIsOpen, isHidden }: SearchMenuProps) => {
   const [isScrollOver, setIsScrollOver] = isHidden;
 
@@ -32,7 +35,6 @@ const SearchMenu = ({ searchIsOpen, isHidden }: SearchMenuProps) => {
     delete copied[tech];
 
     const isPresentTech = filteredTech[tech];
-
     if (isPresentTech) {
       setFilterTech(copied);
     } else setFilterTech({ ...filteredTech, [tech]: true });
