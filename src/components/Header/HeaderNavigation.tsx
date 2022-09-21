@@ -19,30 +19,42 @@ import {
   UploadStudyLink,
 } from './HeaderNavigation.styles';
 import { GpsIcon } from '../@icons';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { isScrollOverAtom } from '../../contexts/isScrollOverAtom';
 import MyPageList from '../mypage/MyPageList';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchMenu from './SearchMenu';
 import RegisterModal from '../Login/RegisterModal';
 import { useLocation } from 'react-router-dom';
+import { userAtom } from 'src/contexts/UserAtom';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
+  const [searchIsOpen, setSearchIsOpen] = useState(false);
+  const [favoriteIsOpen, setFavoriteIsOpen] = useState(false);
+  const [gpsIsOpen, setGpsIsOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const [myPageIsOpen, setMyPageIsOpen] = useState(false);
+  const user = useRecoilValue(userAtom);
+  const resetUser = useResetRecoilState(userAtom);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const handleOpenModal = () => {
     openModal?.(<LoginModal />);
   };
 
-  const [searchIsOpen, setSearchIsOpen] = useState(false);
-  const [favoriteIsOpen, setFavoriteIsOpen] = useState(false);
-  const [gpsIsOpen, setGpsIsOpen] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);
-
-  const [myPageIsOpen, setMyPageIsOpen] = useState(false);
-  const { pathname } = useLocation();
-
-  console.log(pathname);
+  const handleLogout = () => {
+    // logout API 호출
+    //api.post('logout').then((res) => {
+    // })
+    console.log('logout');
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refershToken');
+    resetUser();
+    navigate('/');
+  };
 
   return (
     <>
@@ -98,17 +110,23 @@ const HeaderNavigation = () => {
                 </NavMenu>
               </CategoryBlock>
               <UserBlock>
-                <MyPageMenu
-                  widthProp={NavMenuWidth.myPage}
-                  onMouseEnter={() => {
-                    setMyPageIsOpen(true);
-                  }}
-                  onMouseLeave={() => setMyPageIsOpen(false)}
-                >
-                  <MenuBtn onClick={() => setMyPageIsOpen(true)}>마이 페이지</MenuBtn>
-                  <MyPageList myPageIsOpen={myPageIsOpen} />
-                </MyPageMenu>
-                <LoginButton onClick={handleOpenModal}>로그인</LoginButton>
+                {user.id ? (
+                  <>
+                    <MyPageMenu
+                      widthProp={NavMenuWidth.myPage}
+                      onMouseEnter={() => {
+                        setMyPageIsOpen(true);
+                      }}
+                      onMouseLeave={() => setMyPageIsOpen(false)}
+                    >
+                      <MenuBtn onClick={() => setMyPageIsOpen(true)}>마이 페이지</MenuBtn>
+                      <MyPageList myPageIsOpen={myPageIsOpen} />
+                    </MyPageMenu>
+                    <LoginButton onClick={handleLogout}>로그아웃</LoginButton>
+                  </>
+                ) : (
+                  <LoginButton onClick={handleOpenModal}>로그인</LoginButton>
+                )}
               </UserBlock>
             </WrapRightNav>
           </Wrapper>
