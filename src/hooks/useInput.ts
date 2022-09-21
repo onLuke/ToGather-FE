@@ -33,7 +33,7 @@ const useInput = (initailValue: any) => {
 
   const datePickerChange = (date: Date) => {
     const name = 'deadline';
-    const dateValue = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    const dateValue = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     setForm({ ...form, [name]: dateValue });
   };
 
