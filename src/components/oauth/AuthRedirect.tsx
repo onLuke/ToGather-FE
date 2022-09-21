@@ -3,7 +3,13 @@ import { useRecoilState } from 'recoil';
 import { authAtom } from 'src/contexts/AuthAtom';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { checkLogin } from 'src/apis/auth';
-import { userAtom } from 'src/contexts/UserAtom';
+import { userAtom, userSelector } from 'src/contexts/UserAtom';
+import Api from 'src/apis/Api';
+import { HeadersDefaults } from 'axios';
+
+interface CommonHeaderProperties extends HeadersDefaults {
+  Authorization: string;
+}
 
 const AuthRedirect = () => {
   const [authToken, setAuthToken] = useRecoilState(authAtom);
@@ -34,27 +40,32 @@ const AuthRedirect = () => {
         alert('새로고침 후 다시 시도해주세요.');
         return null;
     }
-
     try {
       await checkLogin(social, token).then((res) => {
-        // 헤더 토큰 기본 설정 해주기
         if (res.data.loginResult) {
           //기존 회원
-          // Api.headers.엑세스토큰키 = 엑세스토큰 값
-          setAuthToken({ refreshToken: res.data.refreshToken, accessToken: res.data.accessToken });
-          localStorage.setItem('refershToken', res.data.refreshToken);
-          localStorage.setItem('accessToken', res.data.accessToken);
-          localStorage.setItem('user', JSON.stringify({ id: 'user' }));
-          setUser({ id: '1' });
+          const resUser = {
+            id: res.data.id,
+            nickname: res.data.nicknam,
+            profileImage: res.data.profileImage,
+            techStackDtos: res.data.techStackDtos,
+          };
+          setAuthToken({ refreshToken: res.data.refreshToken });
+          setUser(resUser);
+          localStorage.setItem('user', JSON.stringify(resUser));
+          Api.defaults.headers = {
+            Authorization: `Bearer ${res.data.accessToken}`,
+          } as CommonHeaderProperties;
         } else {
           //신규 회원
-
           setAuthToken({ signUpToken: res.data.signUpToken });
         }
+        navigation('/');
       });
     } catch (e) {
       console.error(`에러 :${e}`);
       alert('잘못된 접근 입니다.');
+      navigation('/');
     }
   };
 

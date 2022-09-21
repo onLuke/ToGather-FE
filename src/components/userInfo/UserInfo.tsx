@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { getUser, withdrawal } from 'src/apis/user';
+import { userAtom, userSelector } from 'src/contexts/UserAtom';
 import useInput from 'src/hooks/useInput';
 import { position, stacktech } from 'src/mocks/SelectTechs';
 import { CancelButton, SubmitButton } from 'src/styles/Button';
@@ -13,26 +17,55 @@ import {
   ProfileArticle,
 } from 'src/styles/Input';
 import Breadcrumb from '../breadCrumb/Breadcrumb';
-import { UserInfoBlock, ButtonBlock, Wrapper, TempBlock } from './UserInfo.styles';
+import { UserInfoBlock, ButtonBlock, Wrapper } from './UserInfo.styles';
 
 const UserInfo = () => {
   const { form, changeInput, multiSelectChange } = useInput({
-    profile: '',
+    profileImage: '',
     nickname: '',
     techStackDtos: [],
   });
+  const [user, setUser] = useRecoilState(userSelector);
+  const resetUser = useResetRecoilState(userAtom);
+  const navigate = useNavigate();
+
+  const checkUser = () => {
+    const localUser = localStorage.getItem('user');
+    if (localUser) {
+      const userId = user.id || JSON.parse(localUser).id;
+      console.log(userId);
+      getUser(userId)
+        .then((res) => setUser(res.data))
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert('잘못된 접근입니다.');
+      navigate('/');
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   useEffect(() => {
     // user API 콜
   }, []);
 
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
-    debugger;
     e.preventDefault();
     console.log(form);
   };
 
   const handleUserLeave = (e: React.MouseEvent<HTMLElement>) => {
+    withdrawal(user.id)
+      .then((res) => {
+        localStorage.clear();
+        resetUser();
+        navigate('/');
+      })
+      .catch((err) => console.log(err));
     console.log('회원탈퇴');
   };
   return (
@@ -46,10 +79,10 @@ const UserInfo = () => {
               <img src="/" alt="" />
             </ProfileArticle>
             <InputText
-              id="profile"
-              name="profile"
+              id="profileImage"
+              name="profileImage"
               type="file"
-              value={form.profile}
+              value={form.profileImage}
               onChange={changeInput}
             />
           </ProfileImageBlock>
@@ -80,6 +113,7 @@ const UserInfo = () => {
           <CreatableSelect
             isClearable
             isMulti
+            defaultValue={user.techStackDtos}
             id="techStackDtos"
             className="customSelect"
             name="techStackDtos"
@@ -88,14 +122,10 @@ const UserInfo = () => {
             onChange={multiSelectChange}
           />
         </InputBoxBlock>
-        <InputBoxBlock>
+        {/* <InputBoxBlock>
           <InputLabel htmlFor="project">프로젝트 이력</InputLabel>
           <InputText id="project" name="project" type="text" readOnly />
-        </InputBoxBlock>
-        <InputBoxBlock>
-          <InputLabel htmlFor="temp">온도</InputLabel>
-          <TempBlock>23</TempBlock>
-        </InputBoxBlock>
+        </InputBoxBlock> */}
         <ButtonBlock>
           <SubmitButton onClick={handleSubmit}>수정</SubmitButton>
           <CancelButton onClick={handleUserLeave}>회원탈퇴</CancelButton>

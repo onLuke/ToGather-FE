@@ -3,8 +3,7 @@ import { KakaoLoginButton } from './SocialLogin.styles';
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${
   import.meta.env.VITE_KAKAO_KEY
-}&redirect_uri=${import.meta.env.VITE_OAUTH_REDIRECT_URL}&response_type=code
-`;
+}&redirect_uri=${import.meta.env.VITE_OAUTH_REDIRECT_URL}&response_type=code`;
 
 const KaKaoSocialLogin = () => {
   const getAuthToken = () => {

@@ -2,8 +2,10 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { userLogin } from 'src/apis/auth';
 import { authAtom, authSelector } from 'src/contexts/AuthAtom';
+import { userSelector } from 'src/contexts/UserAtom';
 import useInput from 'src/hooks/useInput';
 import { position, stacktech } from 'src/mocks/SelectTechs';
 import { SubmitButton } from 'src/styles/Button';
@@ -12,26 +14,29 @@ import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styl
 
 const RegisterModal = () => {
   const [authToken, setAuthToken] = useRecoilState(authAtom);
-  const { form, changeInput, multiSelectChange } = useInput({});
+  const setUser = useSetRecoilState(userSelector);
+  const { form, changeInput, multiSelectChange } = useInput({
+    profileImage: '',
+    nickname: '',
+    techStackDtos: [],
+  });
 
-  const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    console.log(form);
-    console.log(authToken);
 
-    const data = axios
-      .post(`https://dokuny.blog/oauth/signup`, form, {
-        headers: {
-          signUpToken: authToken.signUpToken,
-        },
-      })
-      .then((data) => {
-        console.log(data);
-        setAuthToken(data.data);
+    const data = await userLogin(form, authToken.signUpToken)
+      .then((res) => {
+        const user = {
+          id: res.data.id,
+          nickname: res.data.nickname,
+          profileImage: res.data.profileImage,
+          techStackDtos: res.data.techStackDtos,
+        };
+        setAuthToken({ refreshToken: res.data.refreshToken });
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
       })
       .catch((err) => console.log(err));
-    console.log(data);
-    // data 안에 accessToken, refreshToken 들어 있다.
     window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
   };
 

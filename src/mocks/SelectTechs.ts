@@ -8,14 +8,6 @@ const stacktech = [
   { value: 1, label: 'React' },
   { value: 2, label: 'JavaScript' },
   { value: 3, label: 'TypeScript' },
-  { value: 'Vue', label: 'Vue' },
-  { value: 'NodeJs', label: 'NodeJs' },
-  { value: 'Spring', label: 'Spring' },
-  { value: 'Java', label: 'Java' },
-  { value: 'Go', label: 'Go' },
-  { value: 'C', label: 'C' },
-  { value: 'Python', label: 'Python' },
-  { value: 'Django', label: 'Django' },
 ];
 
 export { position, stacktech };

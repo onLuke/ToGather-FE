@@ -24,9 +24,9 @@ const MyProjectList = ({ myProject }: Props) => {
     <MyProjectListBlock>
       <Wrapper>
         {myProject.map((list: any) => (
-          <MyProjectInner>
+          <MyProjectInner key={list.id}>
             <div>
-              <Study key={list.id} to="/">
+              <Study to="/">
                 <StudyTechs techsList={list.techs} />
                 <StudyDeadline>
                   마감 예정일

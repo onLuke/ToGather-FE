@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const Api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
-  headers: { 'Content-Type': 'application/json' },
+  headers: {
+    'Content-Type': 'application/json',
+  },
   withCredentials: true,
 });
 
@@ -23,17 +25,14 @@ Api.interceptors.response.use(
     if (errResStatus === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
       const prevRefreshToken = localStorage.getItem('refreshToken');
+      console.log(prevRefreshToken);
       if (prevRefreshToken) {
         // refersh token을 이용하여 access token 재발행 받기
-        return axios
-          .post('', {})
+        return Api.post('/oauth/refresh', prevRefreshToken)
           .then((res) => {
             const { accessToken, refreshToken } = res.data;
-
             localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
-            localStorage.setItem('accessToken', JSON.stringify(accessToken));
-            // 헤더 토큰 기본 설정 해주기
-            // originalRequest.headers.엑세스토큰키 = 엑세스토큰 값
+            originalRequest.headers.Authoriztion = `Bearer ${accessToken}`;
           })
           .catch(() => {
             window.location.href = '/';

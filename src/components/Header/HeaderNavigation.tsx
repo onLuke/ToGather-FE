@@ -26,7 +26,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SearchMenu from './SearchMenu';
 import RegisterModal from '../Login/RegisterModal';
 import { useLocation } from 'react-router-dom';
-import { userAtom } from 'src/contexts/UserAtom';
+import { userAtom, userSelector } from 'src/contexts/UserAtom';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
@@ -35,7 +35,7 @@ const HeaderNavigation = () => {
   const [gpsIsOpen, setGpsIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [myPageIsOpen, setMyPageIsOpen] = useState(false);
-  const user = useRecoilValue(userAtom);
+  const user = useRecoilValue(userSelector);
   const resetUser = useResetRecoilState(userAtom);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -50,7 +50,6 @@ const HeaderNavigation = () => {
     // })
     console.log('logout');
     localStorage.removeItem('user');
-    localStorage.removeItem('accessToken');
     localStorage.removeItem('refershToken');
     resetUser();
     navigate('/');
