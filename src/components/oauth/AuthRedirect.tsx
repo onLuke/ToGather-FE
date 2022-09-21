@@ -3,9 +3,11 @@ import { useRecoilState } from 'recoil';
 import { authAtom } from 'src/contexts/AuthAtom';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { checkLogin } from 'src/apis/auth';
+import { userAtom } from 'src/contexts/UserAtom';
 
 const AuthRedirect = () => {
   const [authToken, setAuthToken] = useRecoilState(authAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   const navigation = useNavigate();
   const location = useLocation();
   const { social } = useParams();
@@ -13,6 +15,7 @@ const AuthRedirect = () => {
   useEffect(() => {
     if (social) {
       getSignToken(social);
+      navigation('/');
     }
   }, []);
 
@@ -41,15 +44,18 @@ const AuthRedirect = () => {
           setAuthToken({ refreshToken: res.data.refreshToken, accessToken: res.data.accessToken });
           localStorage.setItem('refershToken', res.data.refreshToken);
           localStorage.setItem('accessToken', res.data.accessToken);
+          localStorage.setItem('user', JSON.stringify({ id: 'user' }));
+          setUser({ id: '1' });
         } else {
           //신규 회원
+
           setAuthToken({ signUpToken: res.data.signUpToken });
         }
       });
     } catch (e) {
       console.error(`에러 :${e}`);
+      alert('잘못된 접근 입니다.');
     }
-    navigation('/');
   };
 
   return <div>로딩중</div>;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import useInput from 'src/hooks/useInput';
@@ -21,10 +22,18 @@ const UserInfo = () => {
     techStackDtos: [],
   });
 
+  useEffect(() => {
+    // user API 콜
+  }, []);
+
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     debugger;
     e.preventDefault();
     console.log(form);
+  };
+
+  const handleUserLeave = (e: React.MouseEvent<HTMLElement>) => {
+    console.log('회원탈퇴');
   };
   return (
     <UserInfoBlock>
@@ -89,7 +98,7 @@ const UserInfo = () => {
         </InputBoxBlock>
         <ButtonBlock>
           <SubmitButton onClick={handleSubmit}>수정</SubmitButton>
-          <CancelButton onClick={handleSubmit}>취소</CancelButton>
+          <CancelButton onClick={handleUserLeave}>회원탈퇴</CancelButton>
         </ButtonBlock>
       </Wrapper>
     </UserInfoBlock>

@@ -33,7 +33,7 @@ const SubmitButton = styled.button`
 
 const CancelButton = styled.button`
   ${buttonStyle}
-  background: ${COLOR.GRAY_400};
+  background: ${COLOR.RED_100};
 `;
 
 export { SubmitButton, CancelButton };
