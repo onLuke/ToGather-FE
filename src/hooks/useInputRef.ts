@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 
 const useInputRef = (initailValue: any) => {
   const formRef = useRef(initailValue);
@@ -16,6 +16,7 @@ const useInputRef = (initailValue: any) => {
 
   const multiSelectChange = (targetValue: any, targetAction: any) => {
     const { action, name } = targetAction;
+    console.log('here');
 
     if (action === 'clear') {
       formRef.current[name] = [];
@@ -27,18 +28,24 @@ const useInputRef = (initailValue: any) => {
     } else {
       for (let item of targetValue) {
         let { value } = item;
-        formRef.current[name] = formRef.current[name] ? [...formRef.current[name], value] : [value];
+        console.log(formRef.current[name]);
+
+        formRef.current[name] = [...new Set([...formRef.current[name], value])];
       }
     }
+    console.log(formRef.current);
   };
 
   const datePickerChange = (date: Date) => {
-    const name = 'deadline';
     const dateValue = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    formRef.current[name] = dateValue;
+    formRef.current.deadline = dateValue;
   };
 
-  return { formRef, changeInput, selectChange, multiSelectChange, datePickerChange };
+  const editorChange = (value: string) => {
+    formRef.current.content = value;
+  };
+
+  return { formRef, changeInput, selectChange, multiSelectChange, datePickerChange, editorChange };
 };
 
 export default useInputRef;
