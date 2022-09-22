@@ -10,7 +10,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import HeaderNavigation from './components/Header/HeaderNavigation';
 import { useRecoilState } from 'recoil';
 import { userAtom } from './contexts/UserAtom';
-import UploadStudy from './components/UploadStudy/UploadStudy';
+import UploadStudy from './pages/UploadStudy';
 
 const App = () => {
   const [user, setUser] = useRecoilState(userAtom);

@@ -16,6 +16,7 @@ const useInput = (initailValue: any) => {
 
   const multiSelectChange = (targetValue: any, targetAction: any) => {
     const { action, name } = targetAction;
+
     if (action === 'clear') {
       setForm({ ...form, [name]: [] });
     } else if (action === 'remove-value') {
@@ -34,10 +35,14 @@ const useInput = (initailValue: any) => {
   const datePickerChange = (date: Date) => {
     const name = 'deadline';
     const dateValue = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    setForm({ ...form, [name]: dateValue });
+    setForm({ ...form, deadline: dateValue });
   };
 
-  return { form, changeInput, selectChange, multiSelectChange, datePickerChange };
+  const editorChange = (value: string) => {
+    setForm({ ...form, content: value });
+  };
+
+  return { form, changeInput, selectChange, multiSelectChange, datePickerChange, editorChange };
 };
 
 export default useInput;

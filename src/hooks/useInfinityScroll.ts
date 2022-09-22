@@ -1,12 +1,16 @@
 import { RefObject, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { pageNumber } from '../contexts/chachingOptionAtom';
 
-const useObserveElement = (target: RefObject<HTMLDivElement>) => {
+const useInfinityScroll = ({ target }: { target: RefObject<HTMLElement> }) => {
+  const [page, setPage] = useRecoilState(pageNumber);
   useEffect(() => {
     const targetElement = target.current;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
+        if (entry.isIntersecting) {
+          setPage(page + 1);
         }
       });
     });
@@ -23,4 +27,4 @@ const useObserveElement = (target: RefObject<HTMLDivElement>) => {
   }, [target.current]);
 };
 
-export default useObserveElement;
+export default useInfinityScroll;
