@@ -1,7 +1,7 @@
 import { SearchContainer, TechsContainer, TechBtn } from './SearchMenu.style';
 import { techs } from '../@icons/index';
 import { useRecoilState } from 'recoil';
-import { searchTechsAtom } from '../../contexts/SeacrchTechsAtom';
+import { searchTechsAtom } from '../../contexts/SearchTechsAtom';
 import { useEffect, useState } from 'react';
 import useCheckIsScrollOver from '../../hooks/useCheckIsScrollOver';
 import { Dispatch, SetStateAction } from 'react';

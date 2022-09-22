@@ -44,7 +44,6 @@ const HeaderNavigation = () => {
     openModal?.(<LoginModal />);
   };
 
-  console.log(pathname);
   const handleLogout = () => {
     // logout API 호출
     //api.post('logout').then((res) => {
