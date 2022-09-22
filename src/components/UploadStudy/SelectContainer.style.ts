@@ -10,30 +10,10 @@ interface WrapMapProps {
   isOffline: boolean;
 }
 
-const UploadPageMain = styled.section`
-  max-width: 1040px;
-  display: flex;
-  flex-direction: column;
-  padding: 60px 16px;
-  width: 1024px;
-  margin: 0 auto;
-  color: #333;
-  gap: 50px;
-  position: relative;
-  top: 4rem;
-  height: 60rem;
-`;
-
-const Heading = styled.h2`
- font-size:${FontSizes.Study_Upload_Fontsize}
- font-weight:${FontSizes.Study_Upload_FontWeight}
- box-shadow: 2px 2px 2px ${COLOR.GRAY_100};
-`;
-
 const WrapSelects = styled.div`
   margin-top: 3rem;
   ${Flex({ justifyContent: 'space-around', alignItems: 'center' })}
-  min-height:30rem;
+  height:25%
 `;
 
 const OnOfflineBlock = styled.div`
@@ -45,7 +25,7 @@ const OnOfflineBlock = styled.div`
   height:100%;
 `;
 const WrapRegionSelect = styled.div`
-  ${Flex({ columnGap: '1rem' })};
+  ${Flex({ columnGap: '3rem' })};
   visibility: ${(props: WrapMapProps) => (props.isOffline ? 'hidden' : 'visible')};
   width: 25rem;
 `;
@@ -58,6 +38,10 @@ const RegionInput = styled.input`
   height: 38px;
   text-align: center;
   font-size: 16px;
+  color: transparent;
+  :focus {
+    outline: none;
+  }
 `;
 
 const WraponOffline = styled.div`
@@ -74,11 +58,9 @@ const RestSelectBlock = styled(OnOfflineBlock)`
   height: 100%;
 `;
 
-const CustomContainer = styled.div``;
+const WrapTechSelect = styled(WraponOffline)``;
 
 export {
-  UploadPageMain,
-  Heading,
   WrapSelects,
   RestSelectBlock,
   WrapRegionSelect,
@@ -86,5 +68,5 @@ export {
   WrapMapInput,
   OnOfflineBlock,
   WraponOffline,
-  CustomContainer,
+  WrapTechSelect,
 };
