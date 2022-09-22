@@ -1,7 +1,7 @@
-import Editor from './Editor';
-import Footer from './Footer';
-import WrapSection from './WrapSection';
-import SelectContainer from './SelectContainer';
+import Editor from '../components/UploadStudy/Editor';
+import Footer from '../components/UploadStudy/Footer';
+import WrapSection from '../components/UploadStudy/WrapSection';
+import SelectContainer from '../components/UploadStudy/SelectContainer';
 import useInput from 'src/hooks/useInput';
 
 const UploadStudy = () => {
