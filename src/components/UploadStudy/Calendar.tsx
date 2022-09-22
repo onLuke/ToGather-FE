@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { WrapCalendar, CalendarInput } from './Calendar.style';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale';
@@ -8,34 +8,19 @@ import styled from '@emotion/styled';
 const PopUp = styled.div``;
 
 interface iProps {
-  selected: Date;
-  startDateDispatch: React.Dispatch<React.SetStateAction<Date>>;
   datePickerChangeDispatch: (date: Date) => void;
 }
 
 const Calendar = (props: iProps) => {
-  const { selected, startDateDispatch, datePickerChangeDispatch } = props;
+  const { datePickerChangeDispatch } = props;
+  const [startDate, setStartDate] = useState<Date>(new Date());
 
-  const handleOnChange = () => {
-    startDateDispatch(selected);
-    datePickerChangeDispatch(selected);
+  const handleOnChange = (date: Date) => {
+    datePickerChangeDispatch(date);
+    setStartDate(date);
   };
 
-  const MyContainer = ({
-    className,
-    children,
-  }: {
-    className: string;
-    children: React.ReactNode;
-  }) => {
-    return (
-      <WrapCalendar>
-        <CalendarContainer className={className}>{children}</CalendarContainer>
-      </WrapCalendar>
-    );
-  };
-
-  const MyContainer2 = ({ className, children }: { [key: string]: any }) => {
+  const Container = ({ className, children }: { [key: string]: any }) => {
     return (
       <PopUp>
         <CalendarContainer className={className}>
@@ -50,11 +35,11 @@ const Calendar = (props: iProps) => {
       <DatePicker
         locale={ko}
         dateFormat="yyyy.MM.dd"
+        selected={startDate}
         onChange={handleOnChange}
-        selected={selected}
-        calendarContainer={MyContainer2}
+        calendarContainer={Container}
         customInput={<CalendarInput />}
-        minDate={selected}
+        minDate={startDate}
         placeholderText={'모집마감일'}
         showPopperArrow={false}
       ></DatePicker>
