@@ -21,32 +21,18 @@ const AuthRedirect = () => {
   useEffect(() => {
     if (social) {
       getSignToken(social);
-      navigation('/');
     }
   }, []);
 
   const getSignToken = async (social: string) => {
-    let token;
-    switch (social) {
-      case 'google':
-      case 'kakao':
-      case 'github':
-        token = new URL(window.location.href).searchParams.get('code') as string;
-        break;
-      case 'naver':
-        token = location.hash.split('=')[1].split('&')[0] as string;
-        break;
-      default:
-        alert('새로고침 후 다시 시도해주세요.');
-        return null;
-    }
+    let token = new URL(window.location.href).searchParams.get('code') as string;
     try {
       await checkLogin(social, token).then((res) => {
         if (res.data.loginResult) {
           //기존 회원
           const resUser = {
             id: res.data.id,
-            nickname: res.data.nicknam,
+            nickname: res.data.nickname,
             profileImage: res.data.profileImage,
             techStackDtos: res.data.techStackDtos,
           };
@@ -60,13 +46,13 @@ const AuthRedirect = () => {
           //신규 회원
           setAuthToken({ signUpToken: res.data.signUpToken });
         }
-        navigation('/');
       });
     } catch (e) {
       console.error(`에러 :${e}`);
       alert('잘못된 접근 입니다.');
       navigation('/');
     }
+    navigation('/');
   };
 
   return <div>로딩중</div>;

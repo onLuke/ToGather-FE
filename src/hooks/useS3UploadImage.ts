@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AWS from 'aws-sdk';
 import styled from '@emotion/styled';
 import { hiddenStyle } from '../styles/Hide';
+import { v4 as uuidv4 } from 'uuid';
 
 const S3UploadImage = (folderName: string) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -21,18 +22,40 @@ const S3UploadImage = (folderName: string) => {
     signatureVersion: 'v4',
   });
 
-  const uploadFile = (file: File) => {
+  const uploadFile = async (file: File) => {
+    let imageUrl = null;
+    let fileName = file.name;
+
+    if (folderName === 'profile/') {
+      fileName = uuidv4().split('-').join('') + '.' + file.name.split('.')[1];
+    }
     const params = {
       ACL: 'public-read',
       Body: file,
       Bucket: S3_BUCKET,
-      Key: folderName + file.name,
+      Key: folderName + fileName,
       ContentType: 'image/*',
     };
 
-    myBucket.putObject(params).send((err) => {
-      if (err) console.log(err);
-    });
+    const putObjectPromise = myBucket.putObject(params).promise();
+
+    await putObjectPromise
+      .then((data) => {
+        console.log(data);
+        // @ts-ignore
+        imageUrl = data.$response.request.params.Key;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // .on('httpUploadProgress', (Progress, res) => {
+    //   console.log(res);
+    //   //@ts-ignore
+    // })
+    // .send((err) => {
+    //   if (err) console.log(err);
+    // });
+    return imageUrl;
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +76,15 @@ const S3UploadImage = (folderName: string) => {
     } else alert('업로드 할 이미지 파일을 선택해주세요');
   };
 
-  return { handleFileInput, handleUploadBtn };
+  const handleUpload = async () => {
+    let imageUrl = null;
+    if (imageFile) {
+      imageUrl = await uploadFile(imageFile);
+    } else alert('업로드 할 이미지 파일을 선택해주세요');
+    return imageUrl;
+  };
+
+  return { handleFileInput, handleUploadBtn, handleUpload };
 };
 
 export default S3UploadImage;

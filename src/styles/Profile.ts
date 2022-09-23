@@ -1,35 +1,5 @@
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-
-const Wrapper = styled.div`
-  align-items: center;
-  padding: 1rem;
-`;
-
-const Title = styled.h2`
-  margin: 2rem 0;
-  text-align: center;
-`;
-
-const InputBoxBlock = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-  margin-bottom: 2rem;
-  height: 40px;
-  font-size: 1rem;
-  font-weight: 600;
-  align-items: center;
-
-  .customSelect {
-    width: 60%;
-  }
-`;
-
-const ButtonBlock = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+import { InputBoxBlock } from './Input';
 
 const ProfileBoxBlock = styled(InputBoxBlock)`
   height: 100%;
@@ -83,12 +53,4 @@ const ProfileContainer = styled.div`
   }
 `;
 
-export {
-  Wrapper,
-  Title,
-  InputBoxBlock,
-  ButtonBlock,
-  ProfileWrapper,
-  ProfileBoxBlock,
-  ProfileContainer,
-};
+export { ProfileBoxBlock, ProfileWrapper, ProfileContainer };

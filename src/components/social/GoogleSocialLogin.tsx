@@ -1,14 +1,12 @@
 import GoogleLogin from 'react-google-login';
-// import { gapi } from 'gapi-script';
+import { gapi } from 'gapi-script';
 import React, { useEffect } from 'react';
 import { GoogleLoginButton } from './SocialLogin.styles';
 import { useNavigate } from 'react-router-dom';
 
-const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id=${
+const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${
   import.meta.env.VITE_GOOGLE_KEY
-}&redirect_uri=${
-  import.meta.env.VITE_GOOGLE_URL
-}&response_type=code&scope=profile&flowName=GeneralOAuthFlow`;
+}&redirect_uri=${import.meta.env.VITE_GOOGLE_URL}&response_type=code&scope=email profile`;
 
 const GoogleSocialLogin = () => {
   const getAuthToken = () => {

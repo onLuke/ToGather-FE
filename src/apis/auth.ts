@@ -9,9 +9,9 @@ interface GenericResponse {
 }
 
 export const checkLogin = (social: string, token: string) =>
-  Api.post(`/oauth/login/${social}`, token);
+  Api.get(`/oauth/login/${social}?code=${token}`);
 
-export const userLogin = (data: any, token: string) => {
+export const signUp = (data: any, token: string) => {
   return Api.post(`/oauth/signup`, data, {
     headers: {
       signUpToken: token,

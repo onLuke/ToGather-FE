@@ -1,6 +1,7 @@
 declare module '@emotion/core';
 declare module '@emotion/styled';
 declare module '@emotion/react';
+declare module 'uuid';
 declare module 'multer';
 declare module 'multer-s3';
 declare module 'vite-plugin-svgr';

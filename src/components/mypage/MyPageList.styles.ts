@@ -12,8 +12,6 @@ interface isOn {
 const MyPageBlock = styled.div`
   display: ${({ isOpen }: isOpen) => (isOpen ? 'flex' : 'none')};
   flex-direction: column;
-  width: 8rem;
-  height: 100px;
   position: fixed;
   margin: 0 auto;
   top: 4rem;
@@ -25,6 +23,7 @@ const MyPageBlock = styled.div`
   a {
     font-size: 16px;
     text-align: center;
+    padding: 0 20px;
   }
   a + a {
     margin-top: 1rem;
