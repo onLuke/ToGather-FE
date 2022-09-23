@@ -18,7 +18,7 @@ import {
   SearchByText,
   UploadStudyLink,
 } from './HeaderNavigation.styles';
-import { GpsIcon } from '../@icons';
+import { GpsIcon } from '../@icons/Images';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { isScrollOverAtom } from '../../contexts/isScrollOverAtom';
 import MyPageList from '../mypage/MyPageList';
@@ -27,6 +27,7 @@ import SearchMenu from './SearchMenu';
 import RegisterModal from '../Login/RegisterModal';
 import { useLocation } from 'react-router-dom';
 import { userAtom, userSelector } from 'src/contexts/UserAtom';
+import { techs } from '../@icons/Images';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
@@ -44,7 +45,6 @@ const HeaderNavigation = () => {
     openModal?.(<LoginModal />);
   };
 
-  console.log(pathname);
   const handleLogout = () => {
     // logout API 호출
     //api.post('logout').then((res) => {

@@ -7,7 +7,6 @@ const MainPage = () => {
   return (
     <>
       <UserLoginAuth />
-      <HeaderNavigation />
       <Statistics />
       <StudyListContainer />
     </>

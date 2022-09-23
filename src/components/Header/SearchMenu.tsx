@@ -1,5 +1,5 @@
 import { SearchContainer, TechsContainer, TechBtn } from './SearchMenu.style';
-import { techs } from '../@icons/index';
+import { techs } from '../@icons/Images';
 import { useRecoilState } from 'recoil';
 import { searchTechsAtom } from '../../contexts/SearchTechsAtom';
 import { useEffect, useState } from 'react';
@@ -46,9 +46,10 @@ const SearchMenu = ({ searchIsOpen, isHidden }: SearchMenuProps) => {
         {techs.map(({ tech, icon }) => (
           <TechBtn
             key={tech}
-            className="tech__Btn"
+            className={`tech__Btn ${tech}`}
             onClick={() => {
               handleTechBtn(tech);
+              console.log(tech);
             }}
             isOn={filteredTech[tech]}
           >
