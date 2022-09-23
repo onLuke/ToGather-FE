@@ -11,7 +11,7 @@ interface data {
   id: string;
   techStackDtos: techStack[];
   profileImage: string;
-  nickname?: string;
+  nickname: string;
 }
 
 export const userAtom = atom<data>({

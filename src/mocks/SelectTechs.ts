@@ -5,7 +5,7 @@ const position = [
 ];
 
 const stacktech = [
-  { value: 1, label: 'React' },
+  { value: 1, label: 'SPRING' },
   { value: 2, label: 'JavaScript' },
   { value: 3, label: 'TypeScript' },
 ];

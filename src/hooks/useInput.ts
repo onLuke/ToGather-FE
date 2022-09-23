@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+interface data {
+  [key: string]: any;
+}
 const useInput = (initailValue: any) => {
-  const [form, setForm] = useState(initailValue);
+  const [form, setForm] = useState<data>({});
+
+  useEffect(() => {
+    setForm(initailValue);
+  }, []);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,9 +32,10 @@ const useInput = (initailValue: any) => {
       );
       setForm({ ...form, [name]: filterdData });
     } else {
+      debugger;
       for (let item of targetValue) {
         let { value } = item;
-        setForm({ ...form, [name]: [...form[name], value] });
+        setForm({ ...form, [name]: [...form[name]] });
       }
     }
   };

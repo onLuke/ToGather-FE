@@ -36,10 +36,12 @@
     "react-router-dom": "^6.3.0",
     "react-select": "^5.4.0",
     "react-slick": "^0.29.0",
+    "react-uuid": "^1.0.3",
     "recoil": "^0.7.5",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.4.2",
     "usehooks-ts": "^2.6.0",
+    "uuid": "^9.0.0",
     "vite-tsconfig-paths": "^3.5.0"
   },
   "devDependencies": {

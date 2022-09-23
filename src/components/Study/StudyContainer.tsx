@@ -1,25 +1,19 @@
 import { StudySection, Main } from './StudyContainer.style';
-import { useRecoilValue } from 'recoil';
 import StudyList from './StudyList';
-import getStudy from '../../apis/studyTest';
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
-import axios from 'axios';
-
-
-
+import { useRef } from 'react';
+import useInfinityScroll from '../../hooks/useInfinityScroll';
 
 const StudyListContainer = () => {
+  const observerTargetRef = useRef<HTMLElement>(null);
+  useInfinityScroll({ target: observerTargetRef });
 
-  
   return (
     <Main>
-      <StudySection>
+      <StudySection ref={observerTargetRef}>
         <StudyList />
       </StudySection>
     </Main>
   );
-}
+};
 
 export default StudyListContainer;
-
