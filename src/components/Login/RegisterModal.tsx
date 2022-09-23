@@ -11,6 +11,8 @@ import S3UploadImage from 'src/hooks/useS3UploadImage';
 import { position, stacktech } from 'src/mocks/SelectTechs';
 import { SubmitButton } from 'src/styles/Button';
 import { InputLabel, InputText } from 'src/styles/Input';
+import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
+import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
 import {
   InputBoxBlock,
   Title,
@@ -20,6 +22,7 @@ import {
   ProfileBoxBlock,
   ProfileContainer,
 } from './RegisterModal.styles';
+
 
 const RegisterModal = () => {
   const [fileImage, setFileImage] = useState('');
@@ -80,6 +83,7 @@ const RegisterModal = () => {
             )}
           </ProfileWrapper>
           <label htmlFor="profileImage">업로드</label>
+          <InputText id="profileImage" name="profileImage" type="file" onChange={handleImageView} />
           <InputText
             id="profileImage"
             name="profileImage"
@@ -99,18 +103,6 @@ const RegisterModal = () => {
           onChange={changeInput}
         />
       </InputBoxBlock>
-      {/* <InputBoxBlock>
-          <InputLabel htmlFor="position">포지션</InputLabel>
-          <Select
-            className="customSelect"
-            defaultValue={position[0]}
-            id="position"
-            name="position"
-            placeholder="포지션"
-            options={position}
-            onChange={handleSelectChange}
-          />
-        </InputBoxBlock> */}
       <InputBoxBlock>
         <InputLabel htmlFor="techStackDtos">기술 태그</InputLabel>
         <CreatableSelect

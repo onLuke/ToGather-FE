@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withdrawal } from 'src/apis/user';
 import CreatableSelect from 'react-select/creatable';
 import { position, stacktech } from 'src/mocks/SelectTechs';
@@ -16,18 +16,32 @@ import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState } from 'recoil';
 import { userAtom } from 'src/contexts/UserAtom';
 import Select from 'react-select';
+import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
+import S3UploadImage from 'src/hooks/useS3UploadImage';
 
-interface techStack {
-  value: string;
-  label: string;
+interface tech {
+  value?: number;
+  id?: number;
+  name?: string;
+  label?: string;
 }
 
 interface props {
-  id: string;
-  techStackDtos: techStack[];
-  profileImage: string;
-  nickname: string;
+  user: {
+    id: string;
+    profileImage: string;
+    nickname: string;
+    techStackDtos: tech[];
+  };
 }
+
+const UserInfoEdit = ({ user }: props) => {
+  const [fileImage, setFileImage] = useState('');
+  const { form, changeInput, multiSelectChange } = useInput(user);
+  const { handleFileInput, handleUpload } = S3UploadImage('profile/');
+  const resetUser = useResetRecoilState(userAtom);
+  const navigate = useNavigate();
+
 
 const UserInfoEdit = ({ user }: { user: props }) => {
   const { form, setForm, changeInput, multiSelectChange } = useInput(user);
@@ -57,15 +71,24 @@ const UserInfoEdit = ({ user }: { user: props }) => {
   };
   return (
     <Wrapper>
-      <InputBoxBlock>
-        <InputLabel htmlFor="profile">프로필</InputLabel>
-        <ProfileImageBlock>
-          <ProfileArticle>
-            <img src={import.meta.env.VITE_AWS_S3_IMG_URL + form.profileImage} alt="프로필" />
-          </ProfileArticle>
-          <InputText id="profileImage" name="profileImage" type="file" onChange={changeInput} />
-        </ProfileImageBlock>
-      </InputBoxBlock>
+      <ProfileBoxBlock>
+        <InputLabel htmlFor="profileImage">프로필</InputLabel>
+        <ProfileContainer>
+          <ProfileWrapper>
+            {fileImage && (
+              <img className="profile" src={fileImage} alt="프로필" style={{ margin: 'auto' }} />
+            )}
+          </ProfileWrapper>
+          <label htmlFor="profileImage">업로드</label>
+          <InputText
+            id="profileImage"
+            name="profileImage"
+            type="file"
+            // value={form.profileImage}
+            // onChange={handleImageView}
+          />
+        </ProfileContainer>
+      </ProfileBoxBlock>
       <InputBoxBlock>
         <InputLabel htmlFor="nickname">닉네임</InputLabel>
         <InputText

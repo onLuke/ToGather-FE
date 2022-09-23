@@ -25,20 +25,7 @@ const AuthRedirect = () => {
   }, []);
 
   const getSignToken = async (social: string) => {
-    let token;
-    switch (social) {
-      case 'google':
-      case 'kakao':
-      case 'github':
-        token = new URL(window.location.href).searchParams.get('code') as string;
-        break;
-      case 'naver':
-        token = location.hash.split('=')[1].split('&')[0] as string;
-        break;
-      default:
-        alert('새로고침 후 다시 시도해주세요.');
-        return null;
-    }
+    let token = new URL(window.location.href).searchParams.get('code') as string;
     try {
       await checkLogin(social, token).then((res) => {
         if (res.data.loginResult) {

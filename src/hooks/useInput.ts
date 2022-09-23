@@ -3,6 +3,12 @@ import React, { useEffect, useState } from 'react';
 interface data {
   [key: string]: any;
 }
+
+interface Tech {
+  value: number;
+  label: string;
+}
+
 const useInput = (initailValue: any) => {
   const [form, setForm] = useState<data>({});
 
@@ -23,18 +29,19 @@ const useInput = (initailValue: any) => {
 
   const multiSelectChange = (targetValue: any, targetAction: any) => {
     const { action, name } = targetAction;
-
+    debugger;
     if (action === 'clear') {
       setForm({ ...form, [name]: [] });
     } else if (action === 'remove-value') {
       const filterdData = form[name].filter(
-        (item: number) => item != targetAction.removedValue.value
+        (item: Tech) => item.value != targetAction.removedValue.value
       );
       setForm({ ...form, [name]: filterdData });
     } else {
       debugger;
       for (let item of targetValue) {
         let { value } = item;
+
         setForm({ ...form, [name]: [...form[name]] });
       }
     }
