@@ -42,18 +42,6 @@ const UserInfoEdit = ({ user }: props) => {
   const resetUser = useResetRecoilState(userAtom);
   const navigate = useNavigate();
 
-
-const UserInfoEdit = ({ user }: { user: props }) => {
-  const { form, setForm, changeInput, multiSelectChange } = useInput(user);
-  const resetUser = useResetRecoilState(userAtom);
-  const navigate = useNavigate();
-
-  console.log(user);
-
-  useEffect(() => {
-    setForm(user);
-  }, [user]);
-
   const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     console.log(form);

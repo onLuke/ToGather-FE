@@ -13,16 +13,6 @@ import { SubmitButton } from 'src/styles/Button';
 import { InputLabel, InputText } from 'src/styles/Input';
 import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
 import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
-import {
-  InputBoxBlock,
-  Title,
-  Wrapper,
-  ButtonBlock,
-  ProfileWrapper,
-  ProfileBoxBlock,
-  ProfileContainer,
-} from './RegisterModal.styles';
-
 
 const RegisterModal = () => {
   const [fileImage, setFileImage] = useState('');
