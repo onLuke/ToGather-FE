@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-interface data {
+interface Data {
   [key: string]: any;
 }
 
@@ -9,12 +9,13 @@ interface Tech {
   label: string;
 }
 
-const useInput = (initailValue: any) => {
-  const [form, setForm] = useState<data>({});
+interface SeverTech {
+  id: number;
+  name: string;
+}
 
-  useEffect(() => {
-    setForm(initailValue);
-  }, []);
+const useInput = (initailValue: any) => {
+  const [form, setForm] = useState<Data>(initailValue);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,7 +30,6 @@ const useInput = (initailValue: any) => {
 
   const multiSelectChange = (targetValue: any, targetAction: any) => {
     const { action, name } = targetAction;
-    debugger;
     if (action === 'clear') {
       setForm({ ...form, [name]: [] });
     } else if (action === 'remove-value') {
@@ -38,13 +38,19 @@ const useInput = (initailValue: any) => {
       );
       setForm({ ...form, [name]: filterdData });
     } else {
-      debugger;
       for (let item of targetValue) {
-        let { value } = item;
-
-        setForm({ ...form, [name]: [...form[name]] });
+        setForm({ ...form, [name]: [...targetValue] });
       }
     }
+  };
+
+  const idNameToMultiSelect = (target: Tech[]) => {
+    const changeProperty = target.reduce((acc: SeverTech[], cur: Tech) => {
+      let id = cur.value;
+      let name = cur.label;
+      return [...acc, { id, name }];
+    }, []);
+    return changeProperty;
   };
 
   const datePickerChange = (date: Date) => {
@@ -57,7 +63,15 @@ const useInput = (initailValue: any) => {
     setForm({ ...form, content: value });
   };
 
-  return { form, changeInput, selectChange, multiSelectChange, datePickerChange, editorChange };
+  return {
+    form,
+    changeInput,
+    selectChange,
+    multiSelectChange,
+    datePickerChange,
+    editorChange,
+    idNameToMultiSelect,
+  };
 };
 
 export default useInput;
