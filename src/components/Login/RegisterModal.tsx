@@ -1,6 +1,6 @@
-import axios, { HeadersDefaults } from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
+import axios, { HeadersDefaults } from 'axios';
 import CreatableSelect from 'react-select/creatable';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { signUp } from 'src/apis/auth';
@@ -13,23 +13,22 @@ import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Pr
 import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
 import useInput from 'src/hooks/useInput';
 import S3UploadImage from 'src/hooks/useS3UploadImage';
+import AuthService from 'src/service/AuthService';
 import Api from 'src/apis/Api';
 
 interface CommonHeaderProperties extends HeadersDefaults {
   Authorization: string;
 }
 
-
 const RegisterModal = () => {
   const [fileImage, setFileImage] = useState('');
-  const [authToken, setAuthToken] = useRecoilState(authAtom);
-  const setUser = useSetRecoilState(userSelector);
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
   const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
     profileImage: '',
     nickname: '',
     techStackDtos: [],
   });
+  const { registerService } = AuthService();
 
   const handleImageView = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -44,29 +43,12 @@ const RegisterModal = () => {
     try {
       const imageUrl = await handleUpload();
       const formTechStack = idNameToMultiSelect(form.techStackDtos);
-      /**
-       * const response = signUpService(form);
-       */
-      signUp(
-        {
-          ...form,
-          profileImage: imageUrl,
-          techStackDtos: formTechStack,
-        },
-        authToken.signUpToken
-      )
-        .then((res) => {
-          const user = {
-            id: res.data.id,
-            nickname: res.data.nickname,
-            profileImage: res.data.profileImage,
-            techStackDtos: res.data.techStackDtos,
-          };
-          setAuthToken({ refreshToken: res.data.refreshToken });
-          setUser(user);
-          Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
-        })
-        .catch((err) => console.log(err));
+
+      const response = await registerService({
+        ...form,
+        profileImage: imageUrl,
+        techStackDtos: formTechStack,
+      });
     } catch (err) {
       console.error('전송 오류 form 데이터 확인');
     }
@@ -101,7 +83,7 @@ const RegisterModal = () => {
       </InputBoxBlock>
       <InputBoxBlock>
         <InputLabel htmlFor="techStackDtos">기술 태그</InputLabel>
-        <CreatableSelect
+        <Select
           isClearable
           isMulti
           id="techStackDtos"

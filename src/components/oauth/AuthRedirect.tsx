@@ -1,22 +1,11 @@
 import React, { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { authAtom } from 'src/contexts/AuthAtom';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { checkLogin } from 'src/apis/auth';
-import { userAtom, userSelector } from 'src/contexts/UserAtom';
-import Api from 'src/apis/Api';
-import { HeadersDefaults } from 'axios';
-
-interface CommonHeaderProperties extends HeadersDefaults {
-  Authorization: string;
-}
+import { useParams, useNavigate } from 'react-router-dom';
+import AuthService from 'src/service/AuthService';
 
 const AuthRedirect = () => {
-  const [authToken, setAuthToken] = useRecoilState(authAtom);
-  const [user, setUser] = useRecoilState(userAtom);
   const navigation = useNavigate();
-  const location = useLocation();
   const { social } = useParams();
+  const { checkLoginService } = AuthService();
 
   useEffect(() => {
     if (social) {
@@ -27,28 +16,7 @@ const AuthRedirect = () => {
   const getSignToken = async (social: string) => {
     let token = new URL(window.location.href).searchParams.get('code') as string;
     try {
-      await checkLogin(social, token).then((res) => {
-        if (res.data.loginResult) {
-          //기존 회원
-          const resUser = {
-            id: res.data.id,
-            nickname: res.data.nickname,
-            profileImage: res.data.profileImage,
-            techStackDtos: res.data.techStackDtos,
-          };
-          setAuthToken({ refreshToken: res.data.refreshToken });
-          setUser(resUser);
-          Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
-        } else {
-          //신규 회원
-          if (res.data.errMessage) {
-            //다른 SNS 계정으로 회원가입 되어 있다면.
-            alert(res.data.errMessage);
-          } else {
-            setAuthToken({ signUpToken: res.data.signUpToken });
-          }
-        }
-      });
+      const response = await checkLoginService(social, token);
     } catch (e) {
       console.error(`에러 :${e}`);
       alert('잘못된 접근 입니다.');

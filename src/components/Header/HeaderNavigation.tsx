@@ -25,6 +25,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import SearchMenu from './SearchMenu';
 import { useLocation } from 'react-router-dom';
 import { userAtom, userSelector } from 'src/contexts/UserAtom';
+import { logout, refresh } from 'src/apis/auth';
+import Api from 'src/apis/Api';
+import AuthService from 'src/service/AuthService';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
@@ -37,14 +40,17 @@ const HeaderNavigation = () => {
   const resetUser = useResetRecoilState(userAtom);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { refreshService } = AuthService();
 
   const refersh = async () => {
-    /* const response = await api.post('refresh');
-     * const accessToken = response.accessToken;
-     * Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
-     *
-     */
+    if (user.nickname) {
+      const response = await refreshService();
+    }
   };
+
+  useEffect(() => {
+    refersh();
+  }, [user.nickname]);
 
   useEffect(() => {}, []);
 
@@ -54,12 +60,12 @@ const HeaderNavigation = () => {
 
   const handleLogout = () => {
     // logout API 호출
-    //api.post('logout').then((res) => {
-    // })
+    logout().then((res) => {
+      localStorage.removeItem('refershToken');
+      resetUser();
+      navigate('/');
+    });
     console.log('logout');
-    localStorage.removeItem('refershToken');
-    resetUser();
-    navigate('/');
   };
 
   return (
