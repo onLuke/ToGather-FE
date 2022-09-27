@@ -10,6 +10,6 @@
 <pattern id="forth" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_793_3409" transform="translate(-0.0027778) scale(0.00558642)"/>
 </pattern>
-<image id="image0_793_3409" width="180" height="180" xlink:href="images/flutter.png"/>
+<image id="image0_793_3409" width="180" height="180" xlink:href="src/assets/images/flutter.png"/>
 </defs>
 </svg>
