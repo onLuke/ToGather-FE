@@ -6,16 +6,10 @@ import {
   StudyAuthor,
   StudyViewer,
 } from './StudyList.style';
-import { StudyListTest } from '../../mocks/StudyListTest';
-import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
 import { useRecoilValue } from 'recoil';
 import Studytechs from './StudyTechs';
-import { filteredStudy } from '../../contexts/SearchTechsAtom';
-import { getRes } from '../../contexts/getStudyAtom';
-import { useEffect } from 'react';
 import { getStudyListQuery } from '../../apis/studyQuery';
-import { getStudy } from '../../apis/study';
+import { pageNumber, isRecruiting } from '../../contexts/chachingOptionAtom';
 
 const StudyList = () => {
   const data = getStudyListQuery();

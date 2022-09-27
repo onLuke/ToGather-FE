@@ -15,6 +15,7 @@ import useInput from 'src/hooks/useInput';
 import S3UploadImage from 'src/hooks/useS3UploadImage';
 import AuthService from 'src/service/AuthService';
 import Api from 'src/apis/Api';
+import ProfileImage from '../profileImage/ProfileImage';
 
 interface CommonHeaderProperties extends HeadersDefaults {
   Authorization: string;
@@ -59,18 +60,7 @@ const RegisterModal = () => {
   return (
     <Wrapper>
       <Title>회원가입</Title>
-      <ProfileBoxBlock>
-        <InputLabel htmlFor="profileImage">프로필</InputLabel>
-        <ProfileContainer>
-          <ProfileWrapper>
-            {fileImage && (
-              <img className="profile" src={fileImage} alt="프로필" style={{ margin: 'auto' }} />
-            )}
-          </ProfileWrapper>
-          <label htmlFor="profileImage">업로드</label>
-          <InputText id="profileImage" name="profileImage" type="file" onChange={handleImageView} />
-        </ProfileContainer>
-      </ProfileBoxBlock>
+      <ProfileImage image={fileImage} uploadEvent={handleImageView} />
       <InputBoxBlock>
         <InputLabel htmlFor="nickname">닉네임</InputLabel>
         <InputText

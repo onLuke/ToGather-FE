@@ -12,7 +12,7 @@ const UserLoginAuth = () => {
     if (authToken.signUpToken) {
       registerModalOpen();
     }
-  }, []);
+  }, [authToken.signUpToken]);
 
   const registerModalOpen = () => {
     openModal?.(<RegisterModal />);

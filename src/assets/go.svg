@@ -10,6 +10,6 @@
 <pattern id="fifth" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_793_3629" transform="translate(-0.0027778) scale(0.00558642)"/>
 </pattern>
-<image id="image0_793_3629" width="180" height="180" xlink:href="/images/go.png"/>
+<image id="image0_793_3629" width="180" height="180" xlink:href="src/assets/images/go.png"/>
 </defs>
 </svg>

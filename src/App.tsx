@@ -5,7 +5,7 @@ import MainPage from './pages/MainPage';
 import ModalProvider from './contexts/ModalContext';
 import AuthRedirectPage from './pages/AuthRedirectPage';
 import ChatPage from './pages/ChatPage';
-import MyPage from './pages/MyPage';
+/* import MyPage from './pages/MyPage'; */
 import NotFoundPage from './pages/NotFoundPage';
 import HeaderNavigation from './components/Header/HeaderNavigation';
 import UploadStudy from './pages/UploadStudy';

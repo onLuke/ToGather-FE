@@ -10,6 +10,6 @@
 <pattern id="third" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_793_3394" transform="translate(-0.0027778) scale(0.00558642)"/>
 </pattern>
-<image id="image0_793_3394" width="180" height="180"  x="5" y="5" xlink:href="images/django.png"/>
+<image id="image0_793_3394" width="180" height="180"  x="5" y="5" xlink:href="src/assets/images/django.png"/>
 </defs>
 </svg>

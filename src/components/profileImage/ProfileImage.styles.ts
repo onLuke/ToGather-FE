@@ -1,32 +1,28 @@
 import styled from '@emotion/styled';
 import COLOR from 'src/constants/colors';
-import { InputBoxBlock } from './Input';
-
-const ProfileBoxBlock = styled(InputBoxBlock)`
-  height: 100%;
-`;
 
 const ProfileWrapper = styled.div`
-  width: 100px;
-  height: 100px;
-  border: 1px solid;
-  border-radius: 50px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  box-shadow: 3px 3px 10px rgb(0, 0, 0, 0.4);
   .profile {
     width: 100%;
     height: 100%;
-    border-radius: 50px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;
 
 const ProfileContainer = styled.div`
   display: flex;
-  width: 60%;
+  flex-direction: column;
+  width: 100%;
   align-items: center;
-  justify-content: space-around;
   label {
     display: inline-block;
     height: 100%;
+    margin: 1rem 0;
     padding: 0.5em 0.75em;
     color: white;
     font-size: inherit;
@@ -56,4 +52,4 @@ const ProfileContainer = styled.div`
   }
 `;
 
-export { ProfileBoxBlock, ProfileWrapper, ProfileContainer };
+export { ProfileWrapper, ProfileContainer };

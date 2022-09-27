@@ -33,6 +33,7 @@ Api.interceptors.response.use(
             const { accessToken, refreshToken } = res.data;
             localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
             originalRequest.headers.Authoriztion = `Bearer ${accessToken}`;
+            Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
           })
           .catch(() => {
             window.location.href = '/';

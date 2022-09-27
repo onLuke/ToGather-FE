@@ -25,6 +25,11 @@ const buttonStyle = css`
   }
 `;
 
+const CustomButton = styled.button`
+  ${buttonStyle};
+  background-color: ${({ color = COLOR.BLUR_700 }) => color};
+`;
+
 const SubmitButton = styled.button`
   ${buttonStyle}
   margin-right: 1rem;
@@ -36,4 +41,4 @@ const CancelButton = styled.button`
   background: ${COLOR.RED_100};
 `;
 
-export { SubmitButton, CancelButton };
+export { SubmitButton, CancelButton, CustomButton };

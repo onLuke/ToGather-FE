@@ -15,7 +15,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["react/next", "react-dom/next", "vite/client", "@emotion/react/types/css-prop"],
+    "types": [
+      "react/next",
+      "react-dom/next",
+      "vite/client",
+      "@emotion/react/types/css-prop",
+      "kakao.maps.d.ts"
+    ],
     //react18문법 적용을 위해 추가합니다, 타입선언문에서 기본 타입을 덮어쓸 수 있습니다.
     "jsxImportSource": "@emotion/react",
     "paths": {

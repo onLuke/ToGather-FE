@@ -1,5 +1,6 @@
 import Api from './Api';
 import { getRes } from '../contexts/getStudyAtom';
+import { inputFormType } from '../pages/UploadStudy';
 
 interface getRes {
   content: string;
@@ -19,28 +20,31 @@ interface getRes {
 }
 
 interface studyData {
-  title: string;
-  content: string;
-  status: 'RECRUITING';
   offline: boolean;
-  location: string;
+  personnel: string;
+  status: string;
   deadline: string;
   techStackIds: number[];
+  content: string;
+  title: string;
+  location: number[];
 }
-
 interface createRes {}
 
 interface updateRes {}
 
 export const getStudy = async (pageNumber: number, isRecruiting: string) => {
   const res = await Api.get<getRes>(
-    `https://dokuny.blog/projects?limit=9&pageNumber=${pageNumber}&status=${isRecruiting}`
+    `https://dokuny.blog/projects?limit=9&pageNumber=${pageNumber}`
+    /*     `https://jsonplaceholder.typicode.com/todos/${pageNumber}` */
   );
-  console.log(res);
+  console.log('get Request');
 
   return res;
 };
-export const createStudy = (data: studyData) => Api.post<createRes>(`/projects`, data);
+export const createStudy = (data: inputFormType) => {
+  Api.post<createRes>(`https://dokuny.blog/projects`, data);
+};
 
 export const updateStudy = (data: studyData) => {
   Api.post<updateRes>('');

@@ -76,4 +76,4 @@ const TechBtn = styled.button`
   }
 `;
 
-export { SearchContainer, TechsContainer, TechBtn };
+export { SearchContainer, TechsContainer, TechBtn, slowHidden };

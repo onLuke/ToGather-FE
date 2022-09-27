@@ -8,13 +8,17 @@ import {
   WraponOffline,
   WrapTechSelect,
 } from './SelectContainer.style';
-import { stacktech } from '../../mocks/SelectTechs';
 import Calendar from './Calendar';
 import Select from 'react-select';
 import UploadOptions from '../../constants/UploadOptions';
 import { GpsContainer } from '../Header/HeaderNavigation.styles';
 import { GpsIcon } from '../@icons';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import techTable from '../../contexts/TechsTable';
+import { modalContext } from 'src/contexts/ModalContext';
+import MapModal from '../Modal/MapModal';
+import { UserLocationAtom } from '../../contexts/UserLocationAtom';
+import { useRecoilValue } from 'recoil';
 
 interface iProps {
   changeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -24,15 +28,15 @@ interface iProps {
 }
 
 const SelectContainer = (props: iProps) => {
-  const [region, setRegion] = useState('');
   const [isOffline, setIsOffline] = useState(true);
+  const location = useRecoilValue(UserLocationAtom);
+  const openModalContext = useContext(modalContext);
+
+  const handleKakaoOpenModal = () => {
+    openModalContext?.openModal?.(<MapModal />);
+  };
 
   const { changeInput, selectChange, datePickerChange, multiSelectChange } = props;
-
-  const handleRegionValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    setRegion(newValue);
-  };
 
   const handleOnOffline = (targetValue: any, targetName: any) => {
     selectChange(targetValue, targetName);
@@ -55,12 +59,13 @@ const SelectContainer = (props: iProps) => {
             onChange={handleOnOffline}
           />
         </WraponOffline>
-        <WrapMapInput>
-          <WrapRegionSelect isOffline={!isOffline}>
-            <GpsContainer>
+        <WrapRegionSelect isOffline={!isOffline}>
+          <WrapMapInput>
+            <GpsContainer onClick={handleKakaoOpenModal}>
               <GpsIcon />
             </GpsContainer>
             <RegionInput
+              className="select__region"
               type="text"
               onClick={(e: React.MouseEvent) => {
                 e.preventDefault();
@@ -68,9 +73,10 @@ const SelectContainer = (props: iProps) => {
               placeholder="좌측 아이콘을 눌러 지역 선택하기"
               aria-label="좌측 아이콘을 눌러 지역을 선택할 수 있습니다"
               onChange={changeInput}
+              value={location.regionName}
             />
-          </WrapRegionSelect>
-        </WrapMapInput>
+          </WrapMapInput>
+        </WrapRegionSelect>
         <WrapTechSelect>
           <Select
             isMulti
@@ -78,7 +84,7 @@ const SelectContainer = (props: iProps) => {
             className="techStackIdsSelect"
             name="techStackIds"
             placeholder="기술 스택"
-            options={stacktech}
+            options={techTable}
             onChange={multiSelectChange}
             classNamePrefix="select"
           />

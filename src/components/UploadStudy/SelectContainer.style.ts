@@ -1,10 +1,6 @@
-import styled, { css } from '@emotion/styled';
-import axios from 'axios';
-import FontSizes from '../../constants/FontSizes';
+import styled from '@emotion/styled';
 import Flex from '../../styles/Flex';
-import COLOR from '../../constants/colors';
 import 'react-datepicker/dist/react-datepicker.css';
-import CalendarContainer from 'react-datepicker';
 
 interface WrapMapProps {
   isOffline: boolean;
@@ -25,9 +21,13 @@ const OnOfflineBlock = styled.div`
   height:100%;
 `;
 const WrapRegionSelect = styled.div`
-  ${Flex({ columnGap: '3rem' })};
+  ${Flex({ columnGap: '3rem', flexDirection: 'column' })};
   visibility: ${(props: WrapMapProps) => (props.isOffline ? 'hidden' : 'visible')};
   width: 25rem;
+`;
+
+const WrapMapInput = styled.div`
+  ${Flex({ columnGap: '3rem' })};
 `;
 
 const RegionInput = styled.input`
@@ -38,7 +38,6 @@ const RegionInput = styled.input`
   height: 38px;
   text-align: center;
   font-size: 16px;
-  color: transparent;
   :focus {
     outline: none;
   }
@@ -47,8 +46,6 @@ const RegionInput = styled.input`
 const WraponOffline = styled.div`
   width: 23rem;
 `;
-
-const WrapMapInput = styled.div``;
 
 const RestSelectBlock = styled(OnOfflineBlock)`
   ${Flex({ flexDirection: 'column', alignItems: 'center' })};

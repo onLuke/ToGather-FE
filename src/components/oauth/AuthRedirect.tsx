@@ -11,7 +11,7 @@ const AuthRedirect = () => {
     if (social) {
       getSignToken(social);
     }
-  }, []);
+  }, [social]);
 
   const getSignToken = async (social: string) => {
     let token = new URL(window.location.href).searchParams.get('code') as string;

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useState } from 'react';
 
 interface Data {
   [key: string]: any;
@@ -9,7 +8,6 @@ interface Tech {
   value: number;
   label: string;
 }
-
 
 const useInput = (initailValue: any) => {
   const [form, setForm] = useState(initailValue);
@@ -50,13 +48,35 @@ const useInput = (initailValue: any) => {
   };
 
   const datePickerChange = (date: Date) => {
-    const name = 'deadline';
-    const dateValue = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    const dayToString = String(date.getDate());
+    const dayString = String(date.getDate()).length < 2 ? '0' + dayToString : dayToString;
+
+    console.log(dayString);
+
+    const dateValue = `${date.getFullYear()}-${date.getMonth() + 1}-${dayString}`;
     setForm({ ...form, deadline: dateValue });
   };
 
   const editorChange = (value: string) => {
     setForm({ ...form, content: value });
+  };
+
+  const multiSelectUpload = (targetValue: any, targetAction: any) => {
+    const { action, name } = targetAction;
+
+    if (action === 'clear') {
+      setForm({ ...form, [name]: [] });
+    } else if (action === 'remove-value') {
+      const filterdData = form[name].filter(
+        (item: number) => item != targetAction.removedValue.value
+      );
+      setForm({ ...form, [name]: filterdData });
+    } else {
+      for (let item of targetValue) {
+        let { value } = item;
+        setForm({ ...form, [name]: [...form[name], value] });
+      }
+    }
   };
 
   return {
@@ -67,6 +87,7 @@ const useInput = (initailValue: any) => {
     datePickerChange,
     editorChange,
     idNameToMultiSelect,
+    multiSelectUpload,
   };
 };
 
