@@ -1,24 +1,8 @@
 import { useQuery } from 'react-query';
-import { getStudy } from './study';
+import { getStudy, createStudy } from './study';
 import { useRecoilValue } from 'recoil';
 import { isUploaded, pageNumber, isRecruiting } from '../contexts/chachingOptionAtom';
-
-interface resType {
-  content: string;
-  deadline: string;
-  id: number;
-  location: string;
-  member?: {
-    email: string;
-    id: number;
-    nickname: string;
-    profileImage: string;
-  };
-  personnel: number;
-  status: 'COMPLETED' | 'RECRUITING';
-  techStacks: number[];
-  title: string;
-}
+import { inputFormType } from '../pages/UploadStudy';
 
 export const getStudyListQuery = (): any => {
   const page = useRecoilValue(pageNumber);
@@ -33,11 +17,18 @@ export const getStudyListQuery = (): any => {
       refetchOnWindowFocus: false,
       retry: 0,
       staleTime: useRecoilValue(isUploaded) ? 0 : 60 * 1000 * 3,
-      onSuccess: (data) => {},
+      cacheTime: useRecoilValue(isUploaded) ? 0 : 60 * 1000 * 3,
+      onSuccess: (data) => {
+        console.log(data);
+      },
       onError: (e: Error) => {
         console.log(e.message);
       },
     }
   );
   return data;
+};
+
+export const createStudyQuery = async (form: inputFormType) => {
+  createStudy(form);
 };
