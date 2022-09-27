@@ -36,7 +36,7 @@ const HeaderNavigation = () => {
   const [favoriteIsOpen, setFavoriteIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [myPageIsOpen, setMyPageIsOpen] = useState(false);
-  const [user, setUser] = useRecoilState(userSelector);
+  const user = useRecoilValue(userSelector);
   const resetUser = useResetRecoilState(userAtom);
   const { pathname } = useLocation();
   const navigate = useNavigate();
