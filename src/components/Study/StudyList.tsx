@@ -19,8 +19,6 @@ import { getStudy } from '../../apis/study';
 
 const StudyList = () => {
   const data = getStudyListQuery();
-  console.log('here');
-  console.log(data);
 
   return (
     <>

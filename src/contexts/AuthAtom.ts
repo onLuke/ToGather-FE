@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { checkLogin } from 'src/apis/auth';
 
 interface data {
   [key: string]: string;

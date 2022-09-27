@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withdrawal } from 'src/apis/user';
+import { editUser, withdrawal } from 'src/apis/user';
 import CreatableSelect from 'react-select/creatable';
 import { position, stacktech } from 'src/mocks/SelectTechs';
 import { CancelButton, SubmitButton } from 'src/styles/Button';
@@ -18,6 +18,7 @@ import { userAtom } from 'src/contexts/UserAtom';
 import Select from 'react-select';
 import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
 import S3UploadImage from 'src/hooks/useS3UploadImage';
+import Api from 'src/apis/Api';
 
 interface tech {
   value?: number;
@@ -37,22 +38,46 @@ interface props {
 
 const UserInfoEdit = ({ user }: props) => {
   const [fileImage, setFileImage] = useState('');
-  const { form, changeInput, multiSelectChange } = useInput(user);
+  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput(user);
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
   const resetUser = useResetRecoilState(userAtom);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.MouseEvent<HTMLElement>) => {
+  useEffect(() => {
+    setFileImage(`${import.meta.env.VITE_AWS_S3_URL}${user.profileImage}`);
+  }, [user.profileImage]);
+
+  const handleImageView = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFileImage(URL.createObjectURL(e.target.files[0]));
+      handleFileInput(e);
+    }
+  };
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    try {
+      const imageUrl = await handleUpload();
+      const formTechStack = idNameToMultiSelect(form.techStackDtos);
+      await editUser(user.id, {
+        ...form,
+        profileImage: imageUrl,
+        techStackDtos: formTechStack,
+      }).then((res) => {
+        alert('성공');
+        navigate('/');
+      });
+    } catch (e) {
+      console.error(e);
+    }
     console.log(form);
   };
 
   const handleUserLeave = (e: React.MouseEvent<HTMLElement>) => {
     withdrawal(user.id)
       .then((res) => {
-        localStorage.clear();
-        resetUser();
         navigate('/');
+        resetUser();
       })
       .catch((err) => console.log(err));
     console.log('회원탈퇴');
@@ -68,13 +93,7 @@ const UserInfoEdit = ({ user }: props) => {
             )}
           </ProfileWrapper>
           <label htmlFor="profileImage">업로드</label>
-          <InputText
-            id="profileImage"
-            name="profileImage"
-            type="file"
-            // value={form.profileImage}
-            // onChange={handleImageView}
-          />
+          <InputText id="profileImage" name="profileImage" type="file" onChange={handleImageView} />
         </ProfileContainer>
       </ProfileBoxBlock>
       <InputBoxBlock>
@@ -86,6 +105,7 @@ const UserInfoEdit = ({ user }: props) => {
           value={form.nickname || ''}
           onChange={changeInput}
         />
+        <button>중복확인</button>
       </InputBoxBlock>
       <InputBoxBlock>
         <InputLabel htmlFor="tech">기술 태그</InputLabel>

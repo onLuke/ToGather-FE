@@ -1,25 +1,31 @@
-import axios from 'axios';
+import axios, { HeadersDefaults } from 'axios';
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { signUp } from 'src/apis/auth';
 import { authAtom, authSelector } from 'src/contexts/AuthAtom';
 import { userSelector } from 'src/contexts/UserAtom';
-import useInput from 'src/hooks/useInput';
-import S3UploadImage from 'src/hooks/useS3UploadImage';
-import { position, stacktech } from 'src/mocks/SelectTechs';
+import { stacktech } from 'src/mocks/SelectTechs';
 import { SubmitButton } from 'src/styles/Button';
 import { InputLabel, InputText } from 'src/styles/Input';
 import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
 import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
+import useInput from 'src/hooks/useInput';
+import S3UploadImage from 'src/hooks/useS3UploadImage';
+import Api from 'src/apis/Api';
+
+interface CommonHeaderProperties extends HeadersDefaults {
+  Authorization: string;
+}
+
 
 const RegisterModal = () => {
   const [fileImage, setFileImage] = useState('');
   const [authToken, setAuthToken] = useRecoilState(authAtom);
   const setUser = useSetRecoilState(userSelector);
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
-  const { form, changeInput, multiSelectChange } = useInput({
+  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
     profileImage: '',
     nickname: '',
     techStackDtos: [],
@@ -32,10 +38,23 @@ const RegisterModal = () => {
     }
   };
 
-  const handleImageUpload = async () => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
     try {
       const imageUrl = await handleUpload();
-      signUp({ ...form, profileImage: imageUrl }, authToken.signUpToken)
+      const formTechStack = idNameToMultiSelect(form.techStackDtos);
+      /**
+       * const response = signUpService(form);
+       */
+      signUp(
+        {
+          ...form,
+          profileImage: imageUrl,
+          techStackDtos: formTechStack,
+        },
+        authToken.signUpToken
+      )
         .then((res) => {
           const user = {
             id: res.data.id,
@@ -45,18 +64,12 @@ const RegisterModal = () => {
           };
           setAuthToken({ refreshToken: res.data.refreshToken });
           setUser(user);
-          localStorage.setItem('user', JSON.stringify(user));
+          Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
         })
         .catch((err) => console.log(err));
     } catch (err) {
-      console.log('이미지 업로드 오류');
+      console.error('전송 오류 form 데이터 확인');
     }
-  };
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    await handleImageUpload();
 
     window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
   };
@@ -74,13 +87,6 @@ const RegisterModal = () => {
           </ProfileWrapper>
           <label htmlFor="profileImage">업로드</label>
           <InputText id="profileImage" name="profileImage" type="file" onChange={handleImageView} />
-          <InputText
-            id="profileImage"
-            name="profileImage"
-            type="file"
-            value={form.profileImage}
-            onChange={handleImageView}
-          />
         </ProfileContainer>
       </ProfileBoxBlock>
       <InputBoxBlock>
@@ -99,6 +105,7 @@ const RegisterModal = () => {
           isClearable
           isMulti
           id="techStackDtos"
+          value={form.techStackDtos}
           className="customSelect"
           name="techStackDtos"
           placeholder="기술 태그"

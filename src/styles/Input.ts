@@ -4,7 +4,6 @@ import COLOR from 'src/constants/colors';
 const InputBoxBlock = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-around;
   margin-bottom: 2rem;
   height: 40px;
   font-size: 1rem;

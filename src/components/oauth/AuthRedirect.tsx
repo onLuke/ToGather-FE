@@ -38,13 +38,15 @@ const AuthRedirect = () => {
           };
           setAuthToken({ refreshToken: res.data.refreshToken });
           setUser(resUser);
-          localStorage.setItem('user', JSON.stringify(resUser));
-          Api.defaults.headers = {
-            Authorization: `Bearer ${res.data.accessToken}`,
-          } as CommonHeaderProperties;
+          Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
         } else {
           //신규 회원
-          setAuthToken({ signUpToken: res.data.signUpToken });
+          if (res.data.errMessage) {
+            //다른 SNS 계정으로 회원가입 되어 있다면.
+            alert(res.data.errMessage);
+          } else {
+            setAuthToken({ signUpToken: res.data.signUpToken });
+          }
         }
       });
     } catch (e) {

@@ -1,4 +1,6 @@
 import { atom, selector } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+import { getUser } from 'src/apis/user';
 import { IuserType } from 'src/components/type/userType';
 
 interface techStack {
@@ -8,16 +10,12 @@ interface techStack {
   label?: string;
 }
 
-interface data {
-  id: string;
-  techStackDtos: techStack[];
-  profileImage: string;
-  nickname: string;
-}
+const { persistAtom } = recoilPersist();
 
 export const userAtom = atom<IuserType>({
   key: 'USER',
   default: { id: '', techStackDtos: [], nickname: '', profileImage: '' },
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const userSelector = selector<IuserType>({
@@ -32,4 +30,15 @@ export const userSelector = selector<IuserType>({
     return { ...prevData, techStackDtos: filteredStack };
   },
   set: ({ set }, newValue) => set(userAtom, newValue),
+});
+
+export const userLoginSelector = selector({
+  key: 'USER_LOGIN_SELECTOR',
+  get: async ({ get }) => {
+    const userInfo = get(userAtom);
+    const response = await getUser(userInfo.id);
+
+    const accessToken = response.data.accessToken;
+    const refreshToken = response.data.refreshToken;
+  },
 });

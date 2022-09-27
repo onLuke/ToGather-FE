@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { modalContext } from '../../contexts/ModalContext';
 import NavMenuWidth from 'src/constants/NavMenuWidth';
 import LoginModal from '../Login/LoginModal';
@@ -19,15 +19,12 @@ import {
   UploadStudyLink,
 } from './HeaderNavigation.styles';
 import { GpsIcon } from '../@icons/Images';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { isScrollOverAtom } from '../../contexts/isScrollOverAtom';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import MyPageList from '../mypage/MyPageList';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchMenu from './SearchMenu';
-import RegisterModal from '../Login/RegisterModal';
 import { useLocation } from 'react-router-dom';
 import { userAtom, userSelector } from 'src/contexts/UserAtom';
-import { techs } from '../@icons/Images';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
@@ -36,10 +33,20 @@ const HeaderNavigation = () => {
   const [gpsIsOpen, setGpsIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [myPageIsOpen, setMyPageIsOpen] = useState(false);
-  const user = useRecoilValue(userSelector);
+  const [user, setUser] = useRecoilState(userSelector);
   const resetUser = useResetRecoilState(userAtom);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const refersh = async () => {
+    /* const response = await api.post('refresh');
+     * const accessToken = response.accessToken;
+     * Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
+     *
+     */
+  };
+
+  useEffect(() => {}, []);
 
   const handleOpenModal = () => {
     openModal?.(<LoginModal />);
@@ -50,7 +57,6 @@ const HeaderNavigation = () => {
     //api.post('logout').then((res) => {
     // })
     console.log('logout');
-    localStorage.removeItem('user');
     localStorage.removeItem('refershToken');
     resetUser();
     navigate('/');
@@ -78,7 +84,6 @@ const HeaderNavigation = () => {
                       <MenuBtn>공고 검색</MenuBtn>
                       <SearchMenu searchIsOpen={searchIsOpen} isHidden={[isHidden, setIsHidden]} />
                     </NavMenu>
-
                     <NavMenu>
                       <MenuBtn> 제목 검색 </MenuBtn>
                       <SearchByText />

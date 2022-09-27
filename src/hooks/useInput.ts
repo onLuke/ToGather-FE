@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+
 interface Data {
   [key: string]: any;
 }
@@ -9,13 +10,9 @@ interface Tech {
   label: string;
 }
 
-interface SeverTech {
-  id: number;
-  name: string;
-}
 
 const useInput = (initailValue: any) => {
-  const [form, setForm] = useState<Data>(initailValue);
+  const [form, setForm] = useState(initailValue);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -45,10 +42,9 @@ const useInput = (initailValue: any) => {
   };
 
   const idNameToMultiSelect = (target: Tech[]) => {
-    const changeProperty = target.reduce((acc: SeverTech[], cur: Tech) => {
+    const changeProperty = target.reduce((acc: number[], cur: Tech) => {
       let id = cur.value;
-      let name = cur.label;
-      return [...acc, { id, name }];
+      return [...acc, id];
     }, []);
     return changeProperty;
   };

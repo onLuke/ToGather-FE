@@ -1,0 +1,16 @@
+api api 호출
+
+api => userApi, projectApi, chatRoomApi, 댓글APi
+
+CRUD 4개
+
+contexts => userAtom, projectAtom, chatRoomAtom, 댓글 Atom
+
+데이터
+
+service => userService, projectService, chatRoomService, 댓글 Service
+
+로직
+
+
+service => (user, projce, chatRoom, ...)
