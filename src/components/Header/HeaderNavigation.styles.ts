@@ -97,10 +97,11 @@ const FavoriteList = styled.div`
 `;
 
 const GpsContainer = styled.div`
-  ${Flex({ alignItems: 'center', justifyContent: 'center' })};
+  ${Flex({ alignItems: 'center', justifyContent: 'center', flexDirection: 'column' })};
   width: ${({ widthProp }: menuWidthProp) => widthProp};
+  position: relative;
 
-  svg {
+  .gps-icon {
     width: 20px;
     height: 20px;
   }

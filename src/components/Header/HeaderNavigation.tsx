@@ -19,21 +19,18 @@ import {
   UploadStudyLink,
 } from './HeaderNavigation.styles';
 import { GpsIcon } from '../@icons/Images';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { isScrollOverAtom } from '../../contexts/isScrollOverAtom';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import MyPageList from '../mypage/MyPageList';
 import { Link, useNavigate } from 'react-router-dom';
 import SearchMenu from './SearchMenu';
-import RegisterModal from '../Login/RegisterModal';
 import { useLocation } from 'react-router-dom';
 import { userAtom, userSelector } from 'src/contexts/UserAtom';
-import { techs } from '../@icons/Images';
+import MapModal from '../Modal/MapModal';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
   const [searchIsOpen, setSearchIsOpen] = useState(false);
   const [favoriteIsOpen, setFavoriteIsOpen] = useState(false);
-  const [gpsIsOpen, setGpsIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [myPageIsOpen, setMyPageIsOpen] = useState(false);
   const user = useRecoilValue(userSelector);
@@ -45,10 +42,11 @@ const HeaderNavigation = () => {
     openModal?.(<LoginModal />);
   };
 
+  const handleKakaoOpenModal = () => {
+    openModal?.(<MapModal />);
+  };
+
   const handleLogout = () => {
-    // logout API 호출
-    //api.post('logout').then((res) => {
-    // })
     console.log('logout');
     localStorage.removeItem('user');
     localStorage.removeItem('refershToken');
@@ -83,14 +81,7 @@ const HeaderNavigation = () => {
                       <MenuBtn> 제목 검색 </MenuBtn>
                       <SearchByText />
                     </NavMenu>
-                    <GpsContainer
-                      widthProp={NavMenuWidth.gps}
-                      onMouseEnter={() => {
-                        setGpsIsOpen(true);
-                      }}
-                      onMouseLeave={() => setGpsIsOpen(false)}
-                      onClick={() => setGpsIsOpen(true)}
-                    >
+                    <GpsContainer widthProp={NavMenuWidth.gps} onClick={handleKakaoOpenModal}>
                       <GpsIcon />
                     </GpsContainer>
                   </>

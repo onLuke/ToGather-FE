@@ -4,8 +4,19 @@ import WrapSection from '../components/UploadStudy/WrapSection';
 import SelectContainer from '../components/UploadStudy/SelectContainer';
 import useInput from 'src/hooks/useInput';
 
+export interface inputFormType {
+  offline: boolean;
+  personnel: string;
+  status: string;
+  deadline: string;
+  techStackIds: number[];
+  content: string;
+  title: string;
+  location: string;
+}
+
 const UploadStudy = () => {
-  const { form, changeInput, selectChange, datePickerChange, multiSelectChange, editorChange } =
+  const { form, changeInput, selectChange, datePickerChange, multiSelectUpload, editorChange } =
     useInput({
       offline: true,
       personnel: '',
@@ -14,6 +25,7 @@ const UploadStudy = () => {
       techStackIds: [],
       content: '',
       title: '',
+      location: '',
     });
 
   return (
@@ -23,7 +35,7 @@ const UploadStudy = () => {
           changeInput={changeInput}
           selectChange={selectChange}
           datePickerChange={datePickerChange}
-          multiSelectChange={multiSelectChange}
+          multiSelectChange={multiSelectUpload}
         />
         <Editor editorChange={editorChange} changeInput={changeInput} />
         <Footer form={form} />
