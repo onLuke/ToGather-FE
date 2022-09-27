@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { modalContext } from '../../contexts/ModalContext';
 import NavMenuWidth from 'src/constants/NavMenuWidth';
 import LoginModal from '../Login/LoginModal';
@@ -26,6 +26,10 @@ import SearchMenu from './SearchMenu';
 import { useLocation } from 'react-router-dom';
 import { userAtom, userSelector } from 'src/contexts/UserAtom';
 import MapModal from '../Modal/MapModal';
+import { logout, refresh } from 'src/apis/auth';
+import Api from 'src/apis/Api';
+import AuthService from 'src/service/AuthService';
+
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
@@ -33,10 +37,23 @@ const HeaderNavigation = () => {
   const [favoriteIsOpen, setFavoriteIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [myPageIsOpen, setMyPageIsOpen] = useState(false);
-  const user = useRecoilValue(userSelector);
+  const [user, setUser] = useRecoilState(userSelector);
   const resetUser = useResetRecoilState(userAtom);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { refreshService } = AuthService();
+
+  const refersh = async () => {
+    if (user.nickname) {
+      const response = await refreshService();
+    }
+  };
+
+  useEffect(() => {
+    refersh();
+  }, [user.nickname]);
+
+  useEffect(() => {}, []);
 
   const handleOpenModal = () => {
     openModal?.(<LoginModal />);
@@ -47,11 +64,13 @@ const HeaderNavigation = () => {
   };
 
   const handleLogout = () => {
+    // logout API 호출
+    logout().then((res) => {
+      localStorage.removeItem('refershToken');
+      resetUser();
+      navigate('/');
+    });
     console.log('logout');
-    localStorage.removeItem('user');
-    localStorage.removeItem('refershToken');
-    resetUser();
-    navigate('/');
   };
 
   return (
@@ -76,7 +95,6 @@ const HeaderNavigation = () => {
                       <MenuBtn>공고 검색</MenuBtn>
                       <SearchMenu searchIsOpen={searchIsOpen} isHidden={[isHidden, setIsHidden]} />
                     </NavMenu>
-
                     <NavMenu>
                       <MenuBtn> 제목 검색 </MenuBtn>
                       <SearchByText />

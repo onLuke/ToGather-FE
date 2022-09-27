@@ -1,29 +1,34 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
+import axios, { HeadersDefaults } from 'axios';
 import CreatableSelect from 'react-select/creatable';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { signUp } from 'src/apis/auth';
 import { authAtom, authSelector } from 'src/contexts/AuthAtom';
 import { userSelector } from 'src/contexts/UserAtom';
-import useInput from 'src/hooks/useInput';
-import S3UploadImage from 'src/hooks/useS3UploadImage';
-import { position, stacktech } from 'src/mocks/SelectTechs';
+import { stacktech } from 'src/mocks/SelectTechs';
 import { SubmitButton } from 'src/styles/Button';
 import { InputLabel, InputText } from 'src/styles/Input';
 import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
 import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
+import useInput from 'src/hooks/useInput';
+import S3UploadImage from 'src/hooks/useS3UploadImage';
+import AuthService from 'src/service/AuthService';
+import Api from 'src/apis/Api';
+
+interface CommonHeaderProperties extends HeadersDefaults {
+  Authorization: string;
+}
 
 const RegisterModal = () => {
   const [fileImage, setFileImage] = useState('');
-  const [authToken, setAuthToken] = useRecoilState(authAtom);
-  const setUser = useSetRecoilState(userSelector);
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
-  const { form, changeInput, multiSelectChange } = useInput({
+  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
     profileImage: '',
     nickname: '',
     techStackDtos: [],
   });
+  const { registerService } = AuthService();
 
   const handleImageView = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -32,31 +37,21 @@ const RegisterModal = () => {
     }
   };
 
-  const handleImageUpload = async () => {
-    try {
-      const imageUrl = await handleUpload();
-      signUp({ ...form, profileImage: imageUrl }, authToken.signUpToken)
-        .then((res) => {
-          const user = {
-            id: res.data.id,
-            nickname: res.data.nickname,
-            profileImage: res.data.profileImage,
-            techStackDtos: res.data.techStackDtos,
-          };
-          setAuthToken({ refreshToken: res.data.refreshToken });
-          setUser(user);
-          localStorage.setItem('user', JSON.stringify(user));
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log('이미지 업로드 오류');
-    }
-  };
-
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    await handleImageUpload();
+    try {
+      const imageUrl = await handleUpload();
+      const formTechStack = idNameToMultiSelect(form.techStackDtos);
+
+      const response = await registerService({
+        ...form,
+        profileImage: imageUrl,
+        techStackDtos: formTechStack,
+      });
+    } catch (err) {
+      console.error('전송 오류 form 데이터 확인');
+    }
 
     window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
   };
@@ -74,13 +69,6 @@ const RegisterModal = () => {
           </ProfileWrapper>
           <label htmlFor="profileImage">업로드</label>
           <InputText id="profileImage" name="profileImage" type="file" onChange={handleImageView} />
-          <InputText
-            id="profileImage"
-            name="profileImage"
-            type="file"
-            value={form.profileImage}
-            onChange={handleImageView}
-          />
         </ProfileContainer>
       </ProfileBoxBlock>
       <InputBoxBlock>
@@ -95,10 +83,11 @@ const RegisterModal = () => {
       </InputBoxBlock>
       <InputBoxBlock>
         <InputLabel htmlFor="techStackDtos">기술 태그</InputLabel>
-        <CreatableSelect
+        <Select
           isClearable
           isMulti
           id="techStackDtos"
+          value={form.techStackDtos}
           className="customSelect"
           name="techStackDtos"
           placeholder="기술 태그"

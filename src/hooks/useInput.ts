@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 
+interface Data {
+  [key: string]: any;
+}
+
 interface Tech {
   value: number;
   label: string;
-}
-
-interface SeverTech {
-  id: number;
-  name: string;
 }
 
 const useInput = (initailValue: any) => {
@@ -41,10 +40,9 @@ const useInput = (initailValue: any) => {
   };
 
   const idNameToMultiSelect = (target: Tech[]) => {
-    const changeProperty = target.reduce((acc: SeverTech[], cur: Tech) => {
+    const changeProperty = target.reduce((acc: number[], cur: Tech) => {
       let id = cur.value;
-      let name = cur.label;
-      return [...acc, { id, name }];
+      return [...acc, id];
     }, []);
     return changeProperty;
   };
