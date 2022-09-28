@@ -2,12 +2,7 @@ import styled from '@emotion/styled';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import COLOR from 'src/constants/colors';
 
-const MapModalBlock = styled.div`
-  position: fixed;
-  inset: 0px;
-  width:100vw
-  height: 100vh;
-`;
+const MapModalBlock = styled.div``;
 
 const MapContainer = styled(Map)`
   max-width: 100%;
@@ -29,9 +24,17 @@ const MarkerContents = styled.div`
 `;
 const CustomOverlay = styled(CustomOverlayMap)`
   background-color: ${COLOR.BLUR_100};
-  width: 400px;
-  height: 200px;
-  z-index: 9999;
+  width: 200px;
+  height: 100px;
+`;
+const WrapMessage = styled.div`
+  visibility: ${({ isHidden }: { isHidden: boolean }) => (isHidden ? 'hidden' : 'visible')};
+  width: 15rem;
+  height: 1.5rem;
+  text-align: center;
+  position: relative;
+  top: 2px;
+  border-radius: 1rem;
 `;
 
-export { MapModalBlock, MapContainer, Marker, CustomOverlay, MarkerContents };
+export { MapModalBlock, MapContainer, Marker, CustomOverlay, MarkerContents, WrapMessage };

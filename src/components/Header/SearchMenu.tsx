@@ -41,7 +41,11 @@ const SearchMenu = ({ searchIsOpen, isHidden }: SearchMenuProps) => {
   };
 
   return (
-    <SearchContainer isOpen={searchIsOpen} isScrollOver={isScrollOver}>
+    <SearchContainer
+      isOpen={searchIsOpen}
+      isScrollOver={isScrollOver}
+      className="Search__Container"
+    >
       <TechsContainer>
         {techs.map(({ tech, icon }) => (
           <TechBtn

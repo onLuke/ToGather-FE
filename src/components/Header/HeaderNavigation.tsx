@@ -27,8 +27,9 @@ import { useLocation } from 'react-router-dom';
 import { userAtom, userSelector } from 'src/contexts/UserAtom';
 import MapModal from '../Modal/MapModal';
 import { logout, refresh } from 'src/apis/auth';
-import Api from 'src/apis/Api';
 import AuthService from 'src/service/AuthService';
+import Logo from '../@icons/Logo';
+import { UserLocationAtom } from 'src/contexts/UserLocationAtom';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
@@ -41,6 +42,7 @@ const HeaderNavigation = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { refreshService } = AuthService();
+  const reset = useResetRecoilState(UserLocationAtom);
 
   const refersh = async () => {
     if (user.nickname) {
@@ -76,7 +78,7 @@ const HeaderNavigation = () => {
       <NavigationContainer>
         <NavigationBlock>
           <Wrapper>
-            <Link to="/">로고</Link>
+            <Link to="/"></Link>
             <WrapRightNav>
               <CategoryBlock>
                 {pathname === '/' && (
@@ -94,10 +96,13 @@ const HeaderNavigation = () => {
                       <SearchMenu searchIsOpen={searchIsOpen} isHidden={[isHidden, setIsHidden]} />
                     </NavMenu>
                     <NavMenu>
-                      <MenuBtn> 제목 검색 </MenuBtn>
+                      <Link to="/studyDetail">
+                        <MenuBtn>제목 검색</MenuBtn>
+                      </Link>
                       <SearchByText />
                     </NavMenu>
                     <GpsContainer widthProp={NavMenuWidth.gps} onClick={handleKakaoOpenModal}>
+                      {}
                       <GpsIcon />
                     </GpsContainer>
                   </>
@@ -113,7 +118,9 @@ const HeaderNavigation = () => {
                   <Favorites favoriteIsOpen={favoriteIsOpen}></Favorites>
                 </NavMenu>
                 <NavMenu>
-                  <UploadStudyLink to="/uploadStudy">공고 등록</UploadStudyLink>
+                  <UploadStudyLink to="/uploadStudy" onClick={reset}>
+                    공고 등록
+                  </UploadStudyLink>
                 </NavMenu>
               </CategoryBlock>
               <UserBlock>
