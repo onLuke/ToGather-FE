@@ -39,7 +39,7 @@ const Calendar = (props: iProps) => {
         onChange={handleOnChange}
         calendarContainer={Container}
         customInput={<CalendarInput />}
-        minDate={startDate}
+        minDate={new Date()}
         placeholderText={'모집마감일'}
         showPopperArrow={false}
       ></DatePicker>
