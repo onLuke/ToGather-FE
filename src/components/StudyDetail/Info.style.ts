@@ -11,7 +11,6 @@ const InfoBlock = styled.ul`
   grid-row-gap: 24px;
   row-gap: 24px;
   margin-top: 60px;
-  background-color: blue;
 `;
 
 const Info = styled.li`

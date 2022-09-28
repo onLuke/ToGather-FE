@@ -9,7 +9,6 @@ const Title = styled.h1`
 const AuthorBlock = styled.div`
   ${Flex({ alignItems: 'center', justifyContent: 'flex-end' })}
   margin: 2rem 0 2rem;
-  border-radius: 50%;
   border-bottom: 3px solid #f2f2f2;
 `;
 
@@ -18,6 +17,7 @@ const WrapAuthor = styled.div`
   align-items: center;
   position: relative;
   margin-right: 10%;
+  margin-bottom: 3rem;
 `;
 
 const AuthorImg = styled.img`

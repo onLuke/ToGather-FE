@@ -8,7 +8,9 @@ import {
   BackBtn,
   Btn,
 } from './FixedDetail.style';
-import React from 'react';
+import { getStudyDetailQuery } from '../../service/studyQuery';
+import { ProjectDetailAtom } from '../../contexts/ProjectDetailAtom';
+import { useRecoilValue } from 'recoil';
 
 const FixedDetail = () => {
   return (
@@ -17,11 +19,11 @@ const FixedDetail = () => {
         <MemberTable>
           <WrapTableColumn>
             <TableAttribute>모집인원</TableAttribute>
-            <TableValue>2/4</TableValue>
+            <TableValue>{/* {data.member.length}/{data.personnel} */}2/4</TableValue>
           </WrapTableColumn>
           <WrapTableColumn>
             <TableAttribute>팀장</TableAttribute>
-            <TableValue>userName</TableValue>
+            <TableValue>{/* {projectDetail.author} */}닉네임</TableValue>
           </WrapTableColumn>
         </MemberTable>
         <BtnBlock>

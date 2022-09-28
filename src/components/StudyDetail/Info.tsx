@@ -2,12 +2,16 @@ import { InfoBlock, Info, Content } from './Info.style';
 
 import React from 'react';
 
-const InfoContainer = () => {
-  const test = [1, 2, 3, 4, 5];
+interface iProps {
+  gettedData: any;
+}
+const InfoContainer = ({ gettedData }: iProps) => {
+  const options = ['모집상태', '위치', '온/오프라인', '사용하는 기술 스택'];
+
   return (
     <>
       <InfoBlock>
-        {test.map((el) => {
+        {options.map((el) => {
           return <Info key={el}>{el}</Info>;
         })}
       </InfoBlock>

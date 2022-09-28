@@ -4,17 +4,24 @@ import Header from '../components/StudyDetail/Header';
 import Comments from 'src/components/StudyDetail/Comment';
 import FixedDetail from '../components/StudyDetail/FixedDetail';
 import TabletFixedDetail from '../components/StudyDetail/TabletFixedDetail';
+import { useRecoilValue } from 'recoil';
+import { ProjectDetailAtom } from 'src/contexts/ProjectDetailAtom';
+import { getStudyDetailQuery } from 'src/service/studyQuery';
 
 const StudyDetail = () => {
+  const projectDetail = useRecoilValue(ProjectDetailAtom);
+
+  const { data } = getStudyDetailQuery(projectDetail.projectId);
+
   return (
     <>
       <Main>
-        <Header />
-        <InfoContainer />;
+        <Header gettedData={data} />
+        <InfoContainer gettedData={data} />;
         <Comments />
       </Main>
-      <FixedDetail />
-      <TabletFixedDetail />
+      <FixedDetail gettedData={data} />
+      <TabletFixedDetail gettedData={data} />
     </>
   );
 };
