@@ -59,6 +59,7 @@ const HeaderNavigation = () => {
     openModal?.(<LoginModal />);
   };
 
+  console.log(pathname);
   const handleKakaoOpenModal = () => {
     openModal?.(<MapModal />);
   };

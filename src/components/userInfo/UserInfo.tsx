@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { getUser } from 'src/apis/user';
 import { userSelector } from 'src/contexts/UserAtom';
+import UserService from 'src/service/UserService';
 import Breadcrumb from '../breadCrumb/Breadcrumb';
 import { UserInfoBlock } from './UserInfo.styles';
 import UserInfoEdit from './UserInfoEdit';
@@ -11,6 +12,7 @@ import UserInfoEdit from './UserInfoEdit';
 const UserInfo = () => {
   const [user, setUser] = useRecoilState(userSelector);
   const navigate = useNavigate();
+  const { updateUserByIdService } = UserService();
 
   const getUserById = () => {
     if (!user.id) {
@@ -20,7 +22,9 @@ const UserInfo = () => {
     }
     const userId = user.id;
     getUser(userId)
-      .then((res) => setUser(res.data))
+      .then((res) => {
+        setUser(res.data);
+      })
       .catch((err) => {
         console.log(err);
       });

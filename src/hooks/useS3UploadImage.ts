@@ -62,11 +62,11 @@ const S3UploadImage = (folderName: string) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const fileExt = file.name.split('.')[1];
+      setImageFile(file);
 
       if (fileExt !== 'jpg' && fileExt !== 'jpeg' && fileExt !== 'svg' && fileExt !== 'png') {
         alert('jpg, svg, png 형식의 이미지 파일만 업로드 가능합니다');
       }
-      setImageFile(file);
     }
   };
 
@@ -78,6 +78,8 @@ const S3UploadImage = (folderName: string) => {
 
   const handleUpload = async () => {
     let imageUrl = null;
+    console.log(imageFile);
+    debugger;
     if (imageFile) {
       imageUrl = await uploadFile(imageFile);
     } else alert('업로드 할 이미지 파일을 선택해주세요');
