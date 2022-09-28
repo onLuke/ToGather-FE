@@ -43,6 +43,7 @@ const HeaderNavigation = () => {
   const navigate = useNavigate();
   const { refreshService } = AuthService();
   const reset = useResetRecoilState(UserLocationAtom);
+  const { refreshService, logoutService } = AuthService();
 
   const refersh = async () => {
     if (user.nickname) {
@@ -62,15 +63,11 @@ const HeaderNavigation = () => {
     openModal?.(<MapModal />);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // logout API 호출
-    logout().then((res) => {
-      localStorage.removeItem('refershToken');
-      localStorage.removeItem('user');
-      resetUser();
-      navigate('/');
-    });
-    console.log('logout');
+    const resonse = await logoutService();
+    resetUser();
+    navigate('/');
   };
 
   return (

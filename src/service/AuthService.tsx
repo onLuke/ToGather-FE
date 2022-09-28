@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import Api from 'src/apis/Api';
-import { checkLogin, refresh, signUp } from 'src/apis/auth';
+import { checkLogin, logout, refresh, signUp } from 'src/apis/auth';
 import { authAtom } from 'src/contexts/AuthAtom';
 import { userAtom } from 'src/contexts/UserAtom';
 import { getCookie, setCookie } from 'src/lib/cookies';
@@ -76,7 +76,16 @@ const AuthService = () => {
     }
   };
 
-  const logoutService = () => {};
+  const logoutService = async () => {
+    const reponse = await logout();
+
+    setCookie('refershToken', '', {
+      path: '/',
+    });
+    localStorage.removeItem('user');
+
+    Api.defaults.headers.common['Authorization'] = '';
+  };
 
   return { checkLoginService, registerService, refreshService, logoutService };
 };
