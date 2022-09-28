@@ -37,28 +37,29 @@ interface props {
   };
 }
 
+const s3ProFileImage = `${import.meta.env.VITE_AWS_S3_URL}`;
+
 const UserInfoEdit = ({ user }: props) => {
-  const [fileImage, setFileImage] = useState('');
-  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput(user);
+  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
+    ...user,
+    profileImage: s3ProFileImage + user.profileImage,
+  });
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
   const resetUser = useResetRecoilState(userAtom);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setFileImage(`${import.meta.env.VITE_AWS_S3_URL}${user.profileImage}`);
-  }, [user.profileImage]);
-
-  const handleImageView = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFileImage(URL.createObjectURL(e.target.files[0]));
-      handleFileInput(e);
-    }
+  const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileInput(e);
+    changeInput(e);
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     try {
-      const imageUrl = await handleUpload();
+      let imageUrl = form.profileImage;
+      if (s3ProFileImage + user.profileImage !== form.profileImage) {
+        imageUrl = await handleUpload();
+      }
       const formTechStack = idNameToMultiSelect(form.techStackDtos);
       await editUser(user.id, {
         ...form,
@@ -85,7 +86,7 @@ const UserInfoEdit = ({ user }: props) => {
   };
   return (
     <Wrapper>
-      <ProfileImage image={fileImage} uploadEvent={handleImageView} />
+      <ProfileImage image={form.profileImage} uploadEvent={handleChangeProfileImage} />
       <InputBoxBlock>
         <InputLabel htmlFor="nickname">닉네임</InputLabel>
         <InputText

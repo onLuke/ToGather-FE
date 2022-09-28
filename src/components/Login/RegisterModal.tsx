@@ -17,10 +17,6 @@ import AuthService from 'src/service/AuthService';
 import Api from 'src/apis/Api';
 import ProfileImage from '../profileImage/ProfileImage';
 
-interface CommonHeaderProperties extends HeadersDefaults {
-  Authorization: string;
-}
-
 const RegisterModal = () => {
   const [fileImage, setFileImage] = useState('');
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
