@@ -10,7 +10,7 @@ const MyPageList = ({ myPageIsOpen }: Props) => {
     <MyPageBlock isOpen={myPageIsOpen}>
       <Link to="/mypage">내정보</Link>
       <Link to="/chat">채팅방</Link>
-      <Link to="/chat">프로젝트</Link>
+      <Link to="/myProject">프로젝트</Link>
     </MyPageBlock>
   );
 };
