@@ -16,6 +16,7 @@ const Study = styled(Link)`
   &:hover {
     transfrom: scale(1.3);
   }
+  cursor: pointer;
 `;
 
 const StudyTitle = styled.h1`
