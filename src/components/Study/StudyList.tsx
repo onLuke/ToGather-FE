@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { getStudyListQuery } from '../../service/studyQuery';
 import StudyComponent from './StudyComponent';
 
+
 const StudyList = () => {
   const { data } = getStudyListQuery();
 

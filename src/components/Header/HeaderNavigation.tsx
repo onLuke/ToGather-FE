@@ -64,7 +64,7 @@ const HeaderNavigation = () => {
 
   const handleLogout = async () => {
     // logout API 호출
-    const resonse = await logoutService();
+    const response = await logoutService();
     resetUser();
     navigate('/');
   };

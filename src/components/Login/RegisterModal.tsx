@@ -17,33 +17,29 @@ import AuthService from 'src/service/AuthService';
 import Api from 'src/apis/Api';
 import ProfileImage from '../profileImage/ProfileImage';
 
+const baseImageURL = `${import.meta.env.VITE_AWS_S3_URL}/profile/default.png`;
+
 const RegisterModal = () => {
-  const [fileImage, setFileImage] = useState('');
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
   const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
-    profileImage: '',
+    profileImage: baseImageURL,
     nickname: '',
     techStackDtos: [],
   });
   const { registerService } = AuthService();
 
-  const handleImageView = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFileImage(URL.createObjectURL(e.target.files[0]));
-      handleFileInput(e);
-    }
+  const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileInput(e);
+    changeInput(e);
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     try {
-      const imageUrl = await handleUpload();
       const formTechStack = idNameToMultiSelect(form.techStackDtos);
-
       const response = await registerService({
         ...form,
-        profileImage: imageUrl,
         techStackDtos: formTechStack,
       });
     } catch (err) {
@@ -56,7 +52,7 @@ const RegisterModal = () => {
   return (
     <Wrapper>
       <Title>회원가입</Title>
-      <ProfileImage image={fileImage} uploadEvent={handleImageView} />
+      <ProfileImage image={form.profileImage} uploadEvent={handleChangeProfileImage} />
       <InputBoxBlock>
         <InputLabel htmlFor="nickname">닉네임</InputLabel>
         <InputText

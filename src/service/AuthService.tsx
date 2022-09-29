@@ -77,7 +77,7 @@ const AuthService = () => {
   };
 
   const logoutService = async () => {
-    const reponse = await logout();
+    const response = await logout();
 
     setCookie('refershToken', '', {
       path: '/',
@@ -85,6 +85,8 @@ const AuthService = () => {
     localStorage.removeItem('user');
 
     Api.defaults.headers.common['Authorization'] = '';
+
+    return response;
   };
 
   return { checkLoginService, registerService, refreshService, logoutService };
