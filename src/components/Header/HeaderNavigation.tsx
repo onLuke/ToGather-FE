@@ -41,7 +41,6 @@ const HeaderNavigation = () => {
   const resetUser = useResetRecoilState(userAtom);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { refreshService } = AuthService();
   const reset = useResetRecoilState(UserLocationAtom);
   const { refreshService, logoutService } = AuthService();
 
@@ -59,7 +58,6 @@ const HeaderNavigation = () => {
     openModal?.(<LoginModal />);
   };
 
-  console.log(pathname);
   const handleKakaoOpenModal = () => {
     openModal?.(<MapModal />);
   };

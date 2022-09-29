@@ -12,24 +12,13 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { pageNumber, isRecruiting, isUploaded } from '../../contexts/chachingOptionAtom';
 import { useState } from 'react';
 import { getStudyListQuery } from '../../service/studyQuery';
-import { ProjectDetailAtom } from 'src/contexts/ProjectDetailAtom';
-import { getStudyListQuery } from '../../apis/studyQuery';
-import { pageNumber, isRecruiting } from '../../contexts/chachingOptionAtom';
 import StudyComponent from './StudyComponent';
-
 
 const StudyList = () => {
   const { data } = getStudyListQuery();
-  const setProjectDetail = useSetRecoilState(ProjectDetailAtom);
-
-  const handleStudyClick = (nickname: string, id: number, url: string) => {
-    setProjectDetail({ author: nickname, projectId: id, imageUrl: url });
-  };
 
   /*   const query = queryCache.find(['getStudyList', pageNum]);
-
   console.log(query);
-
   const { isLoading, data, isFetching } = useQuery(
     ['getStudyList', pageNum],
     async () => {
@@ -50,18 +39,17 @@ const StudyList = () => {
     }
   ); */
 
-  console.log('isArray?');
-  console.log(data);
   return (
     <>
       {Array.isArray(data) &&
         data.map((list) => (
           <StudyComponent
+            key={list.id}
             id={list.id}
-            techs={list.techs}
+            techs={list.techStacks}
             deadline={list.deadline}
-            title={list.search.title}
-            author={list.search.author}
+            title={list.title}
+            author={list.member.nickname}
           />
         ))}
     </>

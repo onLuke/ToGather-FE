@@ -38,11 +38,10 @@ export const getStudy = async (pageNumber: number, isRecruiting: string) => {
     `https://dokuny.blog/projects?limit=9&pageNumber=${pageNumber}`
     /*     `https://jsonplaceholder.typicode.com/todos/${pageNumber}` */
   );
-  console.log('get Request');
 
   return res;
 };
-export const createStudy = (data: inputFormType) => {
+export const createStudy = async (data: inputFormType) => {
   Api.post<createRes>(`https://dokuny.blog/projects`, data);
 };
 

@@ -1,7 +1,7 @@
 import { FooterContainer, WrapSubmit, Submit } from './Footer.style';
 import { useSetRecoilState } from 'recoil';
 import { isUploaded } from '../../contexts/chachingOptionAtom';
-import { createStudyQuery } from '../../apis/studyQuery';
+import { createStudyQuery } from '../../service/studyQuery';
 import { UserLocationAtom } from '../../contexts/UserLocationAtom';
 import { useRecoilValue } from 'recoil';
 
