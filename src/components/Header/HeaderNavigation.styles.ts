@@ -120,6 +120,23 @@ const UploadStudyLink = styled(Link)`
   width: ${({ widthProp }: menuWidthProp) => widthProp};
   font-weight: 700;
 `;
+const LocationInput = styled.input`
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 4px;
+  border: 1px solid hsl(0, 0%, 80%);
+  width: 75%;
+  height: 38px;
+  text-align: center;
+  font-size: 16px;
+  :focus {
+    outline: none;
+  }
+`;
+
+const Logo = styled(Link)`
+  width: 3rem;
+  height: 2rem;
+`;
 
 export {
   NavigationContainer,
@@ -137,4 +154,6 @@ export {
   WrapRightNav,
   SearchByText,
   UploadStudyLink,
+  LocationInput,
+  Logo,
 };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { editUser, withdrawal } from 'src/apis/user';
 import CreatableSelect from 'react-select/creatable';
-import { position, stacktech } from 'src/mocks/SelectTechs';
 import { CancelButton, CustomButton, SubmitButton } from 'src/styles/Button';
 import {
   ProfileImageBlock,
@@ -16,10 +15,9 @@ import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState } from 'recoil';
 import { userAtom } from 'src/contexts/UserAtom';
 import Select from 'react-select';
-import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
 import S3UploadImage from 'src/hooks/useS3UploadImage';
-import Api from 'src/apis/Api';
 import ProfileImage from '../profileImage/ProfileImage';
+import techTable from 'src/contexts/TechsTable';
 
 interface tech {
   value?: number;
@@ -37,28 +35,30 @@ interface props {
   };
 }
 
+const baseImageUrl = `${import.meta.env.VITE_AWS_S3_URL}/`;
+
 const UserInfoEdit = ({ user }: props) => {
-  const [fileImage, setFileImage] = useState('');
-  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput(user);
+  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
+    ...user
+  });
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
   const resetUser = useResetRecoilState(userAtom);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setFileImage(`${import.meta.env.VITE_AWS_S3_URL}${user.profileImage}`);
-  }, [user.profileImage]);
-
-  const handleImageView = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFileImage(URL.createObjectURL(e.target.files[0]));
-      handleFileInput(e);
-    }
+  const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileInput(e);
+    changeInput(e);
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     try {
-      const imageUrl = await handleUpload();
+      let imageUrl = form.profileImage;
+      if (user.profileImage !== form.profileImage) {
+        imageUrl = await handleUpload();
+        imageUrl = baseImageUrl + imageUrl;
+      }
+
       const formTechStack = idNameToMultiSelect(form.techStackDtos);
       await editUser(user.id, {
         ...form,
@@ -85,7 +85,7 @@ const UserInfoEdit = ({ user }: props) => {
   };
   return (
     <Wrapper>
-      <ProfileImage image={fileImage} uploadEvent={handleImageView} />
+      <ProfileImage image={form.profileImage} uploadEvent={handleChangeProfileImage} />
       <InputBoxBlock>
         <InputLabel htmlFor="nickname">닉네임</InputLabel>
         <InputText
@@ -106,7 +106,7 @@ const UserInfoEdit = ({ user }: props) => {
           className="customSelect"
           name="techStackDtos"
           placeholder="기술 태그"
-          options={stacktech}
+          options={techTable}
           onChange={multiSelectChange}
         />
       </InputBoxBlock>

@@ -14,10 +14,15 @@ const Main = styled.main`
 
 const StudySection = styled.section`
   ${Flex({ flexWrap: 'wrap', columnGap: '2rem', rowGap: '2rem' })};
-  margin-top: 5rem;
+  margin-top: 4rem;
   width: 1180px;
   min-height: 50rem;
   box-shadow: ;
+  height: 1000px;
+`;
+const CheckInfinity = styled.div`
+  height: 5rem;
+  width: 100%;
 `;
 
-export { StudySection, Main };
+export { StudySection, Main, CheckInfinity };

@@ -10,6 +10,6 @@
 <pattern id="seventh" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_793_3599" transform="translate(0.0888455 0.0911171) scale(0.00456838)"/>
 </pattern>
-<image id="image0_793_3599" width="180" height="180" xlink:href="src/assets/images/kotlin.png" />
+<image id="image0_793_3599" width="180" height="180" xlink:href="src/assets/images/images/kotlin.svg" />
 </defs>
 </svg>

@@ -3,7 +3,6 @@ import Flex from '../../styles/Flex';
 import COLOR from '../../constants/colors';
 import FontSizes from '../../constants/FontSizes';
 import { css, keyframes } from '@emotion/react';
-import { theme } from '@emotion/react';
 
 interface isOpen {
   [key: string]: boolean;
@@ -31,7 +30,8 @@ const slowHidden = keyframes(
 );
 
 const SearchContainer = styled.div`
-  display: ${({ isOpen }: isOpen) => (isOpen ? 'block' : 'none')};
+  display: block;
+  visibility: ${({ isOpen }: isOpen) => (isOpen ? 'visible' : 'hidden')};
   left: 50%;
   transform: translateX(-50%);
   width: 1180px;

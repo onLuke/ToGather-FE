@@ -1,4 +1,4 @@
-/* import React from 'react';
+import React from 'react';
 import UserInfo from 'src/components/userInfo/UserInfo';
 
 const MyPage = () => {
@@ -6,4 +6,3 @@ const MyPage = () => {
 };
 
 export default MyPage;
- */

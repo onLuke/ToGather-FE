@@ -22,6 +22,8 @@ const COLOR = {
   BLUR_700: '#2684FF',
 
   RED_100: '#FF452E',
+
+  LOGO_COLOR: '#8fe3d9',
 };
 
 export default COLOR;

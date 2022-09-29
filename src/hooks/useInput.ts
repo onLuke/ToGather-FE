@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import S3UploadImage from './useS3UploadImage';
 
 interface Data {
   [key: string]: any;
@@ -12,9 +13,17 @@ interface Tech {
 const useInput = (initailValue: any) => {
   const [form, setForm] = useState(initailValue);
 
+  useEffect(() => {
+    setForm(initailValue);
+  }, [initailValue.nickname, initailValue.profileImage]);
+
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    if (e.target.files) {
+      setForm({ ...form, [name]: URL.createObjectURL(e.target.files[0]) });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
   };
 
   const selectChange = (targetValue: any, targetName: any) => {

@@ -1,23 +1,18 @@
 import { techsIdTable } from '../../mocks/TechsTableTest';
 import { StudytechsBlock, TechIconContainer } from './StudyTechs.style';
+import { techs } from '../@icons/Images';
 import styled from '@emotion/styled';
 
-const Test = styled.span`
-  display: flex;
-  justify-content: space-around;
-  width: 4rem;
-`;
 interface props {
-  techsList: String[];
+  techsList: any[];
 }
-
 const StudyTechs = ({ techsList }: props) => {
+  console.log(techsList[0]);
+
   return (
     <StudytechsBlock>
       {techsList.map((tech) => (
-        <TechIconContainer key={techsIdTable[String(tech)].techName}>
-          <Test>{techsIdTable[String(tech)].techName}</Test>
-        </TechIconContainer>
+        <TechIconContainer key={techs[tech.id].tech}>{techs[tech.id].icon()}</TechIconContainer>
       ))}
     </StudytechsBlock>
   );

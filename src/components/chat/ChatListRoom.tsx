@@ -17,7 +17,7 @@ const ChatListRoom = () => {
       alert('잘못된 접근입니다.');
       navigate('/');
     }
-  });
+  }, [user.id]);
   return (
     <ChatListRoomBlock>
       <Breadcrumb>마이 페이지 - 채팅방</Breadcrumb>

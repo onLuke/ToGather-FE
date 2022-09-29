@@ -1,4 +1,5 @@
 import React from 'react';
+import StudyComponent from '../Study/StudyComponent';
 import {
   Study,
   StudyAuthor,
@@ -26,22 +27,13 @@ const MyProjectList = ({ myProject }: Props) => {
         {myProject.map((list: any) => (
           <MyProjectInner key={list.id}>
             <div>
-              <Study to="/">
-                <StudyTechs techsList={list.techs} />
-                <StudyDeadline>
-                  마감 예정일
-                  <span aria-hidden="true">|</span>
-                  {list.deadline}
-                </StudyDeadline>
-                <StudyTitle>{list.search.title}</StudyTitle>
-                <StudyFooter>
-                  <StudyAuthor>
-                    <img src="/" width="36px" height="36px" />
-                    {list.search.author}
-                  </StudyAuthor>
-                  <StudyViewer>viewerArea</StudyViewer>
-                </StudyFooter>
-              </Study>
+              <StudyComponent
+                id={list.id}
+                techs={list.techs}
+                deadline={list.deadline}
+                title={list.search.title}
+                author={list.search.author}
+              />
             </div>
             <ChatRoomBlock>
               <ChatRoomButton>채팅방 1 입장</ChatRoomButton>

@@ -1,4 +1,4 @@
-import { StudySection, Main } from './StudyContainer.style';
+import { StudySection, Main, CheckInfinity } from './StudyContainer.style';
 import StudyList from './StudyList';
 import { useRef } from 'react';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
@@ -9,9 +9,10 @@ const StudyListContainer = () => {
 
   return (
     <Main>
-      <StudySection ref={observerTargetRef}>
+      <StudySection>
         <StudyList />
       </StudySection>
+      <CheckInfinity ref={observerTargetRef} className="check" />
     </Main>
   );
 };
