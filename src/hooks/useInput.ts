@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { NeedValueAtom } from 'src/contexts/needValue';
 import S3UploadImage from './useS3UploadImage';
 
 interface Data {
@@ -12,6 +14,11 @@ interface Tech {
 
 const useInput = (initailValue: any) => {
   const [form, setForm] = useState(initailValue);
+  const [option, setOption] = useRecoilState(NeedValueAtom);
+
+  useEffect(() => {
+    setForm(initailValue);
+  }, [initailValue.nickname, initailValue.profileImage]);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

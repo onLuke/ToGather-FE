@@ -66,7 +66,7 @@ const HeaderNavigation = () => {
 
   const handleLogout = async () => {
     // logout API 호출
-    const resonse = await logoutService();
+    const response = await logoutService();
     resetUser();
     navigate('/');
   };
@@ -76,7 +76,7 @@ const HeaderNavigation = () => {
       <NavigationContainer>
         <NavigationBlock>
           <Wrapper>
-            <Link to="/"></Link>
+            <Link to="/">로고</Link>
             <WrapRightNav>
               <CategoryBlock>
                 {pathname === '/' && (

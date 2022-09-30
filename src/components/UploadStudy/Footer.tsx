@@ -29,6 +29,8 @@ const Footer = ({ form }: iProps) => {
 
   const navigation = useNavigate();
 
+
+
   const handleSubmit = () => {
     setIsUploaded(true);
     let resultForm;
@@ -64,6 +66,8 @@ const Footer = ({ form }: iProps) => {
             });
             setOptions({ ...options, Location: true });
             alert(`지역을 선택해주세요!`);
+
+
             break;
           case 'personnel':
             window.scrollTo({
