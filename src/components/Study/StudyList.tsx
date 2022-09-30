@@ -27,7 +27,7 @@ const StudyList = () => {
   ) => {
     const res = await Api.get(
       `https://dokuny.blog/projects?limit=9&pageNumber=${pageParam}&status=${recruitState}${
-        techIds !== null ? '&techStacks=' + techIds.join(',') : ''
+        techIds !== null ? '&techStackIds=' + techIds.join(',') : ''
       }${title !== null ? '&title=' + title : ''}`
     );
     const { data } = res;
