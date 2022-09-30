@@ -9,7 +9,6 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  z-index: -1;
 `;
 
 const StudySection = styled.section`

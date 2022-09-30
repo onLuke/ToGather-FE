@@ -4,6 +4,13 @@ import Flex from 'src/styles/Flex';
 import COLOR from '../../constants/colors';
 import FontSizes from 'src/constants/FontSizes';
 
+const WrapStudy = styled.div`
+  display: flex;
+  grid-gap: 35px;
+  gap: 35px;
+  flex-wrap: wrap;
+  padding: 0;
+`;
 const Study = styled(Link)`
   ${Flex({ flexDirection: 'column' })};
   padding: 70px 26px 26px 34px;
@@ -52,4 +59,4 @@ const StudyViewer = styled.div`
   ${Flex({ rowGap: '0.5rem' })}
 `;
 
-export { Study, StudyDeadline, StudyTitle, StudyFooter, StudyAuthor, StudyViewer };
+export { WrapStudy, Study, StudyDeadline, StudyTitle, StudyFooter, StudyAuthor, StudyViewer };
