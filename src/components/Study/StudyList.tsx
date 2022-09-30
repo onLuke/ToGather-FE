@@ -41,7 +41,7 @@ const StudyList = () => {
     ({ pageParam = 0 }) => fetchPostList(recruitState, techIds, title, pageParam),
     {
       getNextPageParam: (lastPage) => {
-        !lastPage.isLast ? lastPage.nextPage : undefined;
+        return !lastPage.isLast ? lastPage.nextPage : undefined;
       },
     }
   );
