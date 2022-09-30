@@ -16,6 +16,10 @@ const useInput = (initailValue: any) => {
   const [form, setForm] = useState(initailValue);
   const [option, setOption] = useRecoilState(NeedValueAtom);
 
+  useEffect(() => {
+    setForm(initailValue);
+  }, [initailValue.nickname, initailValue.profileImage]);
+
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (e.target.files) {

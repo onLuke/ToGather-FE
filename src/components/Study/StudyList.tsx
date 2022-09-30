@@ -39,6 +39,7 @@ const StudyList = () => {
   let { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ['posts', recruitState, techIds, title],
     ({ pageParam = 0 }) => fetchPostList(recruitState, techIds, title, pageParam),
+
     {
       getNextPageParam: (lastPage) => {
         !lastPage.isLast ? lastPage.nextPage : undefined;

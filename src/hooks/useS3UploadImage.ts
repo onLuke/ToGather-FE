@@ -78,8 +78,6 @@ const S3UploadImage = (folderName: string) => {
 
   const handleUpload = async () => {
     let imageUrl = null;
-    console.log(imageFile);
-    debugger;
     if (imageFile) {
       imageUrl = await uploadFile(imageFile);
     } else alert('업로드 할 이미지 파일을 선택해주세요');

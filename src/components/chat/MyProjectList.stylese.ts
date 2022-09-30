@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import COLOR from 'src/constants/colors';
 
 const MyProjectListBlock = styled.div`
@@ -12,14 +13,18 @@ const Wrapper = styled.div`
 
 const MyProjectInner = styled.div`
   display: flex;
-  margin-top: 3rem;
+  flex-direction: column;
+  margin-top: 2rem;
+  & + & {
+    padding-top: 1rem;
+    border-top: 1px solid;
+  }
 `;
 
 const ChatRoomBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 3rem;
   width: 100%;
 `;
 
@@ -31,13 +36,28 @@ const ChatRoomButton = styled.button`
   border-radius: 1.5rem;
   font-size: 20px;
   & + & {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
   &:hover {
     outline: none;
     border-color: ${COLOR.BLUR_700};
     box-shadow: 0 0 5px ${COLOR.BLUR_700};
   }
+  &:last-child {
+    & ::after {
+      display: content;
+      padding: 30px;
+      margin-bottom: 2rem;
+    }
+  }
 `;
 
-export { MyProjectListBlock, Wrapper, MyProjectInner, ChatRoomBlock, ChatRoomButton };
+const Title = styled(Link)`
+  font-size: 30px;
+  margin-bottom: 1rem;
+
+  &:hover {
+    opacity: 0.6;
+  }
+`;
+export { MyProjectListBlock, Wrapper, MyProjectInner, ChatRoomBlock, ChatRoomButton, Title };
