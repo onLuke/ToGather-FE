@@ -10,8 +10,9 @@ import MyPage from './pages/MyPage';
 import NotFoundPage from './pages/NotFoundPage';
 import HeaderNavigation from './components/Header/HeaderNavigation';
 import UploadStudy from './pages/UploadStudy';
-import MyProject from './components/myProject/MyProject';
 import StudyDetail from './pages/StudyDetail';
+import MyProjectPage from './pages/MyProjectPage';
+
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/myProject" element={<MyProject />} />
+            <Route path="/myProject" element={<MyProjectPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/oauth/:social" element={<AuthRedirectPage />} />
             <Route path="/uploadStudy" element={<UploadStudy />} />
