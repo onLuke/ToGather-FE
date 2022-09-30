@@ -3,7 +3,7 @@ import { Title, AuthorBlock, WrapAuthor, AuthorImg, Author, DateBox } from './He
 interface iProps {
   gettedData: any;
 }
-const Header = ({ gettedData }: iProps) => {
+const Header = (/* { gettedData }: iProps */) => {
   return (
     <>
       <Title>제목 테스트 라인입니다</Title>

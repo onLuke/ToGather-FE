@@ -53,6 +53,7 @@ const AuthService = () => {
       path: '/',
     });
     setUser(resUser);
+    setAuthToken({});
     Api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
 
     return response;
@@ -77,7 +78,7 @@ const AuthService = () => {
   };
 
   const logoutService = async () => {
-    const reponse = await logout();
+    const response = await logout();
 
     setCookie('refershToken', '', {
       path: '/',
@@ -85,6 +86,8 @@ const AuthService = () => {
     localStorage.removeItem('user');
 
     Api.defaults.headers.common['Authorization'] = '';
+
+    return response;
   };
 
   return { checkLoginService, registerService, refreshService, logoutService };

@@ -7,12 +7,6 @@ interface props {
   techsList: any[];
 }
 const StudyTechs = ({ techsList }: props) => {
-  console.log(
-    techsList.map((el) => {
-      console.log(techs[el.id]);
-    })
-  );
-
   return (
     <StudytechsBlock>
       {techsList.map((tech) => (
