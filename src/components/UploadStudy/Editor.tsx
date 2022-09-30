@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useRecoilState } from 'recoil';
@@ -21,13 +21,10 @@ const Editor = (props: iProps) => {
     else setOption({ ...option, title: false });
   };
 
-  const handleBlurContent = (e: any) => {
-    console.log(e.index);
-
+  const handleContent = (e: any) => {
     if (e.index === 0) setOption({ ...option, content: true });
     else setOption({ ...option, content: false });
   };
-
   return (
     <>
       <WrapEditor>
@@ -41,8 +38,10 @@ const Editor = (props: iProps) => {
         ></Input>
         <WarnBox isHidden={option.title}>공고 제목을 입력해주세요</WarnBox>
         <ReactQuill
-          onChange={editorChange}
-          onBlur={handleBlurContent}
+          onChange={(e: any) => {
+            editorChange(e);
+            handleContent(e);
+          }}
           placeholder={'공고 내용을 입력해주세요'}
           theme="snow"
           modules={modules}
