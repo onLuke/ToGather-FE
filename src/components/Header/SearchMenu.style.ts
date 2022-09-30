@@ -30,8 +30,7 @@ const slowHidden = keyframes(
 );
 
 const SearchContainer = styled.div`
-  display: block;
-  visibility: ${({ isOpen }: isOpen) => (isOpen ? 'visible' : 'hidden')};
+  display: ${({ isOpen }: isOpen) => (isOpen ? 'block' : 'none')};
   left: 50%;
   transform: translateX(-50%);
   width: 1180px;

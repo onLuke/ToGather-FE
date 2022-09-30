@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import COLOR from '../../constants/colors';
 import Flex from '../../styles/Flex';
 import { Link } from 'react-router-dom';
+import TextSearch from './TextSearch';
 
 interface favoriteProps {
   favoriteIsOpen: boolean;
@@ -62,6 +63,11 @@ const NavMenu = styled.div`
   width: ${({ widthProp }: menuWidthProp) => widthProp};
 `;
 
+const WrapTextMenu = styled.div`
+  ${Flex({ alignItems: 'center', justifyContent: 'center' })};
+  width: ${({ widthProp }: menuWidthProp) => widthProp};
+`;
+
 const MyPageMenu = styled.div`
   flex: 1;
   width: 100%;
@@ -113,8 +119,6 @@ const UserBlock = styled.div`
   gap: 2rem;
 `;
 
-const SearchByText = styled.div``;
-
 const UploadStudyLink = styled(Link)`
   ${Flex({ alignItems: 'center', justifyContent: 'center' })};
   width: ${({ widthProp }: menuWidthProp) => widthProp};
@@ -152,8 +156,8 @@ export {
   UserBlock,
   MyPageMenu,
   WrapRightNav,
-  SearchByText,
   UploadStudyLink,
   LocationInput,
   Logo,
+  WrapTextMenu,
 };
