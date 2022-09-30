@@ -11,6 +11,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import HeaderNavigation from './components/Header/HeaderNavigation';
 import UploadStudy from './pages/UploadStudy';
 import MyProject from './components/myProject/MyProject';
+import StudyDetail from './pages/StudyDetail';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/oauth/:social" element={<AuthRedirectPage />} />
             <Route path="/uploadStudy" element={<UploadStudy />} />
             <Route path="/*" element={<NotFoundPage />} />
+            <Route path="/studyDetail/:id" element={<StudyDetail />} />
           </Routes>
         </ModalProvider>
       </BrowserRouter>
