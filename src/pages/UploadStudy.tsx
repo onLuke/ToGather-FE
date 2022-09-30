@@ -2,7 +2,7 @@ import Editor from '../components/UploadStudy/Editor';
 import Footer from '../components/UploadStudy/Footer';
 import WrapSection from '../components/UploadStudy/WrapSection';
 import SelectContainer from '../components/UploadStudy/SelectContainer';
-import useInput from 'src/hooks/useInput';
+import useInputForUpload from '../hooks/useInputForUpload';
 import { useRef } from 'react';
 
 export interface inputFormType {
@@ -24,7 +24,7 @@ const UploadStudy = () => {
     datePickerChange,
     multiSelectUpload,
     editorChange,
-  } = useInput({
+  } = useInputForUpload({
     offline: true,
     personnel: '',
     status: 'RECRUITING',
