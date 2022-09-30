@@ -5,7 +5,7 @@ import React from 'react';
 interface iProps {
   gettedData: any;
 }
-const InfoContainer = ({ gettedData }: iProps) => {
+const InfoContainer = (/* { gettedData }: iProps */) => {
   const options = ['모집상태', '위치', '온/오프라인', '사용하는 기술 스택'];
 
   return (
