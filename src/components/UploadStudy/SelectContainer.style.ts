@@ -20,10 +20,18 @@ const OnOfflineBlock = styled.div`
   })}
   height:100%;
 `;
+
 const WrapRegionSelect = styled.div`
   ${Flex({ columnGap: '3rem', flexDirection: 'column' })};
   visibility: ${(props: WrapMapProps) => (props.isOffline ? 'hidden' : 'visible')};
   width: 25rem;
+`;
+
+const WarnBox = styled.div`
+  visibility: ${({ isHidden }: { isHidden: boolean }) => (!isHidden ? 'hidden' : 'visible')};
+  color: red;
+  text-align: center;
+  width: 100%;
 `;
 
 const WrapMapInput = styled.div`
@@ -66,4 +74,5 @@ export {
   OnOfflineBlock,
   WraponOffline,
   WrapTechSelect,
+  WarnBox,
 };

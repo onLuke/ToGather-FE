@@ -1,9 +1,7 @@
-import { useEffect } from 'react';
-import { UserLocationAtom } from '../contexts/UserLocationAtom';
-import { useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
 
 const useGetUserLocation = () => {
-  const [lacation, setLocation] = useRecoilState(UserLocationAtom);
+  const [location, setLocation] = useState({ La: 0, Ma: 0, regionName: '' });
 
   const success = (event: any) => {
     const latitude = event.coords.latitude;
@@ -18,6 +16,8 @@ const useGetUserLocation = () => {
   useEffect(() => {
     getLocation();
   }, []);
+
+  return location;
 };
 
 export default useGetUserLocation;
