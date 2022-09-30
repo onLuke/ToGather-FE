@@ -1,69 +1,74 @@
-import {
-  Study,
-  StudyDeadline,
-  StudyTitle,
-  StudyFooter,
-  StudyAuthor,
-  StudyViewer,
-} from './StudyList.style';
+import { WrapStudy } from './StudyList.style';
 import Studytechs from './StudyTechs';
-import { QueryCache } from 'react-query';
+import { QueryCache, useInfiniteQuery } from 'react-query';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { pageNumber, isRecruiting, isUploaded } from '../../contexts/chachingOptionAtom';
-import { useState } from 'react';
-import { getStudyListQuery } from '../../service/studyQuery';
-import { ProjectDetailAtom } from 'src/contexts/ProjectDetailAtom';
-import { getStudyListQuery } from '../../apis/studyQuery';
-import { pageNumber, isRecruiting } from '../../contexts/chachingOptionAtom';
+import { useEffect, useState } from 'react';
 import StudyComponent from './StudyComponent';
-
+import { TechFilterSelector, TitleFilterAtom } from 'src/contexts/FilterOptionAtom';
+import { getStudy } from 'src/apis/study';
+import React from 'react';
+import { CheckInfinity } from './StudyContainer.style';
+import { useInView } from 'react-intersection-observer';
+import axios from 'axios';
+import Api from 'src/apis/Api';
+import { Link } from 'react-router-dom';
 
 const StudyList = () => {
-  const { data } = getStudyListQuery();
-  const setProjectDetail = useSetRecoilState(ProjectDetailAtom);
+  const recruitState = useRecoilValue(isRecruiting);
+  const techIds = useRecoilValue(TechFilterSelector);
+  const title = useRecoilValue(TitleFilterAtom);
 
-  const handleStudyClick = (nickname: string, id: number, url: string) => {
-    setProjectDetail({ author: nickname, projectId: id, imageUrl: url });
+  const fetchPostList = async (
+    recruitState: string,
+    techIds: string[] | null,
+    title: string | null,
+    pageParam: number
+  ) => {
+    const res = await Api.get(
+      `https://dokuny.blog/projects?limit=9&pageNumber=${pageParam}&status=${recruitState}${
+        techIds !== null ? '&techStacks=' + techIds.join(',') : ''
+      }${title !== null ? '&title=' + title : ''}`
+    );
+    const { data } = res;
+    const isLast = res.data.length === 0 ? true : false;
+    return { data, nextPage: pageParam + 1, isLast };
   };
 
-  /*   const query = queryCache.find(['getStudyList', pageNum]);
-
-  console.log(query);
-
-  const { isLoading, data, isFetching } = useQuery(
-    ['getStudyList', pageNum],
-    async () => {
-      const data = await getStudy(pageNum, recruitState);
-      return data;
-    },
+  const { ref, inView } = useInView();
+  let { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    ['posts', recruitState, techIds, title],
+    ({ pageParam = 0 }) => fetchPostList(recruitState, techIds, title, pageParam),
     {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      staleTime: reFetchOption ? 0 : 5 * 60 * 1000,
-      onSuccess: (dataset) => {
-        console.log('inUseQuery');
-        console.log(data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
+      getNextPageParam: (lastPage) => {
+        return !lastPage.isLast ? lastPage.nextPage : undefined;
       },
     }
-  ); */
+  );
 
-  console.log('isArray?');
-  console.log(data);
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
   return (
     <>
-      {Array.isArray(data) &&
-        data.map((list) => (
-          <StudyComponent
-            id={list.id}
-            techs={list.techs}
-            deadline={list.deadline}
-            title={list.search.title}
-            author={list.search.author}
-          />
+      <WrapStudy className="study">
+        {data?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page.data.map((list: any) => (
+              <StudyComponent
+                key={list.id}
+                id={list.id}
+                techs={list.techStacks}
+                deadline={list.deadline}
+                title={list.title}
+                author={list.member.nickname}
+              />
+            ))}
+          </React.Fragment>
         ))}
+      </WrapStudy>
+      <CheckInfinity ref={ref} className="check" />
     </>
   );
 };

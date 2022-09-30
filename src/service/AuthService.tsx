@@ -53,6 +53,7 @@ const AuthService = () => {
       path: '/',
     });
     setUser(resUser);
+    setAuthToken({});
     Api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
 
     return response;

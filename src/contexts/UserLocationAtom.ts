@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 interface props {
   La: number;
   Ma: number;
@@ -11,5 +11,12 @@ export const UserLocationAtom = atom<props>({
     La: 0,
     Ma: 0,
     regionName: '',
+  },
+});
+
+export const regionNameSelector = selector({
+  key: 'REGION_NAME_SELECTOR',
+  get: ({ get }) => {
+    return get(UserLocationAtom).regionName;
   },
 });

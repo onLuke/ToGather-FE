@@ -2,19 +2,19 @@ import { SearchContainer, TechsContainer, TechBtn } from './SearchMenu.style';
 import { techs } from '../@icons/Images';
 import { useRecoilState } from 'recoil';
 import { searchTechsAtom } from '../../contexts/SearchTechsAtom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useCheckIsScrollOver from '../../hooks/useCheckIsScrollOver';
 import { Dispatch, SetStateAction } from 'react';
+import { TechFilterAtom } from 'src/contexts/FilterOptionAtom';
 
 interface SearchMenuProps {
   searchIsOpen: boolean;
+  textIsOepn: boolean;
   isHidden: [boolean, Dispatch<SetStateAction<boolean>>];
 }
 
-interface BtnStateType {
-  [key: string]: boolean;
-}
-const SearchMenu = ({ searchIsOpen, isHidden }: SearchMenuProps) => {
+const SearchMenu = ({ searchIsOpen, isHidden, textIsOepn }: SearchMenuProps) => {
+  const [filteredTech, setFilteredTech] = useRecoilState(TechFilterAtom);
   const [isScrollOver, setIsScrollOver] = isHidden;
 
   const handleScroll = () => {
@@ -28,34 +28,32 @@ const SearchMenu = ({ searchIsOpen, isHidden }: SearchMenuProps) => {
     };
   });
 
-  const [filteredTech, setFilterTech] = useRecoilState(searchTechsAtom);
-
-  const handleTechBtn = (tech: string) => {
+  const handleTechBtn = (id: number) => {
     const copied = { ...filteredTech };
-    delete copied[tech];
+    delete copied[id];
+    const isPresentTech = filteredTech[id];
 
-    const isPresentTech = filteredTech[tech];
     if (isPresentTech) {
-      setFilterTech(copied);
-    } else setFilterTech({ ...filteredTech, [tech]: true });
+      setFilteredTech(copied);
+    } else setFilteredTech({ ...filteredTech, [id]: true });
   };
 
   return (
     <SearchContainer
       isOpen={searchIsOpen}
+      isOpenText={textIsOepn}
       isScrollOver={isScrollOver}
       className="Search__Container"
     >
       <TechsContainer>
-        {techs.map(({ tech, icon }) => (
+        {techs.map(({ id, tech, icon }) => (
           <TechBtn
-            key={tech}
-            className={`tech__Btn ${tech}`}
+            key={tech + id}
+            className={`tech__Btn`}
             onClick={() => {
-              handleTechBtn(tech);
-              console.log(tech);
+              handleTechBtn(id);
             }}
-            isOn={filteredTech[tech]}
+            isOn={filteredTech[id]}
           >
             {icon()}
             {tech}

@@ -7,18 +7,20 @@ import {
   OnOfflineBlock,
   WraponOffline,
   WrapTechSelect,
+  WarnBox,
 } from './SelectContainer.style';
 import Calendar from './Calendar';
 import Select from 'react-select';
 import UploadOptions from '../../constants/UploadOptions';
 import { GpsContainer } from '../Header/HeaderNavigation.styles';
 import { GpsIcon } from '../@icons';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import techTable from '../../contexts/TechsTable';
 import { modalContext } from 'src/contexts/ModalContext';
 import MapModal from '../Modal/MapModal';
-import { UserLocationAtom } from '../../contexts/UserLocationAtom';
-import { useRecoilValue } from 'recoil';
+import { UserLocationAtom, regionNameSelector } from '../../contexts/UserLocationAtom';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { NeedSelector, NeedValueAtom } from 'src/contexts/needValue';
 
 interface iProps {
   changeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -28,9 +30,12 @@ interface iProps {
 }
 
 const SelectContainer = (props: iProps) => {
+  const needValue = useRecoilValue(NeedSelector);
+  const [option, setOption] = useRecoilState(NeedValueAtom);
   const [isOffline, setIsOffline] = useState(true);
-  const location = useRecoilValue(UserLocationAtom);
+  const [location, setLocation] = useRecoilState(UserLocationAtom);
   const openModalContext = useContext(modalContext);
+  const [input, setInput] = useState('');
 
   const handleKakaoOpenModal = () => {
     openModalContext?.openModal?.(<MapModal />);
@@ -41,6 +46,20 @@ const SelectContainer = (props: iProps) => {
   const handleOnOffline = (targetValue: any, targetName: any) => {
     selectChange(targetValue, targetName);
     setIsOffline(targetValue.value);
+  };
+
+  const inputRef = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    if (inputRef.current && inputRef.current.value.length === 0 && inputRef.current.value !== '') {
+      setOption({ ...option, Location: true });
+    } else setOption({ ...option, Location: false });
+  }, [inputRef]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (inputRef.current && inputRef.current.value.length === 0 && inputRef.current.value !== '') {
+      setOption({ ...option, Location: true });
+    } else setOption({ ...option, Location: false });
   };
 
   return (
@@ -65,18 +84,18 @@ const SelectContainer = (props: iProps) => {
               <GpsIcon />
             </GpsContainer>
             <RegionInput
-              className="select__region"
+              value={location.regionName}
+              id="location"
+              className="location"
               type="text"
-              onClick={(e: React.MouseEvent) => {
-                e.preventDefault();
-              }}
               placeholder="좌측 아이콘을 눌러 지역 선택하기"
               aria-label="좌측 아이콘을 눌러 지역을 선택할 수 있습니다"
-              onChange={changeInput}
-              value={location.regionName}
+              onChange={handleInputChange}
+              ref={inputRef}
             />
           </WrapMapInput>
         </WrapRegionSelect>
+        <WarnBox isHidden={isOffline && needValue === 'Location'}>지역을 입력해주세요</WarnBox>
         <WrapTechSelect>
           <Select
             isMulti
@@ -89,6 +108,7 @@ const SelectContainer = (props: iProps) => {
             classNamePrefix="select"
           />
         </WrapTechSelect>
+        <WarnBox isHidden={needValue === 'techStackIds'}>기술을 선택해주세요</WarnBox>
       </OnOfflineBlock>
 
       <RestSelectBlock>
@@ -101,7 +121,9 @@ const SelectContainer = (props: iProps) => {
           options={UploadOptions.personnel}
           onChange={selectChange}
         />
+        <WarnBox isHidden={needValue === 'personnel'}>모집인원을 선택해주세요</WarnBox>
         <Calendar datePickerChangeDispatch={datePickerChange} />
+        <WarnBox isHidden={needValue === 'deadline'}>모집마감일을 선택해주세요</WarnBox>
       </RestSelectBlock>
     </WrapSelects>
   );

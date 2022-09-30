@@ -37,11 +37,13 @@ const RegisterModal = () => {
     e.preventDefault();
 
     try {
-      const formTechStack = idNameToMultiSelect(form.techStackDtos);
-      const response = await registerService({
-        ...form,
-        techStackDtos: formTechStack,
-      });
+      const formData = { ...form };
+      if (form.prifileImage !== baseImageURL) {
+        formData.profileImage = await handleUpload();
+        formData.profileImage = `${import.meta.env.VITE_AWS_S3_URL}/${formData.profileImage}`;
+      }
+      formData.techStackDtos = idNameToMultiSelect(form.techStackDtos);
+      const response = await registerService(formData);
     } catch (err) {
       console.error('전송 오류 form 데이터 확인');
     }
