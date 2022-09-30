@@ -14,13 +14,16 @@ const UserInfo = () => {
   const navigate = useNavigate();
   const { updateUserByIdService } = UserService();
 
-  const getUserById = () => {
+  const getUserById = async () => {
     if (!user.id) {
       alert('잘못된 접근입니다.');
       navigate('/');
       return;
     }
     const userId = user.id;
+
+    await getUser(userId)
+
     getUser(userId)
       .then((res) => {
         setUser(res.data);
@@ -32,7 +35,7 @@ const UserInfo = () => {
 
   useEffect(() => {
     getUserById();
-  }, [user.id]);
+  }, []);
 
   return (
     <UserInfoBlock>

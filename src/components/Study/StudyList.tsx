@@ -41,7 +41,7 @@ const StudyList = () => {
 
   return (
     <>
-      {Array.isArray(data) &&
+      {/* {Array.isArray(data) &&
         data.map((list) => (
           <StudyComponent
             key={list.id}
@@ -51,7 +51,7 @@ const StudyList = () => {
             title={list.title}
             author={list.member.nickname}
           />
-        ))}
+        ))} */}
     </>
   );
 };

@@ -14,6 +14,7 @@ import {
   ChatRoomButton,
   MyProjectInner,
   MyProjectListBlock,
+  Title,
   Wrapper,
 } from './MyProjectList.stylese';
 
@@ -24,17 +25,9 @@ const MyProjectList = ({ myProject }: Props) => {
   return (
     <MyProjectListBlock>
       <Wrapper>
-        {myProject.map((list: any) => (
-          <MyProjectInner key={list.id}>
-            <div>
-              <StudyComponent
-                id={list.id}
-                techs={list.techs}
-                deadline={list.deadline}
-                title={list.search.title}
-                author={list.search.author}
-              />
-            </div>
+        {myProject.map((list: any, idx: number) => (
+          <MyProjectInner key={idx}>
+            <Title to="/">프로젝트 제목</Title>
             <ChatRoomBlock>
               <ChatRoomButton>채팅방 1 입장</ChatRoomButton>
               <ChatRoomButton>채팅방 3 입장</ChatRoomButton>
