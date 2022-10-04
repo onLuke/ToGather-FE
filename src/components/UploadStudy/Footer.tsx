@@ -29,7 +29,6 @@ const Footer = ({ form }: iProps) => {
 
   const navigation = useNavigate();
 
-
   const handleSubmit = () => {
     setIsUploaded(true);
     let resultForm;
@@ -37,7 +36,10 @@ const Footer = ({ form }: iProps) => {
     if (form.offline) {
       resultForm = {
         ...form,
-        Location: location.La !== 0 ? { latitude: location.La, longitude: location.Ma } : '',
+        Location:
+          location.La !== 0
+            ? { latitude: location.La, longitude: location.Ma, regionName: location.regionName }
+            : '',
       };
     } else {
       resultForm = {
