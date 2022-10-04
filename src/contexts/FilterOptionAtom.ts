@@ -2,6 +2,13 @@ import { atom, selector } from 'recoil';
 interface Data {
   [key: number]: boolean;
 }
+interface stringData {
+  [key: string]: string | null;
+}
+
+interface numberData {
+  [key: string]: number | null;
+}
 
 export const TechFilterAtom = atom<Data>({
   key: 'TECH_FILTER',
@@ -22,7 +29,19 @@ export const StatusFilterAtom = atom<'RECRUITING' | 'COMPLETED'>({
   default: 'RECRUITING',
 });
 
-export const TitleFilterAtom = atom<null | string>({
-  key: 'TITLE_OPTION',
-  default: null,
+export const TextFilterAtom = atom<stringData>({
+  key: 'TEXT_FILTER',
+  default: {
+    title: null,
+    content: null,
+    author: null,
+  },
+});
+
+export const LocationFilterAtom = atom<numberData>({
+  key: 'LOCATION_FILTER',
+  default: {
+    latitude: null,
+    longitude: null,
+  },
 });
