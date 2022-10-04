@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Flex from 'src/styles/Flex';
 import COLOR from '../../constants/colors';
 import FontSizes from 'src/constants/FontSizes';
+import LineClamp from 'src/styles/LineClamp';
 
 const WrapStudy = styled.div`
   display: flex;
@@ -41,9 +42,9 @@ const StudyDeadline = styled.div`
 `;
 
 const StudyFooter = styled.section`
-  ${Flex({ justifyContent: 'space-around', alignItems: 'center', columnGap: '4rem' })};
+  ${Flex({ justifyContent: 'space-between', alignItems: 'center', columnGap: '4rem' })};
   font-size: ${FontSizes.Study_Author_Fontsize};
-  width: 100%;
+  margin: 0 1rem;
   height: 3rem;
   position: absolute;
   left: 0px;
@@ -51,12 +52,25 @@ const StudyFooter = styled.section`
 `;
 
 const StudyAuthor = styled.div`
-  ${Flex({ justifyContent: 'space-between', alignItems: 'center' })};
-  width: 4rem;
+  ${Flex({ justifyContent: 'space-between', alignItems: 'center', columnGap: '0.5rem' })};
+  max-width: 10rem;
 `;
 
 const StudyViewer = styled.div`
   ${Flex({ rowGap: '0.5rem' })}
 `;
 
-export { WrapStudy, Study, StudyDeadline, StudyTitle, StudyFooter, StudyAuthor, StudyViewer };
+const AuthorSpan = styled.span`
+  ${LineClamp};
+`;
+
+export {
+  WrapStudy,
+  Study,
+  StudyDeadline,
+  StudyTitle,
+  StudyFooter,
+  StudyAuthor,
+  StudyViewer,
+  AuthorSpan,
+};
