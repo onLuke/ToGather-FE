@@ -59,6 +59,15 @@ const useInput = (initailValue: any) => {
     return changeProperty;
   };
 
+  const idLabelToMultiSel1ect = (target: Tech[]) => {
+    const changeProperty = target.reduce((acc: any, cur: Tech) => {
+      let id = cur.value;
+      let name = cur.label;
+      return [...acc, id, name];
+    }, []);
+    return changeProperty;
+  };
+
   const datePickerChange = (date: Date) => {
     const dayToString = String(date.getDate());
     const dayString = String(date.getDate()).length < 2 ? '0' + dayToString : dayToString;
@@ -79,6 +88,7 @@ const useInput = (initailValue: any) => {
     datePickerChange,
     editorChange,
     idNameToMultiSelect,
+    idLabelToMultiSel1ect,
   };
 };
 

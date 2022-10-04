@@ -41,7 +41,7 @@ export const getStudy = async (
   author: string | null
 ) => {
   const res = await Api.get(
-    `https://dokuny.blog/projects?limit=9&pageNumber=${pageNumber}&status=${isRecruiting}${
+    `/projects?limit=9&pageNumber=${pageNumber}&status=${isRecruiting}${
       techIds !== null ? '&techStacks=' + techIds.join(',') : ''
     }${title !== null ? '&title=' + title : ''}
     ${content !== null ? '&content=' + content : ''}
@@ -51,7 +51,7 @@ export const getStudy = async (
   return data;
 };
 export const createStudy = async (data: inputFormType) => {
-  Api.post<createRes>(`https://dokuny.blog/projects`, data);
+  Api.post<createRes>(`/projects`, data);
 };
 
 export const updateStudy = (data: studyData) => {
@@ -59,7 +59,7 @@ export const updateStudy = (data: studyData) => {
 };
 
 export const getDetail = async (id: string) => {
-  const res = await Api.get(`https://dokuny.blog/projects/${id}`);
+  const res = await Api.get(`/projects/${id}`);
   const { data } = res;
   return data;
 };

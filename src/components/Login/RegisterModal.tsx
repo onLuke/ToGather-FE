@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
-import axios, { HeadersDefaults } from 'axios';
-import CreatableSelect from 'react-select/creatable';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { signUp } from 'src/apis/auth';
-import { authAtom, authSelector } from 'src/contexts/AuthAtom';
-import { userSelector } from 'src/contexts/UserAtom';
-import { stacktech } from 'src/mocks/SelectTechs';
 import { CustomButton, SubmitButton } from 'src/styles/Button';
 import { InputLabel, InputText } from 'src/styles/Input';
-import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
 import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
 import useInput from 'src/hooks/useInput';
 import S3UploadImage from 'src/hooks/useS3UploadImage';
 import AuthService from 'src/service/AuthService';
-import Api from 'src/apis/Api';
 import ProfileImage from '../profileImage/ProfileImage';
 import { checkNickname } from 'src/apis/user';
+import techTable from 'src/contexts/TechsTable';
 
 const baseImageURL = `${import.meta.env.VITE_AWS_S3_URL}/profile/default.png`;
 
@@ -95,7 +87,7 @@ const RegisterModal = () => {
           className="customSelect"
           name="techStackDtos"
           placeholder="기술 태그"
-          options={stacktech}
+          options={techTable}
           onChange={multiSelectChange}
         />
       </InputBoxBlock>

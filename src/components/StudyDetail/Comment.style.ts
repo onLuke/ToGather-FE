@@ -4,7 +4,7 @@ import Flex from '../../styles/Flex';
 
 const CommentBlock = styled.section`
   width: 80%;
-  height: 60vh;
+  min-height: 60vh;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -81,6 +81,21 @@ const CommentContent = styled.p`
   overflow-wrap: break-word;
 `;
 
+const CommentButtonBlock = styled.div`
+  margin-top: 1rem;
+`;
+
+const ChageCommnetInput = styled.input`
+  padding: 0.5rem 1rem;
+  border: 0.5px solid;
+  border-radius: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  letter-spacing: -0.004em;
+  word-break: break-all;
+  overflow-wrap: break-word;
+`;
+
 export {
   CommentBlock,
   CommentHeader,
@@ -93,4 +108,6 @@ export {
   CommentId,
   CommentTime,
   CommentContent,
+  CommentButtonBlock,
+  ChageCommnetInput,
 };

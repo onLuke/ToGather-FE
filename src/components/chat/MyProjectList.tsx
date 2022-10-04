@@ -1,4 +1,3 @@
-import _, { divide } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { createChatRoomByProjectId, getChatRoomByProjectId } from 'src/apis/chatRoom';
 import { getParticipatingProjects } from 'src/apis/project';
@@ -13,6 +12,8 @@ import {
   Title,
   Wrapper,
   AccordionButton,
+  ChatHeaderBlock,
+  ChatRommInformation,
 } from './MyProjectList.stylese';
 
 interface Props {
@@ -85,12 +86,13 @@ const MyProjectList = ({ myProject }: Props) => {
         {project.length === 0 ? <div>현재 참여중인 프로젝트가 없습니다.</div> : <></>}
         {project.map((item: any) => (
           <MyProjectInner key={'project' + item.projectId}>
-            <div>
+            <ChatHeaderBlock>
               <Title to="/">{item.title}</Title>
               <CustomButton data-projectid={item.projectId} onClick={createChatRoom}>
                 방생성
               </CustomButton>
-            </div>
+              <ChatRommInformation>방은 최대 5개만 생성 가능합니다.</ChatRommInformation>
+            </ChatHeaderBlock>
             <div>
               <span>채팅방 목록</span>
               <AccordionButton id={item.projectId} onClick={getChatingRoomList}>
@@ -100,7 +102,9 @@ const MyProjectList = ({ myProject }: Props) => {
                 chatRoomList.map((room: any) => (
                   <ChatRoomBlock key={'room' + room.id}>
                     <ChatRoomWrapper>
-                      <ChatRoomButton to="/chat">채팅방 입장</ChatRoomButton>
+                      <ChatRoomButton to={`/chat/${item.projectId}/${room.roomId}`}>
+                        {room.roomName} 입장
+                      </ChatRoomButton>
                       <ChatHandleBlock>
                         <CustomButton
                           data-projectid={item.projectId}

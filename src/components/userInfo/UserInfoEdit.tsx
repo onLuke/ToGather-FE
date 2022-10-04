@@ -39,7 +39,7 @@ interface props {
 const baseImageUrl = `${import.meta.env.VITE_AWS_S3_URL}/`;
 
 const UserInfoEdit = ({ user }: props) => {
-  const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
+  const { form, changeInput, multiSelectChange, idLabelToMultiSel1ect } = useInput({
     ...user,
   });
   const { handleFileInput, handleUpload } = S3UploadImage('profile/');
@@ -79,10 +79,11 @@ const UserInfoEdit = ({ user }: props) => {
         imageUrl = baseImageUrl + imageUrl;
       }
 
-      const formTechStack = idNameToMultiSelect(form.techStackDtos);
+      const formTechStack = idLabelToMultiSel1ect(form.techStackDtos);
       const formData = { ...form, profileImage: imageUrl, techStackDtos: formTechStack };
 
       const response = await updateUserByIdService(user.id, formData);
+
       alert('성공');
       navigate('/');
     } catch (e) {

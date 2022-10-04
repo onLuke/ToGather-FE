@@ -72,7 +72,6 @@ const AuthService = () => {
 
   const refreshService = async () => {
     const refreshCookie = getCookie('refreshToken');
-    console.log('refresh');
 
     const response = await refresh(refreshCookie);
 
@@ -80,6 +79,7 @@ const AuthService = () => {
       if (response.data.status === 401) {
         throw new Error(response.data.errorMessage);
       }
+
       setCookie('refreshToken', response.data.refreshToken, {
         path: '/',
       });
@@ -87,6 +87,7 @@ const AuthService = () => {
         refreshToken: response.data.refreshToken,
         accessToken: response.data.accessToken,
       });
+      console.log(`newRefreshToken: ${response.data.refreshToken}`);
       Api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
     } catch (e) {
       console.error(`에러 : ${e}`);
