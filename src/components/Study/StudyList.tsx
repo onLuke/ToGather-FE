@@ -13,12 +13,14 @@ import React from 'react';
 import { CheckInfinity } from './StudyContainer.style';
 import { useInView } from 'react-intersection-observer';
 import { getProjectAllByPage } from 'src/apis/project';
+import { isUploaded } from 'src/contexts/chachingOptionAtom';
 
 const StudyList = () => {
   const recruitState = useRecoilValue(StatusFilterAtom);
   const techIds = useRecoilValue(TechFilterSelector);
   const textFilter = useRecoilValue(TextFilterAtom);
   const locationFilter = useRecoilValue(LocationFilterAtom);
+  const uploadState = useRecoilValue(isUploaded);
 
   const fetchPostList = async (
     recruitState: string,
@@ -67,6 +69,7 @@ const StudyList = () => {
       },
       staleTime: 3 * 60 * 1000,
       refetchOnWindowFocus: false,
+      refetchOnMount: 'always',
     }
   );
 
