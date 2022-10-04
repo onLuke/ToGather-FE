@@ -13,6 +13,7 @@ import UploadStudy from './pages/UploadStudy';
 import StudyDetail from './pages/StudyDetail';
 import MyProjectPage from './pages/MyProjectPage';
 import ChatPage from './pages/ChatPage';
+import GlobalStyle from './global-styles';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <BrowserRouter>
         <ModalProvider>
           <HeaderNavigation />
+          <GlobalStyle />
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
