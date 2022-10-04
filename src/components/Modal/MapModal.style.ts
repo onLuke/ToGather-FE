@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import COLOR from 'src/constants/colors';
 import { css, keyframes } from '@emotion/react';
+import Flex from 'src/styles/Flex';
 
 const MapModalBlock = styled.div``;
 
@@ -34,22 +35,22 @@ const button = styled.button`
   height: 1rem;
 `;
 
-const slowHidden =
-  keyframes();
-  // css`
-  //   0 {
-  //     opacity: 1;
-  //   }
+const slowHidden = keyframes();
+// css`
+//   0 {
+//     opacity: 1;
+//   }
 
-  //   100% {
-  //     opacity: 0;
-  //     visibility: hidden;
-  //   }
-  // `
+//   100% {
+//     opacity: 0;
+//     visibility: hidden;
+//   }
+// `
 
 const WrapMessage = styled.div`
   visibility: ${({ isHidden }: { isHidden: boolean }) => (isHidden ? 'hidden' : 'visible')};
-  width: 15rem;
+  margin-top: ${({ isMain }: { isMain: boolean }) => (isMain ? '1rem' : '')};
+  width: ${({ isMain }: { isMain: boolean }) => (isMain ? '18rem' : '17rem')};
   height: 1.5rem;
   text-align: center;
   position: relative;
@@ -62,5 +63,26 @@ const WrapMessage = styled.div`
         `
       : ''};
 `;
+const WrapBtn = styled.div`
+  ${Flex({ justifyContent: 'center' })};
+`;
 
-export { MapModalBlock, MapContainer, Marker, CustomOverlay, MarkerContents, WrapMessage, button };
+const Btn = styled.button`
+  visibility: ${({ isHidden }: { isHidden: boolean }) => (isHidden ? 'hidden' : 'visible')};
+  width: 30%;
+  height: 2rem;
+  border-radius: 1rem;
+  margin: 1rem;
+  background-color: ${COLOR.BLUR_100};
+`;
+
+export {
+  MapModalBlock,
+  MapContainer,
+  Marker,
+  CustomOverlay,
+  MarkerContents,
+  WrapMessage,
+  WrapBtn,
+  Btn,
+};

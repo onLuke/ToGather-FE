@@ -1,19 +1,20 @@
-import { useEffect, useMemo, useState } from 'react';
-import { MapModalBlock, MapContainer, CustomOverlay, WrapMessage } from './MapModal.style';
+import { useEffect, useState } from 'react';
+import { MapContainer, WrapMessage, Btn, WrapBtn } from './MapModal.style';
 import { MapMarker } from 'react-kakao-maps-sdk';
 import useGetUserLocation from '../../hooks/useGetUserLocation';
 import { UserLocationAtom } from '../../contexts/UserLocationAtom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import getAddr from 'src/hooks/useGetRegionName';
-import { useCallback } from 'react';
 import { useResetRecoilState } from 'recoil';
 import { NeedValueAtom } from 'src/contexts/needValue';
+import { LocationFilterAtom } from 'src/contexts/FilterOptionAtom';
 
 const MapModal = () => {
   const initialLocation = useGetUserLocation();
   const [options, setOptions] = useRecoilState(NeedValueAtom);
   const [location, setlocation] = useRecoilState(UserLocationAtom);
+  const setFilter = useSetRecoilState(LocationFilterAtom);
   const [isHidden, setIsHidden] = useState(true);
   const reset = useResetRecoilState(UserLocationAtom);
 
@@ -41,25 +42,50 @@ const MapModal = () => {
     setOptions({ ...options, Location: false });
   };
 
+  const handleSubmit = () => {
+    setFilter({ latitude: location.La, longitude: location.Ma });
+  };
+
   return (
-    <MapContainer
-      onClick={handleClickMap}
-      center={initialLocation !== undefined && { lat: initialLocation.La, lng: initialLocation.Ma }}
-      className="map"
-      level={5}
-    >
-      <MapMarker
-        position={
-          location && location.La !== 0
-            ? { lat: location.La, lng: location.Ma }
-            : { lat: initialLocation.La, lng: initialLocation.Ma }
+    <>
+      <MapContainer
+        onClick={handleClickMap}
+        center={
+          initialLocation !== undefined && { lat: initialLocation.La, lng: initialLocation.Ma }
         }
+        className="map"
+        level={5}
       >
-        {!isHidden && location && (
-          <WrapMessage isHidden={isHidden}>{location.regionName}</WrapMessage>
-        )}
-      </MapMarker>
-    </MapContainer>
+        <MapMarker
+          position={
+            location && location.La !== 0
+              ? { lat: location.La, lng: location.Ma }
+              : { lat: initialLocation.La, lng: initialLocation.Ma }
+          }
+        >
+          {pathname === '/'
+            ? !isHidden &&
+              location && (
+                <>
+                  <WrapMessage isMain={pathname === '/'} isHidden={isHidden}>
+                    {location.regionName}
+                  </WrapMessage>
+                  <WrapBtn>
+                    <Btn isHidden={isHidden} onClick={handleSubmit}>
+                      검색하기
+                    </Btn>
+                  </WrapBtn>
+                </>
+              )
+            : !isHidden &&
+              location && (
+                <WrapMessage isMain={pathname === '/'} isHidden={isHidden}>
+                  {location.regionName}
+                </WrapMessage>
+              )}
+        </MapMarker>
+      </MapContainer>
+    </>
   );
 };
 
