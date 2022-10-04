@@ -85,6 +85,7 @@ const HeaderNavigation = () => {
               <CategoryBlock>
                 {pathname === '/' && (
                   <>
+                    <TextSearch />
                     <NavMenu
                       widthProp={NavMenuWidth.search}
                       onMouseEnter={() => {
@@ -102,7 +103,7 @@ const HeaderNavigation = () => {
                         textIsOepn={textIsOpen}
                       />
                     </NavMenu>
-                    <WrapTextMenu
+                    {/*                     <WrapTextMenu
                       widthProp={NavMenuWidth.search}
                       onMouseEnter={() => {
                         setTextIsOpen(true);
@@ -114,7 +115,7 @@ const HeaderNavigation = () => {
                     >
                       <MenuBtn active={textIsOpen}>제목 검색</MenuBtn>
                       <TextSearch textIsOpen={textIsOpen} isHidden={isHidden} />
-                    </WrapTextMenu>
+                    </WrapTextMenu> */}
                     <GpsContainer widthProp={NavMenuWidth.gps} onClick={handleKakaoOpenModal}>
                       {}
                       <GpsIcon />

@@ -1,31 +1,73 @@
-import { SearchByTextBlock, SearchInput, WrapInput, Btn } from './TextSearch.style';
-import { TechFilterSelector, TitleFilterAtom } from 'src/contexts/FilterOptionAtom';
-import { useSetRecoilState, useRecoilState } from 'recoil';
-import { useCallback, useMemo, useState } from 'react';
+import {
+  WrapSearch,
+  SelectCategory,
+  Options,
+  WrapInput,
+  SearchInput,
+  Btn,
+} from './TextSearch.style';
+import { TextFilterAtom } from 'src/contexts/FilterOptionAtom';
+import { useRecoilState } from 'recoil';
+import { useState } from 'react';
 
 interface iProps {
   textIsOpen: boolean;
   isHidden: boolean;
 }
-const TextSearch = ({ textIsOpen, isHidden }: iProps) => {
+const TextSearch = () => {
   const [value, setValue] = useState('');
-  /*   const setTitle = useSetRecoilState(TitleFilterAtom); */
-  const [title, setTitle] = useRecoilState(TitleFilterAtom);
+  const [option, setOption] = useRecoilState(TextFilterAtom);
+  const [placeHolder, setPlaceHolder] = useState('제목으로');
 
   const handleBtn = () => {
-    setTitle(value);
+    switch (placeHolder) {
+      case '제목으로':
+        setOption({ ...option, title: value });
+        break;
+      case '내용으로':
+        setOption({ ...option, content: value });
+        break;
+      case '작성자로':
+        setOption({ ...option, author: value });
+        break;
+    }
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    switch (e.target.value) {
+      case 'title':
+        setPlaceHolder('제목으로');
+        break;
+      case 'content':
+        setPlaceHolder('내용으로');
+        break;
+      case 'author':
+        setPlaceHolder('작성자로');
+        break;
+    }
+  };
+
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') handleBtn();
+  };
+
   return (
-    <SearchByTextBlock textIsOpen={textIsOpen} isHidden={isHidden}>
+    <WrapSearch onChange={handleSelect}>
+      <SelectCategory>
+        <Options value="title">제목</Options>
+        <Options value="content">내용</Options>
+        <Options value="author">작성자</Options>
+      </SelectCategory>
       <WrapInput>
         <SearchInput
           value={value}
-          placeholder="공고 제목 검색"
+          placeholder={`${placeHolder} 검색하기`}
           onChange={handleOnChange}
+          onKeyPress={handleEnter}
         ></SearchInput>
         <Btn onClick={handleBtn}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -33,7 +75,7 @@ const TextSearch = ({ textIsOpen, isHidden }: iProps) => {
           </svg>
         </Btn>
       </WrapInput>
-    </SearchByTextBlock>
+    </WrapSearch>
   );
 };
 
