@@ -39,16 +39,16 @@ const UserIntoProject = ({
               <p className="techStack">{user.techStacks.map((item: any) => item.name)}</p>
               <UserConfirmButtonContainer>
                 <button
-                  data-userId={user.memberId}
-                  data-projectId={projectId}
+                  data-userid={user.memberId}
+                  data-projectid={projectId}
                   className="confirm"
                   onClick={handleEnterUser}
                 >
                   승인
                 </button>
                 <button
-                  data-userId={user.memberId}
-                  data-projectId={projectId}
+                  data-userid={user.memberId}
+                  data-projectid={projectId}
                   className="refuse"
                   onClick={handleRefuseUser}
                 >

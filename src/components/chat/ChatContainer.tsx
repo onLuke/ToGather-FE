@@ -14,6 +14,9 @@ import {
   MessageBox,
   UserProfile,
   UserNickname,
+  MyMessageBox,
+  MyMessageTime,
+  MyNickname,
 } from './ChatContainer.styles';
 
 interface IMessage {
@@ -26,9 +29,8 @@ interface IMessage {
 interface IProps {
   roomName: string;
   message: IMessage[];
-  // roomId: string;
-  // rommName: string;
   content: string;
+  myNickname: string;
   sendMessage: (message: string) => void;
   inputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   keyPress: (e: KeyboardEvent) => void;
@@ -41,6 +43,7 @@ const ChatContainer = ({
   inputChange,
   content,
   keyPress,
+  myNickname,
 }: IProps) => {
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -53,6 +56,8 @@ const ChatContainer = ({
     }
   }, [message.length]);
 
+  console.log(message);
+
   return (
     <MessageContainerBlock>
       <MessagContainereWrapper>
@@ -60,16 +65,31 @@ const ChatContainer = ({
           <MessageRoomName>{roomName}</MessageRoomName>
           <MessageBoxWrapper ref={bottomRef}>
             {message.map(({ nickname, profileImage, message, sendTime }, idx) => (
-              <MessageBox key={idx}>
-                <UserProfile>
-                  <img src={profileImage} alt="프로필" />
-                </UserProfile>
-                <div>
-                  <UserNickname>{nickname}</UserNickname>
-                  <BubbleMessage>{message}</BubbleMessage>
-                </div>
-                <MessageTime>{sendTime}</MessageTime>
-              </MessageBox>
+              <>
+                {nickname === myNickname ? (
+                  <MessageBox key={idx}>
+                    <UserProfile>
+                      <img src={profileImage} alt="프로필" />
+                    </UserProfile>
+                    <div>
+                      <UserNickname>{nickname}</UserNickname>
+                      <BubbleMessage>{message}</BubbleMessage>
+                      <MessageTime>{sendTime}</MessageTime>
+                    </div>
+                  </MessageBox>
+                ) : (
+                  <MyMessageBox key={idx}>
+                    <div>
+                      <MyNickname>{nickname}</MyNickname>
+                      <BubbleMessage>{message}</BubbleMessage>
+                      <MyMessageTime>{sendTime}</MyMessageTime>
+                    </div>
+                    <UserProfile>
+                      <img src={profileImage} alt="프로필" />
+                    </UserProfile>
+                  </MyMessageBox>
+                )}
+              </>
             ))}
           </MessageBoxWrapper>
           <ChatMessageWrapper>

@@ -13,7 +13,6 @@ const MessagContainereWrapper = styled.div`
   margin: 0 auto;
 `;
 
-
 const MessageRoomName = styled.div`
   margin-bottom: 3rem;
   font-size: 24px;
@@ -55,8 +54,14 @@ const MessageBox = styled.div`
   margin-bottom: 1rem;
 `;
 
+const MyMessageBox = styled.div`
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: flex-end;
+`;
+
 const BubbleMessage = styled.div`
-  width: 25rem;
+  width: 15rem;
   padding: 1rem;
   border: 1px solid ${COLOR.BLUR_500};
   border-radius: 1rem;
@@ -68,6 +73,8 @@ const UserProfile = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 5px;
+  margin-left: 5px;
+  padding-top: 15px;
   img {
     width: 50px;
     height: 50px;
@@ -83,10 +90,26 @@ const UserNickname = styled.div`
   color: gray;
 `;
 
+const MyNickname = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 12px;
+  padding-left: 5px;
+  margin-bottom: 5px;
+  color: gray;
+`;
+
 const MessageTime = styled.span`
   font-size: 12px;
-  padding-top: 30px;
   padding-left: 5px;
+  color: gray;
+`;
+
+const MyMessageTime = styled.span`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 12px;
+  padding-right: 5px;
   color: gray;
 `;
 
@@ -123,11 +146,14 @@ export {
   MessageBoxBlock,
   UserProfile,
   UserNickname,
+  MyNickname,
   MessageTime,
+  MyMessageTime,
   BubbleMessage,
   ChatMessageInput,
   ChatSendButton,
   MessageBox,
+  MyMessageBox,
   MessageRoomName,
   MessageBoxWrapper,
   ChatMessageWrapper,
