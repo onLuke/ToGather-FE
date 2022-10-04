@@ -44,6 +44,21 @@ const TechsContainer = styled.div`
   z-index: 9999;
 `;
 
+const Category = styled.div`
+  ${Flex({ justifyContent: 'space-around', alignItems: 'center' })};
+  height: 4rem;
+`;
+
+const CategoryBtn = styled.button`
+  font-weight: 800;
+  background-color: rgba(143, 227, 217, 0.3);
+  width: 7rem;
+  height: 2.5rem;
+  border-radius: 1rem;
+  transition: 0.2s;
+  transform: ${({ isOn }: isOn) => (isOn ? 'scale(1.1)' : '')};
+`;
+
 const TechBtn = styled.button`
   width: 8rem;
   border-radius: 100px;
@@ -58,10 +73,6 @@ const TechBtn = styled.button`
   }
   transition: 0.2s;
   transform: ${({ isOn }: isOn) => (isOn ? 'scale(1.2)' : '')};
-
-  tech__Btn:hover {
-    transform: translate3d(-2px, -2px, -100px);
-  }
 `;
 
-export { SearchContainer, TechsContainer, TechBtn, slowHidden };
+export { SearchContainer, TechsContainer, TechBtn, slowHidden, Category, CategoryBtn };

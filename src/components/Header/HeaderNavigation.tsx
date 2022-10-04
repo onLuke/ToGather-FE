@@ -103,19 +103,6 @@ const HeaderNavigation = () => {
                         textIsOepn={textIsOpen}
                       />
                     </NavMenu>
-                    {/*                     <WrapTextMenu
-                      widthProp={NavMenuWidth.search}
-                      onMouseEnter={() => {
-                        setTextIsOpen(true);
-                        setIsHidden(false);
-                        setSearchIsOpen(false);
-                      }}
-                      onMouseLeave={() => setTextIsOpen(false)}
-                      onClick={() => setTextIsOpen(true)}
-                    >
-                      <MenuBtn active={textIsOpen}>제목 검색</MenuBtn>
-                      <TextSearch textIsOpen={textIsOpen} isHidden={isHidden} />
-                    </WrapTextMenu> */}
                     <GpsContainer widthProp={NavMenuWidth.gps} onClick={handleKakaoOpenModal}>
                       {}
                       <GpsIcon />

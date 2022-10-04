@@ -7,7 +7,7 @@ import {
   Btn,
 } from './TextSearch.style';
 import { TextFilterAtom } from 'src/contexts/FilterOptionAtom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useState } from 'react';
 
 interface iProps {
@@ -17,18 +17,20 @@ interface iProps {
 const TextSearch = () => {
   const [value, setValue] = useState('');
   const [option, setOption] = useRecoilState(TextFilterAtom);
+  const resetFilter = useResetRecoilState(TextFilterAtom);
   const [placeHolder, setPlaceHolder] = useState('제목으로');
 
   const handleBtn = () => {
     switch (placeHolder) {
       case '제목으로':
-        setOption({ ...option, title: value });
+        resetFilter();
+        setOption({ content: null, author: null, title: value });
         break;
       case '내용으로':
-        setOption({ ...option, content: value });
+        setOption({ title: null, author: null, content: value });
         break;
       case '작성자로':
-        setOption({ ...option, author: value });
+        setOption({ title: null, content: null, author: value });
         break;
     }
   };
