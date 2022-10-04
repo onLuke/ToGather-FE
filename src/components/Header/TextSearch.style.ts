@@ -40,6 +40,7 @@ const SearchInput = styled.input`
   padding: 10px 7px;
   background-color: transparent;
   outline: none;
+  font-family: 'Noto Sans KR';
 `;
 
 const Btn = styled.button`
