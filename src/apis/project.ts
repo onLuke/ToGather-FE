@@ -21,5 +21,11 @@ export const getProjectAllByPage = (
   pageParam: number,
   status: string,
   techs: string,
-  title: string
-) => Api.get(`/projects?limit=${limit}&pageNumber=${pageParam}&status=${status}${techs}${title}`);
+  title: string,
+  content: string,
+  author: string,
+  location: string
+) =>
+  Api.get(
+    `/projects?limit=${limit}&pageNumber=${pageParam}&status=${status}${techs}${title}${content}${author}${location}`
+  );

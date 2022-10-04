@@ -1,9 +1,5 @@
 import Api from './Api';
-import { getRes } from '../contexts/getStudyAtom';
 import { inputFormType } from '../pages/UploadStudy';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { isUploaded, pageNumber, isRecruiting } from '../contexts/chachingOptionAtom';
-import { TechFilterSelector, TitleFilterAtom } from 'src/contexts/FilterOptionAtom';
 
 interface getRes {
   content: string;
@@ -40,13 +36,16 @@ export const getStudy = async (
   pageNumber: number,
   isRecruiting: string,
   techIds: string[] | null,
-  title: string | null
+  title: string | null,
+  content: string | null,
+  author: string | null
 ) => {
   const res = await Api.get(
     `https://dokuny.blog/projects?limit=9&pageNumber=${pageNumber}&status=${isRecruiting}${
       techIds !== null ? '&techStacks=' + techIds.join(',') : ''
-    }${title !== null ? '&title=' + title : ''}`
-    /*     `https://jsonplaceholder.typicode.com/todos/${pageNumber}` */
+    }${title !== null ? '&title=' + title : ''}
+    ${content !== null ? '&content=' + content : ''}
+    ${author !== null ? '&author=' + author : ''}`
   );
   const { data } = res;
   return data;
