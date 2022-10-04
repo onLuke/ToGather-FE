@@ -48,7 +48,9 @@ const StudyList = () => {
     );
     const { data } = res;
     const isLast = res.data.length === 0 ? true : false;
-    return { data, nextPage: pageParam + 1, isLast };
+    const reversed = data.reverse();
+
+    return { reversed, nextPage: pageParam + 1, isLast };
   };
 
   const { ref, inView } = useInView();
@@ -73,6 +75,11 @@ const StudyList = () => {
     }
   );
 
+  Array.isArray(data) &&
+    data.sort((a, b) => {
+      return Number(a.deadline) - Number(b.deadline);
+    });
+
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
@@ -82,7 +89,7 @@ const StudyList = () => {
       <WrapStudy className="study">
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
-            {page.data.map((list: any) => (
+            {page.reversed.map((list: any) => (
               <StudyComponent
                 key={list.id}
                 id={list.id}
