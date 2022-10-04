@@ -35,13 +35,12 @@ const SelectContainer = (props: iProps) => {
   const [isOffline, setIsOffline] = useState(true);
   const [location, setLocation] = useRecoilState(UserLocationAtom);
   const openModalContext = useContext(modalContext);
-  const [input, setInput] = useState('');
 
   const handleKakaoOpenModal = () => {
     openModalContext?.openModal?.(<MapModal />);
   };
 
-  const { changeInput, selectChange, datePickerChange, multiSelectChange } = props;
+  const { selectChange, datePickerChange, multiSelectChange } = props;
 
   const handleOnOffline = (targetValue: any, targetName: any) => {
     selectChange(targetValue, targetName);
@@ -104,7 +103,12 @@ const SelectContainer = (props: iProps) => {
             name="techStackIds"
             placeholder="기술 스택"
             options={techTable}
-            onChange={multiSelectChange}
+            onChange={(multiValue, actionMeta) => {
+              if (multiValue.length >= 3) {
+                alert('사용 기술스택은 10개 이상 등록할 수 없습니다 :(');
+                Array.isArray(multiValue) && multiValue.pop();
+              } else multiSelectChange(multiValue, actionMeta);
+            }}
             classNamePrefix="select"
           />
         </WrapTechSelect>
