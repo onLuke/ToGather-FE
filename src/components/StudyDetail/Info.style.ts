@@ -21,12 +21,10 @@ const Info = styled.li`
 `;
 
 const Content = styled.article`
-  width: 70%;
-  margin: 132px auto 0;
+  width: 100%;
+  padding: 5rem 10rem;
   font-size: 1.125rem;
   word-break: break-all;
-  line-height: 1.7;
-  letter-spacing: -0.004em;
 `;
 
 export { InfoBlock, Info, Content };

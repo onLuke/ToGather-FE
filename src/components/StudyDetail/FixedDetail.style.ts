@@ -70,6 +70,10 @@ const Btn = styled.button`
   font-size: 14px;
   font-weight: 800;
   margin: 0 auto;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export { Post, MemberTable, WrapTableColumn, TableAttribute, TableValue, BtnBlock, BackBtn, Btn };

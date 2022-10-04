@@ -8,26 +8,33 @@ import {
   BackBtn,
   Btn,
 } from './FixedDetail.style';
-import { getStudyDetailQuery } from '../../service/studyQuery';
-import { ProjectDetailAtom } from '../../contexts/ProjectDetailAtom';
 import { useRecoilValue } from 'recoil';
 
-const FixedDetail = () => {
+interface IProps {
+  userId: string;
+  gettedData: any;
+  handleEnter: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+const FixedDetail = ({ userId, gettedData, handleEnter }: IProps) => {
   return (
     <>
       <Post>
         <MemberTable>
           <WrapTableColumn>
             <TableAttribute>모집인원</TableAttribute>
-            <TableValue>{/* {data.member.length}/{data.personnel} */}2/4</TableValue>
+            <TableValue>{gettedData.personnel}</TableValue>
           </WrapTableColumn>
           <WrapTableColumn>
             <TableAttribute>팀장</TableAttribute>
-            <TableValue>{/* {projectDetail.author} */}닉네임</TableValue>
+            <TableValue>{gettedData.member.nickname}</TableValue>
           </WrapTableColumn>
         </MemberTable>
         <BtnBlock>
-          <Btn>참여하기</Btn>
+          {}
+          <Btn onClick={handleEnter} disabled={userId === gettedData.member.id || !userId}>
+            참여하기
+          </Btn>
         </BtnBlock>
       </Post>
     </>

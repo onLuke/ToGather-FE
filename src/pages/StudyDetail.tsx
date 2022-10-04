@@ -5,23 +5,64 @@ import Comments from 'src/components/StudyDetail/Comment';
 import FixedDetail from '../components/StudyDetail/FixedDetail';
 import TabletFixedDetail from '../components/StudyDetail/TabletFixedDetail';
 import { useRecoilValue } from 'recoil';
-import { ProjectDetailAtom } from 'src/contexts/ProjectDetailAtom';
-import { getStudyDetailQuery } from 'src/service/studyQuery';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { enterProjectById, getProjectById } from 'src/apis/project';
+import { userAtom } from 'src/contexts/UserAtom';
 
 const StudyDetail = () => {
-  const projectDetail = useRecoilValue(ProjectDetailAtom);
+  const { id } = useParams();
+  const user = useRecoilValue(userAtom);
+  const [data, setData] = useState({});
 
-  const { data } = getStudyDetailQuery(projectDetail.projectId);
+  useEffect(() => {
+    getDetailProject();
+  }, []);
+
+  const getDetailProject = async () => {
+    if (id) {
+      try {
+        const response = await getProjectById(id);
+        setData(response.data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  const handleEnterProject = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (id) {
+      try {
+        const response = await enterProjectById(id);
+
+        if (response.data.status === 200) {
+          alert('지원 되었습니다.');
+        }
+
+        if (response.data.status === 400) {
+          alert(response.data.errorMessage);
+        }
+      } catch (e) {
+        alert('다시 시도해주세요.');
+        console.error(e);
+      }
+    }
+  };
+
+  if (Object.keys(data).length === 0) {
+    return null;
+  }
 
   return (
     <>
       <Main>
         <Header gettedData={data} />
         <InfoContainer gettedData={data} />;
-        <Comments />
+        <Comments gettedData={data} />
       </Main>
-      <FixedDetail gettedData={data} />
-      <TabletFixedDetail gettedData={data} />
+      <FixedDetail userId={user.id} gettedData={data} handleEnter={handleEnterProject} />
+      <TabletFixedDetail userId={user.id} gettedData={data} handleEnter={handleEnterProject} />
     </>
   );
 };

@@ -1,17 +1,17 @@
 import { Title, AuthorBlock, WrapAuthor, AuthorImg, Author, DateBox } from './Header.style';
 
-interface iProps {
+interface IProps {
   gettedData: any;
 }
-const Header = ({ gettedData }: iProps) => {
+const Header = ({ gettedData }: IProps) => {
   return (
     <>
-      <Title>제목 테스트 라인입니다</Title>
+      <Title>{gettedData.title}</Title>
       <AuthorBlock>
         <WrapAuthor>
-          <AuthorImg src=/* {gettedData.image} */"/" />
-          <Author>작성자</Author>
-          <DateBox>{Date.now()}</DateBox>
+          <AuthorImg src={gettedData.member.profileImage} />
+          <Author>{gettedData.member.nickname}</Author>
+          <DateBox>{gettedData.deadLine}</DateBox>
         </WrapAuthor>
       </AuthorBlock>
     </>

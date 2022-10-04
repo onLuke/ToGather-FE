@@ -1,5 +1,5 @@
+import COLOR from 'src/constants/colors';
 import styled from '@emotion/styled';
-import COLOR from '../../constants/colors';
 import Flex from '../../styles/Flex';
 import { Link } from 'react-router-dom';
 import TextSearch from './TextSearch';
@@ -44,6 +44,10 @@ const LoginButton = styled.button`
   background-color: #fff;
   cursor: pointer;
   font-weight: 600;
+
+  &:hover {
+    color: ${COLOR.LOGO_COLOR};
+  }
 `;
 
 const CategoryBlock = styled.div`
@@ -81,6 +85,12 @@ const MenuBtn = styled.div`
   ${Flex({ alignItems: 'center', justifyContent: 'center' })}
   border-radius:15%;
   cursor: pointer;
+
+  color: ${({ active }: { active: boolean }) => (active ? COLOR.LOGO_COLOR : 'black')};
+
+  &:hover {
+    color: ${COLOR.LOGO_COLOR};
+  }
 `;
 
 const Favorites = styled.div`
@@ -123,6 +133,10 @@ const UploadStudyLink = styled(Link)`
   ${Flex({ alignItems: 'center', justifyContent: 'center' })};
   width: ${({ widthProp }: menuWidthProp) => widthProp};
   font-weight: 700;
+
+  &:hover {
+    color: ${COLOR.LOGO_COLOR};
+  }
 `;
 const LocationInput = styled.input`
   background-color: hsl(0, 0%, 100%);
@@ -137,9 +151,10 @@ const LocationInput = styled.input`
   }
 `;
 
-const Logo = styled(Link)`
-  width: 3rem;
-  height: 2rem;
+const LogoTitle = styled(Link)`
+  color: ${COLOR.LOGO_COLOR} !important;
+  font-weight: bold;
+  letter-spacing: 1.5px;
 `;
 
 export {
@@ -158,6 +173,6 @@ export {
   WrapRightNav,
   UploadStudyLink,
   LocationInput,
-  Logo,
+  LogoTitle,
   WrapTextMenu,
 };

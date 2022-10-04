@@ -1,3 +1,4 @@
+import { divide } from 'lodash';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import COLOR from 'src/constants/colors';
@@ -23,21 +24,36 @@ const MyProjectInner = styled.div`
 
 const ChatRoomBlock = styled.div`
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
   justify-content: center;
-  width: 100%;
+  flex-direction: column;
 `;
+const ChatRoomWrapper = styled.div`
+  display: flex;
 
-const ChatRoomButton = styled.button`
-  width: 100%;
-  height: 12%;
-  background: white;
-  border: 3px solid ${COLOR.GRAY_100};
-  border-radius: 1.5rem;
-  font-size: 20px;
   & + & {
     margin-top: 1rem;
   }
+`;
+
+const ChatHandleBlock = styled.div`
+  width: 20%;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 3.5rem;
+`;
+
+const ChatRoomButton = styled(Link)`
+  display: inline-block;
+  width: 20%;
+  height: 100px;
+  background: white;
+  border: 3px solid ${COLOR.GRAY_100};
+  border-radius: 1.5rem;
+  text-align: center;
+  line-height: 4.5;
+  font-size: 20px;
   &:hover {
     outline: none;
     border-color: ${COLOR.BLUR_700};
@@ -55,9 +71,25 @@ const ChatRoomButton = styled.button`
 const Title = styled(Link)`
   font-size: 30px;
   margin-bottom: 1rem;
+  margin-right: 2rem;
 
   &:hover {
     opacity: 0.6;
   }
 `;
-export { MyProjectListBlock, Wrapper, MyProjectInner, ChatRoomBlock, ChatRoomButton, Title };
+
+const AccordionButton = styled.button`
+  background: none;
+  margin-left: 0.5rem;
+`;
+export {
+  MyProjectListBlock,
+  Wrapper,
+  MyProjectInner,
+  ChatRoomBlock,
+  ChatRoomButton,
+  ChatHandleBlock,
+  Title,
+  ChatRoomWrapper,
+  AccordionButton,
+};

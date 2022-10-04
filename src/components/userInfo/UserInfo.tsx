@@ -22,7 +22,7 @@ const UserInfo = () => {
     }
     const userId = user.id;
 
-    await getUser(userId)
+    await getUser(userId);
 
     getUser(userId)
       .then((res) => {

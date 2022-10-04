@@ -20,9 +20,9 @@ const Study = styled(Link)`
   border: 2px solid ${COLOR.GRAY_100};
   position: relative;
   border-radius: 10%;
-  &:hover {
+  /* &:hover {
     transfrom: scale(1.3);
-  }
+  } */
   cursor: pointer;
 `;
 

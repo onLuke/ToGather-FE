@@ -33,6 +33,10 @@ const AuthService = () => {
       });
 
       setUser(resUser);
+      setAuthToken({
+        refreshToken: response.data.refreshToken,
+        accessToken: response.data.accessToken,
+      });
       Api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
     } else if (response.data.errorMessage) alert(response.data.errorMessage);
     else if (response.data.signUpToken) setAuthToken({ signUpToken: response.data.signUpToken });
@@ -41,6 +45,10 @@ const AuthService = () => {
 
   const registerService = async (form: Iform) => {
     const response = await signUp(form, authToken.signUpToken);
+
+    if (response.data.status === 400) {
+      alert(response.data.errorMessage);
+    }
 
     const resUser = {
       id: response.data.id,
@@ -53,7 +61,10 @@ const AuthService = () => {
       path: '/',
     });
     setUser(resUser);
-    setAuthToken({});
+    setAuthToken({
+      refreshToken: response.data.refreshToken,
+      accessToken: response.data.accessToken,
+    });
     Api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
 
     return response;
@@ -61,6 +72,7 @@ const AuthService = () => {
 
   const refreshService = async () => {
     const refreshCookie = getCookie('refreshToken');
+    console.log('refresh');
 
     const response = await refresh(refreshCookie);
 
@@ -71,6 +83,10 @@ const AuthService = () => {
       setCookie('refreshToken', response.data.refreshToken, {
         path: '/',
       });
+      setAuthToken({
+        refreshToken: response.data.refreshToken,
+        accessToken: response.data.accessToken,
+      });
       Api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
     } catch (e) {
       console.error(`에러 : ${e}`);
@@ -80,13 +96,13 @@ const AuthService = () => {
   const logoutService = async () => {
     const response = await logout();
 
-    setCookie('refershToken', '', {
+    setCookie('refreshToken', '', {
       path: '/',
     });
     localStorage.removeItem('user');
 
     Api.defaults.headers.common['Authorization'] = '';
-
+    setAuthToken({});
     return response;
   };
 

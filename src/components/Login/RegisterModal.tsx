@@ -7,7 +7,7 @@ import { signUp } from 'src/apis/auth';
 import { authAtom, authSelector } from 'src/contexts/AuthAtom';
 import { userSelector } from 'src/contexts/UserAtom';
 import { stacktech } from 'src/mocks/SelectTechs';
-import { SubmitButton } from 'src/styles/Button';
+import { CustomButton, SubmitButton } from 'src/styles/Button';
 import { InputLabel, InputText } from 'src/styles/Input';
 import { ProfileBoxBlock, ProfileContainer, ProfileWrapper } from 'src/styles/Profile';
 import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
@@ -16,6 +16,7 @@ import S3UploadImage from 'src/hooks/useS3UploadImage';
 import AuthService from 'src/service/AuthService';
 import Api from 'src/apis/Api';
 import ProfileImage from '../profileImage/ProfileImage';
+import { checkNickname } from 'src/apis/user';
 
 const baseImageURL = `${import.meta.env.VITE_AWS_S3_URL}/profile/default.png`;
 
@@ -26,6 +27,7 @@ const RegisterModal = () => {
     nickname: '',
     techStackDtos: [],
   });
+  const [nicknameCheck, setNicknameCheck] = useState(true);
   const { registerService } = AuthService();
 
   const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,12 +35,27 @@ const RegisterModal = () => {
     changeInput(e);
   };
 
+  const handleCheckUserNickName = async (e: React.MouseEvent<HTMLElement>) => {
+    const nickname = form.nickname;
+    try {
+      const response = await checkNickname(nickname);
+
+      alert(response.data ? '중복입니다' : '정상입니다.');
+
+      setNicknameCheck(response.data);
+    } catch (e) {}
+  };
+
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
+    if (nicknameCheck) {
+      alert('중복확인을 눌러 주세요.');
+      return;
+    }
     try {
       const formData = { ...form };
-      if (form.prifileImage !== baseImageURL) {
+      if (form.profileImage !== baseImageURL) {
         formData.profileImage = await handleUpload();
         formData.profileImage = `${import.meta.env.VITE_AWS_S3_URL}/${formData.profileImage}`;
       }
@@ -64,6 +81,9 @@ const RegisterModal = () => {
           value={form.nickname}
           onChange={changeInput}
         />
+        <CustomButton style={{ marginLeft: '1rem' }} onClick={handleCheckUserNickName}>
+          중복확인
+        </CustomButton>
       </InputBoxBlock>
       <InputBoxBlock>
         <InputLabel htmlFor="techStackDtos">기술 태그</InputLabel>

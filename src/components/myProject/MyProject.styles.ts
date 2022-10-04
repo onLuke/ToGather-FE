@@ -11,4 +11,13 @@ const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
-export { MyProjectBlock, Wrapper };
+const ArcodionHandleBlock = styled.div`
+  margin: 0.5rem 0;
+`;
+
+const AccordionButton = styled.button`
+  background: none;
+  margin-left: 0.5rem;
+`;
+
+export { MyProjectBlock, Wrapper, ArcodionHandleBlock, AccordionButton };

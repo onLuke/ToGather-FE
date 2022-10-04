@@ -1,55 +1,54 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "airbnb",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "ignorePatterns": ["*.css"],
+  "rules": {
+    "react/function-component-definition": [
+      { "namedComponents": ["function-declaration", "function-expression", "arrow-function"] }
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint",
-        "prettier"
+    "react/no-unescaped-entities": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "import/no-unresolved": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx", ".jsx", "js", ".svg"] }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": true, "optionalDependencies": true, "peerDependencies": true }
     ],
-    "ignorePatterns": ["*.css"],
-    "rules": {
-        "react/function-component-definition": [{"namedComponents": ["function-declaration", "function-expression", "arrow-function"]}],
-        "react/no-unescaped-entities": "off",
-        "@typescript-eslint/no-var-requires": "off",
-        "import/no-unresolved": "off",
-        "react/react-in-jsx-scope": "off",
-        "react/jsx-filename-extension": ["warn", { "extensions": [".tsx", ".jsx", "js", ".svg"] }],
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": true, "peerDependencies": true}],
-        "no-shadow": "off",
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "ts": "never",
-                "tsx": "never"
-            }
-        ]
+    "no-shadow": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  },
+  "settings": {
+    "node": {
+      "paths": ["src"]
     },
-    "settings": {
-        "node":{
-            "paths": ["src"]
-        },
-        "import/resolver": {
-            "typescript":{}
-        }
+    "import/resolver": {
+      "typescript": {}
     }
+  }
 }
-
-

@@ -4,10 +4,12 @@ import Flex from '../../styles/Flex';
 
 const CommentBlock = styled.section`
   width: 80%;
+  height: 60vh;
   display: flex;
   flex-direction: column;
   background: #fff;
-  margin: 12rem auto 0;
+  margin: 0 10rem;
+  margin-bottom: 10rem;
 `;
 
 const CommentHeader = styled.h1`
@@ -21,7 +23,7 @@ const CommentInput = styled.textarea`
   outline: none;
   border: 2px solid #e1e1e1;
   border-radius: 16px;
-  width: 100%;
+  width: 95%;
   min-height: 100px;
   margin-bottom: 10px;
   resize: none;

@@ -12,22 +12,38 @@ import {
   CommentContent,
 } from './Comment.style';
 
-const Comments = () => {
+interface IProps {
+  gettedData: any;
+}
+const Comments = ({ gettedData }: IProps) => {
   return (
     <CommentBlock>
       <CommentHeader>댓글창</CommentHeader>
-      <CommentInput />
-      <CommentSection>
-        <CommentTitle>제목</CommentTitle>
-        <CommentAuthorBlock>
-          <CommentAuthorImg />
-          <CommentAuthor>
-            <CommentId>작성자아이디</CommentId>
-            <CommentTime>{Date.now()}</CommentTime>
-          </CommentAuthor>
-        </CommentAuthorBlock>
-        <CommentContent>댓글 내용</CommentContent>
-      </CommentSection>
+      <div style={{ display: 'flex' }}>
+        <CommentInput />
+        <button
+          style={{
+            width: '10%',
+            marginLeft: '1rem',
+            borderRadius: '1rem',
+            background: 'aliceblue',
+          }}
+        >
+          입력
+        </button>
+      </div>
+      {gettedData.comments.map((item: any) => (
+        <CommentSection>
+          <CommentAuthorBlock>
+            <CommentAuthorImg src={item.member.profileImage} alt="프로필" />
+            <CommentAuthor>
+              <CommentId>{item.member.nickname}</CommentId>
+              <CommentTime>{item.createdAt}</CommentTime>
+            </CommentAuthor>
+          </CommentAuthorBlock>
+          <CommentContent>{item.content}</CommentContent>
+        </CommentSection>
+      ))}
     </CommentBlock>
   );
 };

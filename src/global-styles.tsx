@@ -1,6 +1,5 @@
 import { css, Global } from '@emotion/react';
 import React from 'react';
-import Reset from './styles/Reset';
 
 const sizes: { [key: string]: number } = {
   mobile: 320,
@@ -12,7 +11,6 @@ const GlobalStyle = () => {
   return (
     <Global
       styles={css`
-        ${Reset()}
         * {
           font-family: 'Prompt', sans-serif;
         }

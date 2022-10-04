@@ -1,8 +1,4 @@
-import GoogleLogin from 'react-google-login';
-import { gapi } from 'gapi-script';
-import React, { useEffect } from 'react';
 import { GoogleLoginButton } from './SocialLogin.styles';
-import { useNavigate } from 'react-router-dom';
 
 const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${
   import.meta.env.VITE_GOOGLE_KEY

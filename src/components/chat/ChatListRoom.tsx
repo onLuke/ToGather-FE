@@ -12,7 +12,7 @@ const ChatListRoom = () => {
   return (
     <ChatListRoomBlock>
       <Breadcrumb>마이 페이지 - 채팅방</Breadcrumb>
-      <MyProjectList myProject={[1, 2]} />
+      <MyProjectList />
     </ChatListRoomBlock>
   );
 };

@@ -45,7 +45,7 @@ const MapModal = () => {
     <MapContainer
       onClick={handleClickMap}
       center={initialLocation !== undefined && { lat: initialLocation.La, lng: initialLocation.Ma }}
-      class="map"
+      className="map"
       level={5}
     >
       <MapMarker

@@ -17,6 +17,7 @@ import {
   WrapRightNav,
   UploadStudyLink,
   WrapTextMenu,
+  LogoTitle,
 } from './HeaderNavigation.styles';
 import TextSearch from './TextSearch';
 import { GpsIcon } from '../@icons/Images';
@@ -31,6 +32,8 @@ import { logout, refresh } from 'src/apis/auth';
 import AuthService from 'src/service/AuthService';
 import Logo from '../@icons/Logo';
 import { UserLocationAtom } from 'src/contexts/UserLocationAtom';
+import { authAtom } from 'src/contexts/AuthAtom';
+import COLOR from 'src/constants/colors';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
@@ -48,6 +51,7 @@ const HeaderNavigation = () => {
 
   const refersh = async () => {
     if (user.nickname) {
+      console.log(1);
       const response = await refreshService();
     }
   };
@@ -76,7 +80,7 @@ const HeaderNavigation = () => {
       <NavigationContainer>
         <NavigationBlock>
           <Wrapper>
-            <Link to="/">로고</Link>
+            <LogoTitle to="/">toGahter</LogoTitle>
             <WrapRightNav>
               <CategoryBlock>
                 {pathname === '/' && (
@@ -91,7 +95,7 @@ const HeaderNavigation = () => {
                       onMouseLeave={() => setSearchIsOpen(false)}
                       onClick={() => setSearchIsOpen(true)}
                     >
-                      <MenuBtn>공고 검색</MenuBtn>
+                      <MenuBtn active={searchIsOpen}>공고 검색</MenuBtn>
                       <SearchMenu
                         searchIsOpen={searchIsOpen}
                         isHidden={[isHidden, setIsHidden]}
@@ -108,7 +112,7 @@ const HeaderNavigation = () => {
                       onMouseLeave={() => setTextIsOpen(false)}
                       onClick={() => setTextIsOpen(true)}
                     >
-                      <MenuBtn>제목 검색</MenuBtn>
+                      <MenuBtn active={textIsOpen}>제목 검색</MenuBtn>
                       <TextSearch textIsOpen={textIsOpen} isHidden={isHidden} />
                     </WrapTextMenu>
                     <GpsContainer widthProp={NavMenuWidth.gps} onClick={handleKakaoOpenModal}>
@@ -143,7 +147,7 @@ const HeaderNavigation = () => {
                       }}
                       onMouseLeave={() => setMyPageIsOpen(false)}
                     >
-                      <MenuBtn onClick={() => setMyPageIsOpen(true)}>마이 페이지</MenuBtn>
+                      <MenuBtn active={myPageIsOpen}>마이 페이지</MenuBtn>
                       <MyPageList myPageIsOpen={myPageIsOpen} />
                     </MyPageMenu>
                     <LoginButton onClick={handleLogout}>로그아웃</LoginButton>

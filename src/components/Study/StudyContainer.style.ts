@@ -16,7 +16,6 @@ const StudySection = styled.section`
   margin-top: 4rem;
   width: 1180px;
   min-height: 50rem;
-  box-shadow: ;
   height: 1000px;
 `;
 const CheckInfinity = styled.div`

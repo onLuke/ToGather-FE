@@ -11,17 +11,25 @@ import {
   Btn,
 } from './FixedDetail.style';
 
-const TabletFixedDetail = () => {
+interface IProps {
+  userId: string;
+  gettedData: any;
+  handleEnter: (e: React.MouseEvent<HTMLElement>) => void;
+}
+
+const TabletFixedDetail = ({ userId, gettedData, handleEnter }: IProps) => {
   return (
     <TabletPost>
       <TabletBlock>
         <TabletMember>
           <WrapTableColumn>
             <TableAttribute>모집인원</TableAttribute>
-            <TableValue>2/4</TableValue>
+            <TableValue>{gettedData.personnel}</TableValue>
           </WrapTableColumn>
         </TabletMember>
-        <TabletBtn>참여하기</TabletBtn>
+        <TabletBtn onClick={handleEnter} disabled={userId === gettedData.member.id || !userId}>
+          참여하기
+        </TabletBtn>
       </TabletBlock>
     </TabletPost>
   );

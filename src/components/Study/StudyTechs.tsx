@@ -10,7 +10,9 @@ const StudyTechs = ({ techsList }: props) => {
   return (
     <StudytechsBlock>
       {techsList.map((tech) => (
-        <TechIconContainer key={techs[tech.id].tech}>{techs[tech.id].icon()}</TechIconContainer>
+        <TechIconContainer key={techs[tech.id - 1].tech}>
+          {techs[tech.id - 1].icon()}
+        </TechIconContainer>
       ))}
     </StudytechsBlock>
   );

@@ -34,18 +34,18 @@ const button = styled.button`
   height: 1rem;
 `;
 
-const slowHidden = keyframes(
-  css`
-    0 {
-      opacity: 1;
-    }
+const slowHidden =
+  keyframes();
+  // css`
+  //   0 {
+  //     opacity: 1;
+  //   }
 
-    100% {
-      opacity: 0;
-      visibility: hidden;
-    }
-  `
-);
+  //   100% {
+  //     opacity: 0;
+  //     visibility: hidden;
+  //   }
+  // `
 
 const WrapMessage = styled.div`
   visibility: ${({ isHidden }: { isHidden: boolean }) => (isHidden ? 'hidden' : 'visible')};

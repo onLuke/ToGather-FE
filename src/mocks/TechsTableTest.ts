@@ -1,6 +1,5 @@
 import { techs } from '../components/@icons/Techs/Techs';
 import react from 'react';
-import { EmotionJSX } from '@emotion/react';
 
 interface techsNameTestType {
   [key: string]: number;

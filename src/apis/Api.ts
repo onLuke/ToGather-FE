@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookie, setCookie } from 'src/lib/cookies';
 
 const Api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -24,16 +25,19 @@ Api.interceptors.response.use(
     // access token이 만료되어 발생하는 경우
     console.log(originalRequest.url);
     // originalRequest로 재요청 보내야 하는 로직 생각 해야함
+
     if (errResStatus === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
-      const prevRefreshToken = localStorage.getItem('refreshToken');
-      console.log(prevRefreshToken);
+      const prevRefreshToken = getCookie('refreshToken');
+
       if (prevRefreshToken) {
         // refersh token을 이용하여 access token 재발행 받기
         return Api.post('/oauth/refresh', prevRefreshToken)
           .then((res) => {
             const { accessToken, refreshToken } = res.data;
-            localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
+            setCookie('refreshToken', res.data.refreshToken, {
+              path: '/',
+            });
             originalRequest.headers.Authoriztion = `Bearer ${accessToken}`;
             Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
           })

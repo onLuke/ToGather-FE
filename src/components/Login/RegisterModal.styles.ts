@@ -14,12 +14,12 @@ const Title = styled.h2`
 const InputBoxBlock = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-around;
-  margin-bottom: 2rem;
   height: 40px;
   font-size: 1rem;
   font-weight: 600;
   align-items: center;
+  margin: 0 3rem;
+  margin-bottom: 2rem;
 
   .customSelect {
     width: 60%;

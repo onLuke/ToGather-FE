@@ -8,18 +8,7 @@ interface iProps {
   isHidden: boolean;
 }
 
-const slowHidden = keyframes(
-  css`
-    0 {
-      opacity: 1;
-    }
-
-    100% {
-      opacity: 0;
-      visibility: hidden;
-    }
-  `
-);
+const slowHidden = keyframes();
 
 const SearchByTextBlock = styled.div`
   ${Flex({ alignItems: 'center' })};

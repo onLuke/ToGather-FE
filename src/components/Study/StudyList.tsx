@@ -13,6 +13,7 @@ import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import Api from 'src/apis/Api';
 import { Link } from 'react-router-dom';
+import { getProjectAllByPage } from 'src/apis/project';
 
 const StudyList = () => {
   const recruitState = useRecoilValue(isRecruiting);
@@ -25,11 +26,10 @@ const StudyList = () => {
     title: string | null,
     pageParam: number
   ) => {
-    const res = await Api.get(
-      `https://dokuny.blog/projects?limit=9&pageNumber=${pageParam}&status=${recruitState}${
-        techIds !== null ? '&techStacks=' + techIds.join(',') : ''
-      }${title !== null ? '&title=' + title : ''}`
-    );
+    const techIsParams = techIds !== null ? '&techStackIds=' + techIds.join(',') : '';
+    const titleParams = title !== null ? '&title=' + title : '';
+
+    const res = await getProjectAllByPage(9, pageParam, recruitState, techIsParams, titleParams);
     const { data } = res;
     const isLast = res.data.length === 0 ? true : false;
     return { data, nextPage: pageParam + 1, isLast };
