@@ -30,6 +30,12 @@ const Study = styled(Link)`
 const StudyTitle = styled.h1`
   text-align: center;
   font-size: ${FontSizes.Study_Title_Fontsize};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 `;
 
 const StudyDeadline = styled.div`
@@ -54,14 +60,23 @@ const StudyFooter = styled.section`
 const StudyAuthor = styled.div`
   ${Flex({ justifyContent: 'space-between', alignItems: 'center', columnGap: '0.5rem' })};
   max-width: 10rem;
+  img {
+    border-radius: 1rem;
+    object-fit: cover;
+  }
 `;
 
 const StudyViewer = styled.div`
-  ${Flex({ rowGap: '0.5rem' })}
+  ${Flex({ rowGap: '0.5rem' })};
 `;
 
 const AuthorSpan = styled.span`
-  ${LineClamp};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 `;
 
 export {
