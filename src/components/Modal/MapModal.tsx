@@ -9,6 +9,10 @@ import getAddr from 'src/hooks/useGetRegionName';
 import { useResetRecoilState } from 'recoil';
 import { NeedValueAtom } from 'src/contexts/needValue';
 import { LocationFilterAtom } from 'src/contexts/FilterOptionAtom';
+import Api from 'src/apis/Api';
+import { useQuery } from 'react-query';
+import { config } from 'process';
+import axios from 'axios';
 
 const MapModal = () => {
   const initialLocation = useGetUserLocation();
@@ -17,6 +21,7 @@ const MapModal = () => {
   const setFilter = useSetRecoilState(LocationFilterAtom);
   const [isHidden, setIsHidden] = useState(true);
   const reset = useResetRecoilState(UserLocationAtom);
+  const [status, setStatus] = useState<any>();
 
   const { pathname } = useLocation();
 
@@ -42,8 +47,20 @@ const MapModal = () => {
     setOptions({ ...options, Location: false });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setFilter({ latitude: location.La, longitude: location.Ma });
+    const res = await Api.get(
+      `https://dokuny.blog/projects/search/distance?distance=3&latitude=${location.La}&longitude=${location.Ma}`
+      /*       {
+        params: {
+          distance: 1,
+          latitude: 37.500789,
+          longitude: 127.036909,
+        },
+      } */
+    );
+    setStatus([{ title: '제목', latitude: 127.04, longitude: 135.11 }]);
+    return res;
   };
 
   return (
@@ -84,6 +101,17 @@ const MapModal = () => {
                 </WrapMessage>
               )}
         </MapMarker>
+        {/* 
+        {pathname === '/' &&
+          status &&
+          location &&
+          status.map((el: any) => (
+            <>
+              <MapMarker position={location && { lat: status.latitude, lng: status.longitude }}>
+                <WrapMessage>{'제목'}</WrapMessage>
+              </MapMarker>
+            </>
+          ))} */}
       </MapContainer>
     </>
   );

@@ -16,7 +16,18 @@ interface isScrollOver {
   [key: string]: boolean;
 }
 
-const slowHidden = keyframes();
+const slowHidden = keyframes(
+  css`
+    0 {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  `
+);
 
 const SearchContainer = styled.div`
   display: ${({ isOpen }: isOpen) => (isOpen ? 'block' : 'none')};

@@ -14,6 +14,10 @@ const MapContainer = styled(Map)`
   top: 20%;
   right: 50%;
   transform: translate(50%);
+  z-index: 9999;
+  * {
+    z-index: 9999 !important;
+  }
 `;
 
 const Marker = styled(MapMarker);
@@ -23,11 +27,13 @@ const MarkerContents = styled.div`
   height: 200px;
   outline: none;
   border: none;
+  z-index: 9999;
 `;
 const CustomOverlay = styled(CustomOverlayMap)`
   width: 300px !important;
   height: 200px !important;
   background-color: red !important;
+  z-index: 9999;
 `;
 
 const button = styled.button`
@@ -62,9 +68,11 @@ const WrapMessage = styled.div`
           ${slowHidden} 0.5s 0s forwards
         `
       : ''};
+  z-index: 9999;
 `;
 const WrapBtn = styled.div`
   ${Flex({ justifyContent: 'center' })};
+  z-index: 9999;
 `;
 
 const Btn = styled.button`
