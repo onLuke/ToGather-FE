@@ -29,9 +29,7 @@ const SearchMenu = ({ searchIsOpen, isHidden, textIsOepn }: SearchMenuProps) => 
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => {};
   });
 
   const handleTechBtn = (id: number) => {

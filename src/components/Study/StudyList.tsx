@@ -69,8 +69,8 @@ const StudyList = () => {
       getNextPageParam: (lastPage) => {
         return !lastPage.isLast ? lastPage.nextPage : undefined;
       },
-      staleTime: 3 * 60 * 1000,
-      refetchOnWindowFocus: false,
+      /*       staleTime: 3 * 60 * 1000,
+      refetchOnWindowFocus: false, */
       refetchOnMount: 'always',
     }
   );
@@ -96,7 +96,6 @@ const StudyList = () => {
                 techs={list.techStacks}
                 deadline={list.deadline}
                 title={list.title}
-                profileImage={list.member.profileImage}
                 author={list.member.nickname}
                 image={list.member.profileImage}
               />

@@ -104,8 +104,10 @@ const SelectContainer = (props: iProps) => {
             placeholder="기술 스택"
             options={techTable}
             onChange={(multiValue, actionMeta) => {
-              if (multiValue.length >= 3) {
+              if (multiValue.length >= 10) {
                 alert('사용 기술스택은 10개 이상 등록할 수 없습니다 :(');
+                console.log(multiValue);
+
                 Array.isArray(multiValue) && multiValue.pop();
               } else multiSelectChange(multiValue, actionMeta);
             }}
