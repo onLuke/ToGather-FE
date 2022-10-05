@@ -4,7 +4,7 @@ import Flex from '../../styles/Flex';
 
 const CommentBlock = styled.section`
   width: 80%;
-  min-height: 60vh;
+  min-height: 30vh;
   display: flex;
   flex-direction: column;
   background: #fff;

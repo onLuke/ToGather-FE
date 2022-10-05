@@ -19,6 +19,7 @@ const RegisterModal = () => {
     nickname: '',
     techStackDtos: [],
   });
+
   const [nicknameCheck, setNicknameCheck] = useState(true);
   const { registerService } = AuthService();
 

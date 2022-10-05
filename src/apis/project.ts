@@ -29,3 +29,5 @@ export const getProjectAllByPage = (
   Api.get(
     `/projects?limit=${limit}&pageNumber=${pageParam}&status=${status}${techs}${title}${content}${author}${location}`
   );
+
+export const removeMyProject = (projectId: string) => Api.delete(`/projects/${projectId}`);

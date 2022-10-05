@@ -96,8 +96,8 @@ const StudyList = () => {
                 techs={list.techStacks}
                 deadline={list.deadline}
                 title={list.title}
-                author={list.member.nickname}
                 image={list.member.profileImage}
+                author={list.member.nickname}
               />
             ))}
           </React.Fragment>

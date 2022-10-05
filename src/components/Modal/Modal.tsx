@@ -2,6 +2,8 @@ import React from 'react';
 import Portal from '../../Portals/Portal';
 import { Header, ModalBlock, Content, CloseButton } from './Modal.styles';
 
+import logo from 'src/components/@icons/logo.png';
+
 interface Props {
   children: React.ReactNode;
   openModal: boolean;
@@ -30,7 +32,7 @@ const Modal = ({ children, openModal, setOpenModal }: Props) => {
         <ModalBlock onClick={handleCloseButton}>
           <Content>
             <Header>
-              로고
+              <img src="src/components/@icons/logo.png" alt="" width="50px" height="50px" />
               <CloseButton type="button" onClick={modalClose}>
                 <svg
                   stroke="currentColor"

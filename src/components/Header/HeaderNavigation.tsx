@@ -80,7 +80,9 @@ const HeaderNavigation = () => {
       <NavigationContainer>
         <NavigationBlock>
           <Wrapper>
-            <LogoTitle to="/">toGahter</LogoTitle>
+            <LogoTitle to="/">
+              <img src="src/components/@icons/logo4.png" alt="" width="200px" height="60px" />
+            </LogoTitle>
             <WrapRightNav>
               <CategoryBlock>
                 {pathname === '/' && (
@@ -109,7 +111,7 @@ const HeaderNavigation = () => {
                     </GpsContainer>
                   </>
                 )}
-                <NavMenu
+                {/* <NavMenu
                   widthProp={NavMenuWidth.favorite}
                   onMouseEnter={() => {
                     setFavoriteIsOpen(true);
@@ -118,7 +120,7 @@ const HeaderNavigation = () => {
                 >
                   <MenuBtn onClick={() => setFavoriteIsOpen(true)}>즐겨찾기</MenuBtn>
                   <Favorites favoriteIsOpen={favoriteIsOpen}></Favorites>
-                </NavMenu>
+                </NavMenu> */}
                 <NavMenu>
                   <UploadStudyLink to="/uploadStudy" onClick={reset}>
                     공고 등록

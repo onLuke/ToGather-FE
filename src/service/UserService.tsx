@@ -9,7 +9,6 @@ const UserService = () => {
 
   const updateUserByIdService = async (id: string, form: any) => {
     const response = await editUser(id, form);
-
     setUser(response.data);
 
     return response;

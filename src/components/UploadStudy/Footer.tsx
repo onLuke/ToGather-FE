@@ -8,19 +8,17 @@ import { createStudyQuery } from 'src/service/studyQuery';
 import { useNavigate } from 'react-router-dom';
 
 interface iProps {
-  form: {
-    offline: boolean;
-    personnel: string;
-    status: string;
-    deadline: string;
-    techStackIds: number[];
-    content: string;
-    title: string;
-    Location: '';
-  };
+  offline: boolean;
+  personnel: string;
+  status: string;
+  deadline: string;
+  techStackIds: number[];
+  content: string;
+  title: string;
+  Location: string;
 }
 
-const Footer = ({ form }: iProps) => {
+const Footer = ({ form }: any) => {
   const setIsUploaded = useSetRecoilState(isUploaded);
   const location = useRecoilValue(UserLocationAtom);
 

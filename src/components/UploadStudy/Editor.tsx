@@ -25,6 +25,7 @@ const Editor = (props: iProps) => {
     if (e.index === 0) setOption({ ...option, content: true });
     else setOption({ ...option, content: false });
   };
+
   return (
     <>
       <WrapEditor>
