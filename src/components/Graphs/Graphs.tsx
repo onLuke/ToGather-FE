@@ -56,16 +56,7 @@ const Graph = () => {
     }
   }
 
-  let rankColor = [
-    '#11b288',
-    '#207ac7',
-    '#207ac7',
-    '#207ac7',
-    '#d6d6d6',
-    '#d6d6d6',
-    '#d6d6d6',
-    '#d6d6d6',
-  ];
+  let rankColor = ['#11b288', '#207ac7', '#d6d6d6', COLOR.RED_100, COLOR.LOGO_COLOR, '#d6d6d6'];
 
   const stasisticsData = {
     labels: dataLabel,
