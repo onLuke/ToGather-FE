@@ -8,7 +8,7 @@ const MainPage = () => {
   return (
     <>
       <UserLoginAuth />
-      <Graph />
+
       <StudyListContainer />
     </>
   );
