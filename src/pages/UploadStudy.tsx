@@ -3,7 +3,9 @@ import Footer from '../components/UploadStudy/Footer';
 import WrapSection from '../components/UploadStudy/WrapSection';
 import SelectContainer from '../components/UploadStudy/SelectContainer';
 import useInputForUpload from '../hooks/useInputForUpload';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { getProjectById } from 'src/apis/project';
 
 export interface inputFormType {
   offline: boolean;

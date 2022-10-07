@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { NeedValueAtom } from 'src/contexts/needValue';
 import S3UploadImage from './useS3UploadImage';
@@ -12,8 +12,13 @@ interface Tech {
   label: string;
 }
 
-const useInput = (initailValue: any) => {
+const useInputForUpload = (initailValue: any) => {
   const [form, setForm] = useState(initailValue);
+
+  useEffect(() => {
+    setForm(initailValue);
+  }, [initailValue.title]);
+
   const [option, setOption] = useRecoilState(NeedValueAtom);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +133,8 @@ const useInput = (initailValue: any) => {
     changeInputWithCheck,
     selectChangeWithCheck,
     datePickerChangeWithCheck,
+    setForm,
   };
 };
 
-export default useInput;
+export default useInputForUpload;

@@ -10,9 +10,4 @@ const pageNumber = atom({
   default: 0,
 });
 
-const isRecruiting = atom<'RECRUITING' | 'COMPLETE'>({
-  key: 'IS_RECRUITING',
-  default: 'RECRUITING',
-});
-
-export { isUploaded, pageNumber, isRecruiting };
+export { isUploaded, pageNumber };

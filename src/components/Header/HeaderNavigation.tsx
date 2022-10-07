@@ -80,11 +80,19 @@ const HeaderNavigation = () => {
       <NavigationContainer>
         <NavigationBlock>
           <Wrapper>
-            <LogoTitle to="/">toGahter</LogoTitle>
+            <LogoTitle to="/">
+              <img
+                src="src/components/@icons/logo2_express.svg"
+                alt=""
+                width="200px"
+                height="60px"
+              />
+            </LogoTitle>
             <WrapRightNav>
               <CategoryBlock>
                 {pathname === '/' && (
                   <>
+                    <TextSearch />
                     <NavMenu
                       widthProp={NavMenuWidth.search}
                       onMouseEnter={() => {
@@ -102,26 +110,13 @@ const HeaderNavigation = () => {
                         textIsOepn={textIsOpen}
                       />
                     </NavMenu>
-                    <WrapTextMenu
-                      widthProp={NavMenuWidth.search}
-                      onMouseEnter={() => {
-                        setTextIsOpen(true);
-                        setIsHidden(false);
-                        setSearchIsOpen(false);
-                      }}
-                      onMouseLeave={() => setTextIsOpen(false)}
-                      onClick={() => setTextIsOpen(true)}
-                    >
-                      <MenuBtn active={textIsOpen}>제목 검색</MenuBtn>
-                      <TextSearch textIsOpen={textIsOpen} isHidden={isHidden} />
-                    </WrapTextMenu>
                     <GpsContainer widthProp={NavMenuWidth.gps} onClick={handleKakaoOpenModal}>
                       {}
                       <GpsIcon />
                     </GpsContainer>
                   </>
                 )}
-                <NavMenu
+                {/* <NavMenu
                   widthProp={NavMenuWidth.favorite}
                   onMouseEnter={() => {
                     setFavoriteIsOpen(true);
@@ -130,7 +125,7 @@ const HeaderNavigation = () => {
                 >
                   <MenuBtn onClick={() => setFavoriteIsOpen(true)}>즐겨찾기</MenuBtn>
                   <Favorites favoriteIsOpen={favoriteIsOpen}></Favorites>
-                </NavMenu>
+                </NavMenu> */}
                 <NavMenu>
                   <UploadStudyLink to="/uploadStudy" onClick={reset}>
                     공고 등록

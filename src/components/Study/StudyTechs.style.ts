@@ -6,14 +6,15 @@ import FontSizes from 'src/constants/FontSizes';
 import { techs } from 'src/components/@icons';
 
 const StudytechsBlock = styled.div`
-  ${Flex({ rowGap: '1rem', alignItems: 'center', justifyContent: 'center', flexWrap: 'nowrap' })};
-  width: 200px;
+  ${Flex({ rowGap: '1rem', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' })};
+  max-width: 200px;
   height: 4rem;
   svg {
     width: 40px;
     height: 40px;
   }
   margin: 0 auto 5%;
+  margin-bottom: ${({ len }: any) => (len > 5 ? '3rem' : '5%')};
 `;
 
 const TechIconContainer = styled.div``;

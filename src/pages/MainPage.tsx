@@ -1,3 +1,4 @@
+import Graph from 'src/components/Graphs/Graphs';
 import HeaderNavigation from 'src/components/Header/HeaderNavigation';
 import UserLoginAuth from 'src/components/oauth/UserLoginAuth';
 import StudyListContainer from 'src/components/Study/StudyContainer';
@@ -7,7 +8,7 @@ const MainPage = () => {
   return (
     <>
       <UserLoginAuth />
-      <Statistics />
+      <Graph />
       <StudyListContainer />
     </>
   );

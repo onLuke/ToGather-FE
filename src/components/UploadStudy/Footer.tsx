@@ -8,19 +8,17 @@ import { createStudyQuery } from 'src/service/studyQuery';
 import { useNavigate } from 'react-router-dom';
 
 interface iProps {
-  form: {
-    offline: boolean;
-    personnel: string;
-    status: string;
-    deadline: string;
-    techStackIds: number[];
-    content: string;
-    title: string;
-    Location: '';
-  };
+  offline: boolean;
+  personnel: string;
+  status: string;
+  deadline: string;
+  techStackIds: number[];
+  content: string;
+  title: string;
+  Location: string;
 }
 
-const Footer = ({ form }: iProps) => {
+const Footer = ({ form }: any) => {
   const setIsUploaded = useSetRecoilState(isUploaded);
   const location = useRecoilValue(UserLocationAtom);
 
@@ -29,7 +27,6 @@ const Footer = ({ form }: iProps) => {
 
   const navigation = useNavigate();
 
-
   const handleSubmit = () => {
     setIsUploaded(true);
     let resultForm;
@@ -37,7 +34,10 @@ const Footer = ({ form }: iProps) => {
     if (form.offline) {
       resultForm = {
         ...form,
-        Location: location.La !== 0 ? { latitude: location.La, longitude: location.Ma } : '',
+        Location:
+          location.La !== 0
+            ? { latitude: location.La, longitude: location.Ma, regionName: location.regionName }
+            : '',
       };
     } else {
       resultForm = {

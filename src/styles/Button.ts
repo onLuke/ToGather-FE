@@ -15,7 +15,6 @@ const buttonStyle = css`
   border-radius: 4px;
   font-size: 1rem;
   font-weight: bold;
-  letter-spacing: 4px;
   color: white;
   outline: none;
   cursor: pointer;
@@ -32,12 +31,12 @@ const CustomButton = styled.button`
 
 const SubmitButton = styled.button`
   ${buttonStyle}
-  margin-right: 1rem;
   background: ${COLOR.BLUR_700};
 `;
 
 const CancelButton = styled.button`
   ${buttonStyle}
+  margin-left: 1rem;
   background: ${COLOR.RED_100};
 `;
 

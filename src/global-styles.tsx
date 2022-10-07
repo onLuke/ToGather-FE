@@ -12,7 +12,7 @@ const GlobalStyle = () => {
     <Global
       styles={css`
         * {
-          font-family: 'Prompt', sans-serif;
+          font-family: 'Jua';
         }
 
         #root {

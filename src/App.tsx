@@ -13,6 +13,7 @@ import UploadStudy from './pages/UploadStudy';
 import StudyDetail from './pages/StudyDetail';
 import MyProjectPage from './pages/MyProjectPage';
 import ChatPage from './pages/ChatPage';
+import GlobalStyle from './global-styles';
 
 const App = () => {
   return (
@@ -20,12 +21,13 @@ const App = () => {
       <BrowserRouter>
         <ModalProvider>
           <HeaderNavigation />
+          <GlobalStyle />
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/myProject" element={<MyProjectPage />} />
             <Route path="/chatRoom" element={<ChatRoomPage />} />
-            <Route path="/chat" element={<ChatPage roomId="1" projectId="1" />} />
+            <Route path="/chat/:projectId/:roomId" element={<ChatPage />} />
             <Route path="/oauth/:social" element={<AuthRedirectPage />} />
             <Route path="/uploadStudy" element={<UploadStudy />} />
             <Route path="/*" element={<NotFoundPage />} />

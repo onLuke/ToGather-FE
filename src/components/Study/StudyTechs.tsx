@@ -7,8 +7,10 @@ interface props {
   techsList: any[];
 }
 const StudyTechs = ({ techsList }: props) => {
+  const len = techsList.length;
+
   return (
-    <StudytechsBlock>
+    <StudytechsBlock len={len}>
       {techsList.map((tech) => (
         <TechIconContainer key={techs[tech.id - 1].tech}>
           {techs[tech.id - 1].icon()}

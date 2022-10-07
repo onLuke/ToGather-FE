@@ -10,34 +10,20 @@ interface iProps {
 
 const slowHidden = keyframes();
 
-const SearchByTextBlock = styled.div`
+const WrapSearch = styled.div`
+  width: 20rem;
   ${Flex({ alignItems: 'center' })};
-  width: 25rem;
-  visibility: ${({ textIsOpen }: iProps) => (textIsOpen ? 'visible' : 'hidden')};
-  left: 40vw;
-  position: fixed;
-  top: 4rem;
-  cursor: default;
-  box-shadow: 0px 4px 5px ${COLOR.GRAY_100};
-  padding: 1rem;
-  z-index: 9999;
-  background-color: ${COLOR.WHITE};
-  border-radius: 1rem;
+`;
 
-  animation: ${({ isHidden }: iProps) =>
-    isHidden === true
-      ? css`
-          ${slowHidden} 0.5s 0s forwards
-        `
-      : ''};
-  ${Flex({ justifyContent: 'center' })}
+const SelectCategory = styled.select`
+  width: 6rem;
+  outline: none;
+  ${Flex({ justifyContent: 'center', alignItems: 'center' })}
+  height: 2rem;
+`;
 
-  @media screen and (max-width: 1200px ) {
-    left: calc(100% - 70vw);
-  }
-  @media screen and (max-width: 800px) {
-    left: 10%;
-  }
+const Options = styled.option`
+  text-align: 5rem;
 `;
 
 const WrapInput = styled.div`
@@ -54,6 +40,7 @@ const SearchInput = styled.input`
   padding: 10px 7px;
   background-color: transparent;
   outline: none;
+  font-family: 'Noto Sans KR';
 `;
 
 const Btn = styled.button`
@@ -66,4 +53,4 @@ const Btn = styled.button`
   ${Flex({ alignItems: 'center' })}
 `;
 
-export { SearchByTextBlock, WrapInput, SearchInput, Btn };
+export { WrapSearch, SelectCategory, Options, WrapInput, SearchInput, Btn };

@@ -7,6 +7,7 @@ import {
   StudyFooter,
   StudyTitle,
   StudyViewer,
+  AuthorSpan,
 } from './StudyList.style';
 import StudyTechs from './StudyTechs';
 
@@ -16,12 +17,13 @@ interface Iprops {
   deadline: any;
   title: any;
   author: any;
+  image: any;
 }
 
-const StudyComponent = ({ id, techs, deadline, title, author }: Iprops) => {
+const StudyComponent = ({ id, techs, deadline, title, author, image }: Iprops) => {
   return (
     <Study to={`/studyDetail/${id}`}>
-      {/* <StudyTechs techsList={techs} /> */}
+      <StudyTechs techsList={techs} />
       <StudyDeadline>
         마감 예정일
         <span aria-hidden="true">|</span>
@@ -29,10 +31,10 @@ const StudyComponent = ({ id, techs, deadline, title, author }: Iprops) => {
       </StudyDeadline>
       <StudyTitle>{title}</StudyTitle>
       <StudyFooter>
-        {/* <StudyAuthor>
-          <img src="/" width="36px" height="36px" />
-          {author}
-        </StudyAuthor> */}
+        <StudyAuthor>
+          <img src={image} width="36px" height="36px" />
+          <AuthorSpan>{author}</AuthorSpan>
+        </StudyAuthor>
         <StudyViewer>{author}</StudyViewer>
       </StudyFooter>
     </Study>

@@ -20,6 +20,10 @@ const MyProjectInner = styled.div`
     padding-top: 1rem;
     border-top: 1px solid;
   }
+
+  &:last-child {
+    margin-bottom: 10rem;
+  }
 `;
 
 const ChatRoomBlock = styled.div`
@@ -35,6 +39,11 @@ const ChatRoomWrapper = styled.div`
   & + & {
     margin-top: 1rem;
   }
+`;
+
+const ChatHeaderBlock = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const ChatHandleBlock = styled.div`
@@ -78,6 +87,13 @@ const Title = styled(Link)`
   }
 `;
 
+const ChatRommInformation = styled.span`
+  margin-left: 10px;
+  padding-top: 10px;
+  font-size: 12px;
+  color: gray;
+`;
+
 const AccordionButton = styled.button`
   background: none;
   margin-left: 0.5rem;
@@ -92,4 +108,6 @@ export {
   Title,
   ChatRoomWrapper,
   AccordionButton,
+  ChatHeaderBlock,
+  ChatRommInformation,
 };
