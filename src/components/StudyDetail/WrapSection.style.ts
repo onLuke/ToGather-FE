@@ -8,6 +8,7 @@ const DetailBlock = styled.section`
   width: 70%;
   left: 15%;
   ${Flex({ justifyContent: 'center', flexDirection: 'column' })};
+  padding: 5rem 2rem;
 `;
 
 export { DetailBlock };

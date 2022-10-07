@@ -180,7 +180,7 @@ const StudyDetail = () => {
     <>
       <Main>
         <Header gettedData={data} />
-        <InfoContainer gettedData={data} />;
+        <InfoContainer gettedData={data} />
         <Comments
           userId={user.id}
           gettedData={data}

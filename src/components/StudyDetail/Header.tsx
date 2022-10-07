@@ -11,7 +11,7 @@ const Header = ({ gettedData }: IProps) => {
         <WrapAuthor>
           <AuthorImg src={gettedData.member.profileImage} />
           <Author>{gettedData.member.nickname}</Author>
-          <DateBox>{gettedData.deadLine}</DateBox>
+          <DateBox>{gettedData.deadline}</DateBox>
         </WrapAuthor>
       </AuthorBlock>
     </>
