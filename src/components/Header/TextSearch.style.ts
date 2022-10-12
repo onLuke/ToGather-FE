@@ -19,7 +19,7 @@ const SelectCategory = styled.select`
   width: 6rem;
   outline: none;
   ${Flex({ justifyContent: 'center', alignItems: 'center' })}
-  height: 2rem;
+  height: 1.5rem;
 `;
 
 const Options = styled.option`
