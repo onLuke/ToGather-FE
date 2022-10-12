@@ -24,7 +24,7 @@ const Info = styled.li`
 `;
 
 const ContetnBlock = styled.div`
-  margin-bottom: 3rem;
+  margin: 5rem 5rem 3rem;
   border-bottom: 3px solid #f2f2f2;
 `;
 
