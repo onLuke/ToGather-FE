@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && echo '/* /index.html 200' | cat > dist/_redirects",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "facepaint": "^1.2.1",
+    "firebase": "^9.11.0",
     "lodash": "^4.17.21",
     "multer": "^1.4.5-lts.1",
     "multer-s3": "^3.0.1",
@@ -49,6 +50,7 @@
     "react-select": "^5.4.0",
     "react-slick": "^0.29.0",
     "react-stomp": "^5.1.0",
+    "react-toastify": "^9.0.8",
     "react-uuid": "^1.0.3",
     "recoil": "^0.7.5",
     "recoil-persist": "^4.2.0",

@@ -12,15 +12,26 @@ const Main = styled.main`
 `;
 
 const StudySection = styled.section`
-  ${Flex({ flexWrap: 'wrap', columnGap: '2rem', rowGap: '2rem' })};
+  ${Flex({ flexWrap: 'wrap', columnGap: '2rem', rowGap: '2rem', flexDirection: 'column' })};
   margin-top: 4rem;
   width: 1180px;
   min-height: 50rem;
-  height: 1000px;
 `;
 const CheckInfinity = styled.div`
   height: 5rem;
   width: 100%;
 `;
 
-export { StudySection, Main, CheckInfinity };
+const ChartBlock = styled.div`
+  width: 800px;
+  height: 25rem;
+  cursor: default;
+  margin: 0 auto 3rem;
+  text-align: center;
+  .canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+`;
+
+export { StudySection, Main, CheckInfinity, ChartBlock };

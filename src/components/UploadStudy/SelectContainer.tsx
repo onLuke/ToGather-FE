@@ -21,6 +21,7 @@ import MapModal from '../Modal/MapModal';
 import { UserLocationAtom, regionNameSelector } from '../../contexts/UserLocationAtom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { NeedSelector, NeedValueAtom } from 'src/contexts/needValue';
+import { toast } from 'react-toastify';
 
 interface iProps {
   changeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -105,7 +106,7 @@ const SelectContainer = (props: iProps) => {
             options={techTable}
             onChange={(multiValue, actionMeta) => {
               if (multiValue.length >= 10) {
-                alert('사용 기술스택은 10개 이상 등록할 수 없습니다 :(');
+                toast.info('사용 기술스택은 10개 이상 등록할 수 없습니다 :(');
                 Array.isArray(multiValue) && multiValue.pop();
               } else multiSelectChange(multiValue, actionMeta);
             }}

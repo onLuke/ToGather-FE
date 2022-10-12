@@ -13,15 +13,38 @@ import UploadStudy from './pages/UploadStudy';
 import StudyDetail from './pages/StudyDetail';
 import MyProjectPage from './pages/MyProjectPage';
 import ChatPage from './pages/ChatPage';
-import GlobalStyle from './global-styles';
+import { toast, ToastContainer } from 'react-toastify';
+import './utils/firebase';
+import { onMessageListener, requestFirebaseToken } from './utils/firebase';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from './contexts/UserAtom';
+import NotificationAlert from './components/Notification/NotificationAlert';
 
 const App = () => {
+  const user = useRecoilValue(userAtom);
+
+  useEffect(() => {
+    if (user.nickname) {
+      requestFirebaseToken();
+      onMessageListener()
+        .then((payload: any) => {
+          toast.info(
+            <NotificationAlert
+              body={payload.notification.body}
+              title={payload.notification.title}
+            />
+          );
+          console.log(payload);
+        })
+        .catch((err) => console.log('failed: ', err));
+    }
+  }, []);
   return (
     <CookiesProvider>
       <BrowserRouter>
         <ModalProvider>
           <HeaderNavigation />
-          <GlobalStyle />
+          <ToastContainer position={toast.POSITION.TOP_RIGHT} autoClose={2000} theme={'colored'} />
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />

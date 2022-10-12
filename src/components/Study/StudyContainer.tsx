@@ -1,13 +1,17 @@
-import { StudySection, Main, CheckInfinity } from './StudyContainer.style';
+import { StudySection, Main, ChartBlock } from './StudyContainer.style';
 import StudyList from './StudyList';
 import { useRef } from 'react';
 import StatusFilter from './StatusFilter';
+import Graph from '../Graphs/Graphs';
 
 const StudyListContainer = () => {
   return (
     <Main>
-      <StatusFilter />
       <StudySection>
+        <ChartBlock>
+          <Graph />
+        </ChartBlock>
+        <StatusFilter />
         <StudyList />
       </StudySection>
     </Main>

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import AuthService from 'src/service/AuthService';
 
 const AuthRedirect = () => {
@@ -19,7 +20,7 @@ const AuthRedirect = () => {
       const response = await checkLoginService(social, token);
     } catch (e) {
       console.error(`에러 :${e}`);
-      alert('잘못된 접근 입니다.');
+      toast.error('잘못된 접근 입니다.');
       navigation('/');
     }
     navigation('/');

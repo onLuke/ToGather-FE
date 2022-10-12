@@ -16,14 +16,15 @@ Api.interceptors.response.use(
   (error) => {
     let errResStatus = null;
     const originalRequest = error.config;
-
     try {
       errResStatus = error.response.status;
     } catch (e) {
       console.error(e);
     }
     // access token이 만료되어 발생하는 경우
+
     console.log(originalRequest.url);
+
     // originalRequest로 재요청 보내야 하는 로직 생각 해야함
     if (errResStatus === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
@@ -35,17 +36,15 @@ Api.interceptors.response.use(
             if (res.data.status === 401) {
               return Promise.reject(error);
             }
-
             const { accessToken, refreshToken } = res.data;
-            setCookie('refreshToken', res.data.refreshToken, {
+            setCookie('refreshToken', refreshToken, {
               path: '/',
             });
-            debugger;
+            console.log(`newAccessToken : ${accessToken}`);
             originalRequest.headers.Authoriztion = `Bearer ${accessToken}`;
             Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
           })
           .catch(() => {
-            window.location.href = '/';
             return false;
           });
       }

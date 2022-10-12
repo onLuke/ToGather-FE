@@ -15,6 +15,7 @@ const Label = styled.label`
   background-color: #c1cbd8;
   cursor: pointer;
   background-color: ${({ isOn }: { isOn: boolean }) => (isOn ? COLOR.LOGO_COLOR : '')};
+  margin-right: 1.5rem;
 `;
 const HiddenInput = styled.input`
   position: absolute;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useRecoilState } from 'recoil';
 import { getUser } from 'src/apis/user';
 import { userSelector } from 'src/contexts/UserAtom';
@@ -16,7 +17,7 @@ const UserInfo = () => {
 
   const getUserById = async () => {
     if (!user.id) {
-      alert('잘못된 접근입니다.');
+      toast.error('잘못된 접근입니다.');
       navigate('/');
       return;
     }

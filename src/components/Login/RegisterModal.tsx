@@ -13,7 +13,7 @@ import techTable from 'src/contexts/TechsTable';
 const baseImageURL = `${import.meta.env.VITE_AWS_S3_URL}/profile/default.png`;
 
 const RegisterModal = () => {
-  const { handleFileInput, handleUpload } = S3UploadImage('profile/');
+  // const { handleFileInput, handleUpload } = S3UploadImage('profile/');
   const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
     profileImage: baseImageURL,
     nickname: '',
@@ -24,7 +24,7 @@ const RegisterModal = () => {
   const { registerService } = AuthService();
 
   const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileInput(e);
+    // handleFileInput(e);
     changeInput(e);
   };
 
@@ -49,7 +49,7 @@ const RegisterModal = () => {
     try {
       const formData = { ...form };
       if (form.profileImage !== baseImageURL) {
-        formData.profileImage = await handleUpload();
+        // formData.profileImage = await handleUpload();
         formData.profileImage = `${import.meta.env.VITE_AWS_S3_URL}/${formData.profileImage}`;
       }
       formData.techStackDtos = idNameToMultiSelect(form.techStackDtos);

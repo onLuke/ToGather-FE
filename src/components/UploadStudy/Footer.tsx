@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { NeedValueAtom } from 'src/contexts/needValue';
 import { createStudyQuery } from 'src/service/studyQuery';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface iProps {
   offline: boolean;
@@ -107,7 +108,7 @@ const Footer = ({ form }: any) => {
       }
     }
     createStudyQuery(resultForm);
-    alert('공고가 정상 등록 되었습니다 :)');
+    toast.success('공고가 정상 등록되었습니다.');
     navigation(-1);
   };
 

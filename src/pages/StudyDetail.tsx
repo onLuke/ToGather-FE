@@ -11,6 +11,7 @@ import { enterProjectById, getProjectById } from 'src/apis/project';
 import { userAtom } from 'src/contexts/UserAtom';
 import { addComments, removeComments, updateComments } from 'src/apis/comment';
 import PostButton from 'src/components/StudyDetail/PostButton';
+import { toast } from 'react-toastify';
 
 const StudyDetail = () => {
   const { id } = useParams();
@@ -52,15 +53,20 @@ const StudyDetail = () => {
       try {
         const response = await enterProjectById(id);
 
-        if (response.status === 200) {
-          alert('지원 했습니다.');
+        console.log(response);
+
+        if (response.status === 200 && response.data === '') {
+          toast.success('지원 성공.');
+          return;
         }
 
         if (response.data.status === 400) {
-          alert(response.data.errorMessage);
+          console.error(response.data.errorMessage);
+          toast.error(response.data.errorMessage);
+          return;
         }
       } catch (e) {
-        alert('다시 시도해주세요.');
+        toast.info('다시 시도해주세요.');
         console.error(e);
       }
     }
@@ -89,7 +95,7 @@ const StudyDetail = () => {
 
   const handleAddComment = async () => {
     if (commentForm === '') {
-      alert('댓글을 입력해주세요');
+      toast.info('댓글을 입력해주세요.');
       return;
     }
 
@@ -123,12 +129,12 @@ const StudyDetail = () => {
       const response = await updateComments(commentId, comment);
 
       if (response.data?.status) {
-        alert('다시 시도해 주세요.');
+        toast.info('다시 시도해 주세요.');
         return;
       }
 
       if (response.status === 200) {
-        alert('댓글 수정완료');
+        toast.success('댓글 수정완료.');
 
         const updateComment = data.comments.map((item: any) =>
           item.id === response.data.id ? response.data : item
@@ -153,7 +159,7 @@ const StudyDetail = () => {
       const response = await removeComments(commentId);
 
       if (response.data.status) {
-        alert('다시 시도해 주세요.');
+        toast.info('다시 시도해 주세요.');
       }
 
       const filterdData = data.comments.filter((item: any) => item.id != commentId);
