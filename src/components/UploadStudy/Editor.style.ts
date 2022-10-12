@@ -21,7 +21,7 @@ const ContentHeading = styled.h3`
   width: 100%;
   font-size: ${FontSizes.Study_Upload_Fontsize};
   font-weight: ${FontSizes.Study_Upload_FontWeight};
-  box-shadow: 2px 2px 2px ${COLOR.GRAY_100};
+  box-shadow: 0 4px 2px -2px rgb(0 0 0 / 8%);
   margin-top: 13rem;
 `;
 
