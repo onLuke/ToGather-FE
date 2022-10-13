@@ -4,10 +4,8 @@ import { isUploaded } from '../../contexts/chachingOptionAtom';
 import { UserLocationAtom } from '../../contexts/UserLocationAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { NeedValueAtom } from 'src/contexts/needValue';
-import { createStudyQuery } from 'src/service/studyQuery';
 import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import { useCallback, useMemo } from 'react';
+import { toast } from 'react-toastify';
 import { createStudy, updateStudy } from 'src/apis/study';
 
 const Footer = ({ form, isEdit, id }: any) => {

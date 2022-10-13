@@ -41,7 +41,7 @@ export const getStudy = async (
   author: string | null
 ) => {
   const res = await Api.get(
-    `/projects?limit=9&pageNumber=${pageNumber}&status=${isRecruiting}${
+    `/projects?limit=9&pageNumber=${pageNumber}&projectStatus=${isRecruiting}${
       techIds !== null ? '&techStacks=' + techIds.join(',') : ''
     }${title !== null ? '&title=' + title : ''}
     ${content !== null ? '&content=' + content : ''}
@@ -54,8 +54,9 @@ export const createStudy = async (data: uploadType) => {
   Api.post<createRes>(`/projects`, data);
 };
 
-export const updateStudy = (data: studyData, id: string) => {
-  Api.put<updateRes>(`/projects/${id}`, data);
+export const updateStudy = async (data: studyData, id: string) => {
+  const res = await Api.put(`/projects/${id}`, data);
+  return res;
 };
 export const removeStudy = (id: string) => {
   Api.delete<updateRes>(`/projects/${id}`);
