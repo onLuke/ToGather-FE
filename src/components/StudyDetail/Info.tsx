@@ -16,7 +16,7 @@ const InfoContainer = ({ gettedData }: IProps) => {
         {gettedData.offline ? (
           <Info>
             <label htmlFor="">위치</label>
-            {gettedData.location}
+            {gettedData.location.address}
           </Info>
         ) : null}
         <Info>

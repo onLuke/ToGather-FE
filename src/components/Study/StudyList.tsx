@@ -14,6 +14,7 @@ import { CheckInfinity } from './StudyContainer.style';
 import { useInView } from 'react-intersection-observer';
 import { getProjectAllByPage } from 'src/apis/project';
 import { isUploaded } from 'src/contexts/chachingOptionAtom';
+import { userAtom } from 'src/contexts/UserAtom';
 
 const StudyList = () => {
   const recruitState = useRecoilValue(StatusFilterAtom);
@@ -21,6 +22,7 @@ const StudyList = () => {
   const textFilter = useRecoilValue(TextFilterAtom);
   const locationFilter = useRecoilValue(LocationFilterAtom);
   const uploadState = useRecoilValue(isUploaded);
+  const user = useRecoilValue(userAtom);
 
   const fetchPostList = async (
     recruitState: string,
@@ -73,13 +75,6 @@ const StudyList = () => {
       refetchOnMount: 'always',
     }
   );
-
-  /*   Array.isArray(data) &&
-    data.sort((a, b) => {
-      console.log(a);
-
-      return Number(a.deadline) - Number(b.deadline);
-    }); */
 
   useEffect(() => {
     if (inView) fetchNextPage();
