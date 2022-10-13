@@ -14,7 +14,7 @@ const WrapStudy = styled.div`
 `;
 const Study = styled(Link)`
   ${Flex({ flexDirection: 'column' })};
-  padding: 70px 26px 26px 34px;
+  padding: 55px 26px 38px 34px;
   width: 370px;
   height: 450px;
   box-shadow: 0px 5px 5px ${COLOR.GRAY_300};
@@ -50,6 +50,7 @@ const StudyDeadline = styled.div`
 const StudyFooter = styled.section`
   ${Flex({ justifyContent: 'space-between', alignItems: 'center', columnGap: '4rem' })};
   font-size: ${FontSizes.Study_Author_Fontsize};
+  width: 80%;
   margin: 0 1rem;
   height: 3rem;
   position: absolute;
@@ -78,6 +79,20 @@ const AuthorSpan = styled.span`
   -webkit-box-orient: vertical;
   word-wrap: break-word;
 `;
+const WrapIsRecruiting = styled.div`
+  width: 90%;
+  height: 2rem;
+  ${Flex({ justifyContent: 'flex-end', alignItems: 'center' })};
+  margin-bottom: 1rem;
+`;
+const IsRecruiting = styled.div`
+  width: 4rem;
+  height: 2rem;
+  border-radius: 1rem;
+  ${Flex({ justifyContent: 'center', alignItems: 'center' })};
+  background-color: ${({ isRecruiting }: { isRecruiting: boolean }) =>
+    isRecruiting ? `${COLOR.BLUE}` : `${COLOR.GRAY_200}}`};
+`;
 
 export {
   WrapStudy,
@@ -88,4 +103,6 @@ export {
   StudyAuthor,
   StudyViewer,
   AuthorSpan,
+  IsRecruiting,
+  WrapIsRecruiting,
 };
