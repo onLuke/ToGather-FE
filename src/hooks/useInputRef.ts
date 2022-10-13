@@ -16,7 +16,6 @@ const useInputRef = (initailValue: any) => {
 
   const multiSelectChange = (targetValue: any, targetAction: any) => {
     const { action, name } = targetAction;
-    console.log('here');
 
     if (action === 'clear') {
       formRef.current[name] = [];
@@ -28,12 +27,10 @@ const useInputRef = (initailValue: any) => {
     } else {
       for (let item of targetValue) {
         let { value } = item;
-        console.log(formRef.current[name]);
 
         formRef.current[name] = [...new Set([...formRef.current[name], value])];
       }
     }
-    console.log(formRef.current);
   };
 
   const datePickerChange = (date: Date) => {
