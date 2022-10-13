@@ -15,6 +15,7 @@ const StatusFilter = () => {
 
   return (
     <WrapLabel>
+      모집중인 공고 보기
       <Label isOn={isOn} htmlFor="status">
         <HiddenInput id="status" onClick={handleLabel}></HiddenInput>
         <Circle isOn={isOn}></Circle>
