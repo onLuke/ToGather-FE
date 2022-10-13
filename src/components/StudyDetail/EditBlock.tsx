@@ -1,7 +1,7 @@
 import { EditContainer, Btn } from './EditBlock.style';
 import { userAtom } from '../../contexts/UserAtom';
 import { useRecoilValue } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { dataType } from '../../pages/StudyDetail';
 import { removeStudy } from 'src/apis/study';
 import NotificationAlert from '../Notification/NotificationAlert';
@@ -11,12 +11,13 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 const EditBlock = ({ data }: { data: dataType }) => {
   const userData = useRecoilValue(userAtom);
   const id = data.member.id;
+  const projectID = useParams().id;
   const navigate = useNavigate();
 
   const handleEdit = () => {
     navigate('/uploadStudy', {
       state: {
-        id: id,
+        id: projectID,
         content: data.content,
         title: data.title,
         personnel: data.personnel,
@@ -37,7 +38,7 @@ const EditBlock = ({ data }: { data: dataType }) => {
         {
           label: '네',
           onClick: () => {
-            if (id) removeStudy(id);
+            if (projectID) removeStudy(projectID);
           },
         },
         {
@@ -51,8 +52,10 @@ const EditBlock = ({ data }: { data: dataType }) => {
     <>
       {userData.id === id && (
         <EditContainer>
-          <Btn onClick={handleEdit}>수정하기</Btn>
-          <Btn onClick={handleRemove}>삭제하기</Btn>
+          <>
+            <Btn onClick={handleEdit}>수정하기</Btn>
+            <Btn onClick={handleRemove}>삭제하기</Btn>
+          </>
         </EditContainer>
       )}
     </>

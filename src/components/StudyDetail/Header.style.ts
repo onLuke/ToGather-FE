@@ -8,7 +8,7 @@ const Title = styled.h1`
 `;
 
 const AuthorBlock = styled.div`
-  ${Flex({ alignItems: 'center' })}
+  ${Flex({ alignItems: 'center', justifyContent: 'space-between' })}
   width:90%;
   margin: 2rem 5rem 2rem;
   border-bottom: 3px solid #f2f2f2;
@@ -50,4 +50,14 @@ const DateBox = styled.div`
   margin-left: 10px;
 `;
 
-export { Title, AuthorBlock, WrapAuthor, AuthorImg, Author, DateBox };
+const RecruitingBtn = styled.div`
+  ${Flex({ justifyContent: 'center', alignItems: 'center' })}
+  width: 7rem;
+  height: 3rem;
+  margin-right: 5%;
+  background-color: ${COLOR.BLUR_200};
+  border-radius: 1rem;
+  font-size: 18px;
+`;
+
+export { Title, AuthorBlock, WrapAuthor, AuthorImg, Author, DateBox, RecruitingBtn };
