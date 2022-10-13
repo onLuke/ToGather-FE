@@ -1,5 +1,5 @@
 import Api from './Api';
-import { inputFormType } from '../pages/UploadStudy';
+import { uploadType } from '../pages/UploadStudy';
 
 interface getRes {
   content: string;
@@ -50,7 +50,7 @@ export const getStudy = async (
   const { data } = res;
   return data;
 };
-export const createStudy = async (data: inputFormType) => {
+export const createStudy = async (data: uploadType) => {
   Api.post<createRes>(`/projects`, data);
 };
 
