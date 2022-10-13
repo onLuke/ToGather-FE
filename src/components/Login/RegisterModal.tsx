@@ -4,21 +4,20 @@ import { CustomButton, SubmitButton } from 'src/styles/Button';
 import { InputLabel, InputText } from 'src/styles/Input';
 import { InputBoxBlock, Title, Wrapper, ButtonBlock } from './RegisterModal.styles';
 import useInput from 'src/hooks/useInput';
-import S3UploadImage from 'src/hooks/useS3UploadImage';
 import AuthService from 'src/service/AuthService';
 import ProfileImage from '../profileImage/ProfileImage';
 import { checkNickname } from 'src/apis/user';
 import techTable from 'src/contexts/TechsTable';
-import axios from 'axios';
 import Api from 'src/apis/Api';
 import { useRecoilState } from 'recoil';
 import { imageAtom } from 'src/contexts/ImageAtom';
 import { toast } from 'react-toastify';
+import defaultImage from 'src/assets/images/images/default.png';
 
 const RegisterModal = () => {
   const [imageFile, setImageFile] = useRecoilState(imageAtom);
   const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
-    profileImage: '',
+    profileImage: defaultImage,
     nickname: '',
     techStackDtos: [],
   });
@@ -68,21 +67,23 @@ const RegisterModal = () => {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      });
+      })
+        .then((res) => {
+          if (res.data.status === 400) {
+            throw new Error(res.data.errorMessage);
+          }
 
-      debugger;
+          formData.techStackDtos = idNameToMultiSelect(form.techStackDtos);
+          formData.profileImage = res.data;
 
-      if (file.data.status === 400) {
-        throw new Error(file.data.errorMessage);
-      }
-
-      formData.techStackDtos = idNameToMultiSelect(form.techStackDtos);
-      formData.profileImage = file.data;
-
-      const response = await registerService(formData).then((res) => {
-        toast.success('회원가입 되었습니다.');
-        window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
-      });
+          const response = registerService(formData).then((res) => {
+            toast.success('회원가입 되었습니다.');
+            window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
+          });
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
     } catch (err: any) {
       toast.error(err.message);
     }

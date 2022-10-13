@@ -85,6 +85,8 @@ const StudyList = () => {
   return (
     <>
       <WrapStudy className="study">
+        {isLoading && <LoadingAtMain></LoadingAtMain>}
+
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.data.map((list: any) => (

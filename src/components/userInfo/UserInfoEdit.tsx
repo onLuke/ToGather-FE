@@ -88,19 +88,26 @@ const UserInfoEdit = ({ user }: props) => {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      });
+      })
+        .then((res) => {
+          if (res.data.status === 400) {
+            throw new Error(res.data.errorMessage);
+          }
 
-      const formTechStack = idLabelToMultiSel1ect(form.techStackDtos);
-      const formData = { ...form, profileImage: imageUrl, techStackDtos: formTechStack };
+          const formTechStack = idLabelToMultiSel1ect(form.techStackDtos);
+          const formData = { ...form, profileImage: res.data, techStackDtos: formTechStack };
 
-      const response = await updateUserByIdService(user.id, formData);
+          const response = updateUserByIdService(user.id, formData);
 
-      toast.success('회원정보 수정 성공');
-      navigate('/');
-    } catch (e) {
-      console.error(e);
+          toast.success('회원정보 수정 성공');
+          navigate('/');
+        })
+        .catch((err) => {
+          toast.error(err);
+        });
+    } catch (err: any) {
+      toast.error(err.message);
     }
-    console.log(form);
   };
 
   const handleUserLeave = (e: React.MouseEvent<HTMLElement>) => {
