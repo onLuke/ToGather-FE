@@ -41,11 +41,38 @@ const button = styled.button`
 
 const Marker = styled(MapMarker)`
   ${Flex({ justifyContent: 'center', alignItems: 'center' })};
+  & > img {
+    animation: ${({ markerIsOn }: { markerIsOn: boolean }) =>
+      markerIsOn
+        ? css`
+            ${markAnimation} 1s 0s forwards
+          `
+        : ''};
+  }
 `;
+const markAnimation = keyframes(
+  css`
+    0 {
+      transform: scale(1);
+    }
+
+    25% {
+      transform: scale(1.2);
+    }
+    50% {
+      transform: scale(1);
+    }
+    75% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  `
+);
 
 const WrapMessage = styled.div`
   visibility: ${({ isHidden }: { isHidden: boolean }) => (isHidden ? 'hidden' : 'visible')};
-  /*   margin-top: ${({ isMain }: { isMain: boolean }) => (isMain ? '2rem' : '1rem')}; */
   width: ${({ isMain }: { isMain: boolean }) => (isMain ? '18rem' : '17rem')};
   height: 1.5rem;
   text-align: center;
@@ -61,6 +88,12 @@ const WrapBtn = styled.div`
 
 const Btn = styled.button`
   visibility: ${({ isHidden }: { isHidden: boolean }) => (isHidden ? 'hidden' : 'visible')};
+  animation: ${({ markerIsOpen }: { markerIsOpen: boolean }) =>
+    markerIsOpen
+      ? css`
+          ${markAnimation} 1s 0s forwards
+        `
+      : ''};
   width: 30%;
   height: 2rem;
   border-radius: 1rem;
