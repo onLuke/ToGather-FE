@@ -40,17 +40,20 @@ const button = styled.button`
 `;
 
 const Marker = styled(MapMarker)`
+  visibility: hidden;
   ${Flex({ justifyContent: 'center', alignItems: 'center' })};
-  & > img {
+  img {
     animation: ${({ markerIsOn }: { markerIsOn: boolean }) =>
       markerIsOn
         ? css`
             ${markAnimation} 1s 0s forwards
           `
         : ''};
+    visibility: ${({ isHidden }: { isHidden: boolean }) =>
+      isHidden ? 'hidden' : 'visible'}!important;
   }
 `;
-const markAnimation = keyframes(
+export const markAnimation = keyframes(
   css`
     0 {
       transform: scale(1);

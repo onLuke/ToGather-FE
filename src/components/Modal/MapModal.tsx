@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, WrapMessage, Marker, Btn, WrapBtn } from './MapModal.style';
+import { MapContainer, WrapMessage, Marker, Btn, WrapBtn, markAnimation } from './MapModal.style';
 import useGetUserLocation from '../../hooks/useGetUserLocation';
 import { UserLocationAtom } from '../../contexts/UserLocationAtom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -18,9 +18,11 @@ const MapModal = ({ closeModal }: any) => {
   const [isHidden, setIsHidden] = useState(true);
   const reset = useResetRecoilState(UserLocationAtom);
   const [status, setStatus] = useState<any>(null);
-  const [markerIsOpen, setMarkerIsOpen] = useState(false);
+  const [markerIsOpen, setMarkerIsOpen] = useState({ id: 0, open: false });
   const [markerIsOn, setMarkerIsOn] = useState(false);
+  const [currentMarker, setCurrentMarker] = useState(true);
   const navigate = useNavigate();
+  const [level, setLevel] = useState(5);
 
   const { pathname } = useLocation();
 
@@ -44,15 +46,18 @@ const MapModal = ({ closeModal }: any) => {
     await regionPromise(lat, lng);
     setIsHidden(false);
     setOptions({ ...options, Location: false });
+    setMarkerIsOpen({ ...markerIsOpen, open: false });
   };
 
   const handleSubmit = async () => {
     setFilter({ latitude: location.La, longitude: location.Ma });
+    const mapLevel = level - 3 < 0 ? 1 : level - 3;
     const res = await Api.get(
-      `https://dokuny.blog/projects/search/distance?distance=3&latitude=${location.La}&longitude=${location.Ma}`
+      `https://dokuny.blog/projects/search/distance?distance=${mapLevel}&latitude=${location.La}&longitude=${location.Ma}`
     );
     setStatus(res.data);
     setMarkerIsOn(true);
+    setCurrentMarker(false);
     return res;
   };
 
@@ -65,8 +70,10 @@ const MapModal = ({ closeModal }: any) => {
     closeModal();
   };
 
-  const handleMarker = () => {
-    setMarkerIsOpen(!markerIsOpen);
+  const handleMarker = (id: number) => {
+    setMarkerIsOpen({ ...markerIsOpen, id: id, open: !markerIsOpen.open });
+    setIsHidden(true);
+    setCurrentMarker(false);
   };
 
   return (
@@ -78,42 +85,50 @@ const MapModal = ({ closeModal }: any) => {
         }
         className="map"
         level={5}
+        onZoomChanged={(map: any) => setLevel(map.getLevel())}
       >
-        <Marker
-          position={
-            location && location.La !== 0
-              ? { lat: location.La, lng: location.Ma }
-              : { lat: initialLocation.La, lng: initialLocation.Ma }
-          }
-        >
-          {!isHidden && location && (
-            <>
-              <WrapMessage isMain={pathname === '/'} isHidden={isHidden}>
-                {location.regionName}
-              </WrapMessage>
+        {currentMarker && (
+          <Marker
+            position={
+              location && location.La !== 0
+                ? { lat: location.La, lng: location.Ma }
+                : { lat: initialLocation.La, lng: initialLocation.Ma }
+            }
+          >
+            {!isHidden && location && (
+              <>
+                <WrapMessage isMain={pathname === '/'} isHidden={isHidden}>
+                  {location.regionName}
+                </WrapMessage>
 
-              <WrapBtn>
-                <Btn isHidden={isHidden} onClick={pathname === '/' ? handleSubmit : handleClose}>
-                  제출하기
-                </Btn>
-              </WrapBtn>
-            </>
-          )}
-        </Marker>
+                <WrapBtn>
+                  <Btn isHidden={isHidden} onClick={pathname === '/' ? handleSubmit : handleClose}>
+                    제출하기
+                  </Btn>
+                </WrapBtn>
+              </>
+            )}
+          </Marker>
+        )}
 
         {status &&
           status.map((el: any) => (
             <Marker
-              key={el.location.latitude + el.location.longitude}
+              key={el.id}
               position={{ lat: el.location.latitude, lng: el.location.longitude }}
-              onClick={handleMarker}
+              onClick={() => {
+                handleMarker(el.id);
+              }}
               markerIsOn={markerIsOn}
             >
-              {markerIsOpen && (
+              {markerIsOpen.id === el.id && markerIsOpen.open && (
                 <>
                   <WrapMessage>{el.location.address}</WrapMessage>
                   <WrapBtn>
-                    <Btn markerIsOpen={markerIsOpen} onClick={(e: any) => handleLink(e, el.id)}>
+                    <Btn
+                      markerIsOpen={markerIsOpen.id === el.id && markerIsOpen.open}
+                      onClick={(e: any) => handleLink(e, el.id)}
+                    >
                       공고보러가기
                     </Btn>
                   </WrapBtn>
