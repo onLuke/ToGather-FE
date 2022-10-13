@@ -24,6 +24,7 @@ const COLOR = {
   RED_100: '#FF452E',
 
   LOGO_COLOR: '#8fe3d9',
+  BLUE: '#00D7FF',
 };
 
 export default COLOR;
