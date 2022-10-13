@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { modalContext } from '../../contexts/ModalContext';
 import NavMenuWidth from 'src/constants/NavMenuWidth';
 import LoginModal from '../Login/LoginModal';
@@ -9,38 +9,32 @@ import {
   LoginButton,
   CategoryBlock,
   NavMenu,
-  Favorites,
   MenuBtn,
   GpsContainer,
   UserBlock,
   MyPageMenu,
   WrapRightNav,
   UploadStudyLink,
-  WrapTextMenu,
   LogoTitle,
 } from './HeaderNavigation.styles';
 import TextSearch from './TextSearch';
 import { GpsIcon } from '../@icons/Images';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import MyPageList from '../mypage/MyPageList';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SearchMenu from './SearchMenu';
 import { useLocation } from 'react-router-dom';
 import { userAtom, userSelector } from 'src/contexts/UserAtom';
 import MapModal from '../Modal/MapModal';
-import { logout, refresh } from 'src/apis/auth';
 import AuthService from 'src/service/AuthService';
-import Logo from '../@icons/Logo';
 import { UserLocationAtom } from 'src/contexts/UserLocationAtom';
-import { authAtom } from 'src/contexts/AuthAtom';
-import COLOR from 'src/constants/colors';
 import LogoImage from 'src/components/@icons/logo2_express.svg';
 
 const HeaderNavigation = () => {
   const openModal = useContext(modalContext)?.openModal;
+  const context = useContext(modalContext);
   const [searchIsOpen, setSearchIsOpen] = useState(false);
   const [textIsOpen, setTextIsOpen] = useState(false);
-  const [favoriteIsOpen, setFavoriteIsOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [myPageIsOpen, setMyPageIsOpen] = useState(false);
   const user = useRecoilValue(userSelector);
@@ -62,10 +56,12 @@ const HeaderNavigation = () => {
 
   const handleOpenModal = () => {
     openModal?.(<LoginModal />);
+    setSearchIsOpen(false);
   };
 
   const handleKakaoOpenModal = () => {
-    openModal?.(<MapModal />);
+    openModal?.(<MapModal closeModal={context?.closeModal} />);
+    setSearchIsOpen(false);
   };
 
   const handleLogout = async () => {
@@ -83,7 +79,7 @@ const HeaderNavigation = () => {
             <LogoTitle to="/">
               <img src={LogoImage} alt="" width="200px" height="60px" />
             </LogoTitle>
-            <WrapRightNav>
+            <WrapRightNav onMouseLeave={() => setSearchIsOpen(false)}>
               <CategoryBlock>
                 {pathname === '/' && (
                   <>
@@ -95,7 +91,6 @@ const HeaderNavigation = () => {
                         setTextIsOpen(false);
                         setIsHidden(false);
                       }}
-                      onMouseLeave={() => setSearchIsOpen(false)}
                       onClick={() => setSearchIsOpen(true)}
                     >
                       <MenuBtn active={searchIsOpen}>공고 검색</MenuBtn>
@@ -111,16 +106,6 @@ const HeaderNavigation = () => {
                     </GpsContainer>
                   </>
                 )}
-                {/* <NavMenu
-                  widthProp={NavMenuWidth.favorite}
-                  onMouseEnter={() => {
-                    setFavoriteIsOpen(true);
-                  }}
-                  onMouseLeave={() => setFavoriteIsOpen(false)}
-                >
-                  <MenuBtn onClick={() => setFavoriteIsOpen(true)}>즐겨찾기</MenuBtn>
-                  <Favorites favoriteIsOpen={favoriteIsOpen}></Favorites>
-                </NavMenu> */}
                 <NavMenu>
                   <UploadStudyLink to="/uploadStudy" onClick={reset}>
                     공고 등록

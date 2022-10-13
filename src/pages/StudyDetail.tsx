@@ -4,6 +4,7 @@ import Header from '../components/StudyDetail/Header';
 import Comments from 'src/components/StudyDetail/Comment';
 import FixedDetail from '../components/StudyDetail/FixedDetail';
 import TabletFixedDetail from '../components/StudyDetail/TabletFixedDetail';
+import EditBlock from 'src/components/StudyDetail/EditBlock';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -13,11 +14,26 @@ import { addComments, removeComments, updateComments } from 'src/apis/comment';
 import PostButton from 'src/components/StudyDetail/PostButton';
 import { toast } from 'react-toastify';
 
+export interface dataType {
+  id: string;
+  content: string;
+  comments: any[];
+  member: any[];
+  title: string;
+  personnel: string;
+  status: string;
+  location: string;
+  deadline: string;
+  offline: string;
+  techStacks: { id: number; name: string; category: string; image: string }[];
+}
+
 const StudyDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userAtom);
-  const [data, setData] = useState({
+  const [data, setData] = useState<dataType>({
     id: '',
+    content: '',
     comments: [],
     member: [],
     title: '',
@@ -174,10 +190,6 @@ const StudyDetail = () => {
     }
   };
 
-  const handlePostUpdate = () => {};
-
-  const handlePostRemove = () => {};
-
   if (Object.keys(data).length === 0) {
     return null;
   }
@@ -186,6 +198,7 @@ const StudyDetail = () => {
     <>
       <Main>
         <Header gettedData={data} />
+        <EditBlock data={data}></EditBlock>
         <InfoContainer gettedData={data} />
         <Comments
           userId={user.id}
@@ -201,9 +214,6 @@ const StudyDetail = () => {
           removeComment={handleRemoveComment}
           inputKeyPress={inputKeyPress}
         />
-        {/* {user.id == data.member.id ? (
-          <PostButton updatePost={handlePostUpdate} removePost={handlePostRemove} />
-        ) : null} */}
       </Main>
       <FixedDetail userId={user.id} gettedData={data} handleEnter={handleEnterProject} />
       <TabletFixedDetail userId={user.id} gettedData={data} handleEnter={handleEnterProject} />
