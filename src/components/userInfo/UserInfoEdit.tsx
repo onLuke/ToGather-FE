@@ -44,15 +44,16 @@ const UserInfoEdit = ({ user }: props) => {
   const { form, changeInput, multiSelectChange, idLabelToMultiSel1ect } = useInput({
     ...user,
   });
-  // const { handleFileInput, handleUpload } = S3UploadImage('profile/');
   const resetUser = useResetRecoilState(userAtom);
   const [nicknameCheck, setNicknameCheck] = useState(true);
   const navigate = useNavigate();
   const { updateUserByIdService } = UserService();
 
   const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // handleFileInput(e);
-    changeInput(e);
+    if (e.target.files) {
+      changeInput(e);
+      setImageFile(e.target?.files[0]);
+    }
   };
 
   const handleCheckUserNickName = async (e: React.MouseEvent<HTMLElement>) => {

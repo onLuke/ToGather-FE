@@ -13,6 +13,12 @@ const Footer = ({ form, isEdit, id }: any) => {
   const location = useRecoilValue(UserLocationAtom);
   const [options, setOptions] = useRecoilState(NeedValueAtom);
   const navigation = useNavigate();
+  console.log({
+    ...form,
+    latitude: location.La,
+    longitude: location.Ma,
+    address: location.regionName,
+  });
 
   const resultForm = form.offline
     ? {
@@ -28,6 +34,7 @@ const Footer = ({ form, isEdit, id }: any) => {
   const getElement = (name: string) => document.querySelector(name);
 
   const handleSubmit = () => {
+    console.log(resultForm);
     let success = false;
 
     for (let entry of Object.entries(resultForm)) {
@@ -92,6 +99,8 @@ const Footer = ({ form, isEdit, id }: any) => {
     }
     success = true;
     if (success) {
+      console.log(resultForm);
+
       id ? updateStudy(resultForm, id) : createStudy(resultForm);
       setIsUploaded(true);
       toast.success('공고가 정상 등록되었습니다.');

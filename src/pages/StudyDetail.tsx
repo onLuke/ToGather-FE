@@ -13,6 +13,7 @@ import { userAtom } from 'src/contexts/UserAtom';
 import { addComments, removeComments, updateComments } from 'src/apis/comment';
 import PostButton from 'src/components/StudyDetail/PostButton';
 import { toast } from 'react-toastify';
+import { confirmAlert } from 'react-confirm-alert';
 
 export interface dataType {
   id: string;
@@ -166,11 +167,28 @@ const StudyDetail = () => {
     }
   };
 
-  const handleRemoveComment = async (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
+  const checkRemoveComment = (e: React.MouseEvent<HTMLElement>) => {
+    confirmAlert({
+      title: '확인 요청',
+      message: '정말 삭제하시겠습니까?',
+      buttons: [
+        {
+          label: '네',
+          onClick: () => {
+            const target = e.target as HTMLInputElement;
+            const id = target.getAttribute('data-commentid')!;
 
-    const commentId = e.currentTarget.dataset.commentid!;
+            handleRemoveComment(id);
+          },
+        },
+        {
+          label: '아니오',
+        },
+      ],
+    });
+  };
 
+  const handleRemoveComment = async (commentId: string) => {
     try {
       const response = await removeComments(commentId);
 
@@ -211,7 +229,7 @@ const StudyDetail = () => {
           modComment={handleModComment}
           chageComment={handleOnChangeModComment}
           submitComment={handleSubmitModComment}
-          removeComment={handleRemoveComment}
+          removeComment={checkRemoveComment}
           inputKeyPress={inputKeyPress}
         />
       </Main>

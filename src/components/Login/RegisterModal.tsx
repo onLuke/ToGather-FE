@@ -42,17 +42,21 @@ const RegisterModal = () => {
     try {
       const response = await checkNickname(nickname);
 
-      toast.info(response.data ? '중복입니다' : '정상입니다.');
+      const type = response.data ? 'error' : 'success';
+
+      toast[type](response.data ? '중복입니다' : '정상입니다.');
 
       setNicknameCheck(response.data);
-    } catch (e) {}
+    } catch (e) {
+      toast.error('다시 시도해 주세요.');
+    }
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (nicknameCheck) {
-      alert('중복확인을 눌러 주세요.');
+      toast.info('중복확인을 눌러 주세요.');
       return;
     }
     try {
@@ -66,14 +70,22 @@ const RegisterModal = () => {
         },
       });
 
+      debugger;
+
+      if (file.data.status === 400) {
+        throw new Error(file.data.errorMessage);
+      }
+
       formData.techStackDtos = idNameToMultiSelect(form.techStackDtos);
       formData.profileImage = file.data;
-      const response = await registerService(formData);
-    } catch (err) {
-      console.error('전송 오류 form 데이터 확인');
-    }
 
-    window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
+      const response = await registerService(formData).then((res) => {
+        toast.success('회원가입 되었습니다.');
+        window.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }));
+      });
+    } catch (err: any) {
+      toast.error(err.message);
+    }
   };
 
   return (

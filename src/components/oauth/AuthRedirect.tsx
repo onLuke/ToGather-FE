@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AuthService from 'src/service/AuthService';
+import Loading from '../Loading/Loading';
 
 const AuthRedirect = () => {
   const navigation = useNavigate();
@@ -26,7 +27,7 @@ const AuthRedirect = () => {
     navigation('/');
   };
 
-  return <div>로딩중</div>;
+  return <Loading />;
 };
 
 export default AuthRedirect;
