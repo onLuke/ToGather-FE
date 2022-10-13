@@ -75,6 +75,7 @@ const AuthService = () => {
     const refreshCookie = getCookie('refreshToken');
 
     const response = await refresh(refreshCookie);
+    console.log('토큰 새 발급');
 
     try {
       if (response.data.status === 401) {
@@ -88,7 +89,6 @@ const AuthService = () => {
         refreshToken: response.data.refreshToken,
         accessToken: response.data.accessToken,
       });
-      console.log(`newRefreshToken: ${response.data.refreshToken}`);
       Api.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
     } catch (e) {
       console.error(`에러 : ${e}`);

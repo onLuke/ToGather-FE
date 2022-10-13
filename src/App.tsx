@@ -38,7 +38,7 @@ const App = () => {
         })
         .catch((err) => console.log('failed: ', err));
     }
-  }, []);
+  }, [user.nickname]);
   return (
     <CookiesProvider>
       <BrowserRouter>

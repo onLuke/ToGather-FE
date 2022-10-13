@@ -13,7 +13,7 @@ Api.interceptors.response.use(
   (res) => {
     return res;
   },
-  (error) => {
+  async (error) => {
     let errResStatus = null;
     const originalRequest = error.config;
     try {
@@ -29,11 +29,13 @@ Api.interceptors.response.use(
     if (errResStatus === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
       const prevRefreshToken = getCookie('refreshToken');
-      debugger;
       if (prevRefreshToken !== 'undefined') {
         // refersh token을 이용하여 access token 재발행 받기
-        debugger;
-        return Api.post('/oauth/refresh', prevRefreshToken)
+        const newToken = await Api.post('/oauth/refresh', prevRefreshToken, {
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+        })
           .then((res) => {
             if (res.data.status === 401) {
               return Promise.reject(error);
@@ -42,13 +44,13 @@ Api.interceptors.response.use(
             setCookie('refreshToken', refreshToken, {
               path: '/',
             });
-            console.log(`newAccessToken : ${accessToken}`);
             originalRequest.headers.Authoriztion = `Bearer ${accessToken}`;
             Api.defaults.headers.common['Authorization'] = `Bearer ${res.data.accessToken}`;
           })
           .catch(() => {
             return false;
           });
+        return Api(originalRequest);
       }
       return Promise.reject(error);
     }

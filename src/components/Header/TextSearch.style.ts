@@ -12,7 +12,6 @@ const slowHidden = keyframes();
 
 const SearchBlock = styled.div`
   width: 100%;
-  ${Flex({ alignItems: 'center', justifyContent: 'flex-end' })};
 `;
 
 const WrapSearch = styled.div`

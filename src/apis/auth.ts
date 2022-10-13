@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Api from './Api';
 
 export const checkLogin = (social: string, token: string) =>
@@ -11,8 +12,8 @@ export const signUp = (data: any, token: string) => {
   });
 };
 
-export const refresh = async (refreshToken: string) =>
-  await Api.post(`/oauth/refresh`, refreshToken, {
+export const refresh = (refreshToken: string) =>
+  axios.post(`/oauth/refresh`, refreshToken, {
     headers: {
       'Content-Type': 'text/plain',
     },
