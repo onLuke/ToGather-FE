@@ -54,8 +54,11 @@ export const createStudy = async (data: inputFormType) => {
   Api.post<createRes>(`/projects`, data);
 };
 
-export const updateStudy = (data: studyData) => {
-  Api.post<updateRes>('');
+export const updateStudy = (data: studyData, id: string) => {
+  Api.put<updateRes>(`/projects/${id}`, data);
+};
+export const removeStudy = (id: string) => {
+  Api.delete<updateRes>(`/projects/${id}`);
 };
 
 export const getDetail = async (id: string) => {

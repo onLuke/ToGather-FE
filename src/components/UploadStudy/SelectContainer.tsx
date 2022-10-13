@@ -14,7 +14,7 @@ import Select from 'react-select';
 import UploadOptions from '../../constants/UploadOptions';
 import { GpsContainer } from '../Header/HeaderNavigation.styles';
 import { GpsIcon } from '../@icons';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import techTable from '../../contexts/TechsTable';
 import { modalContext } from 'src/contexts/ModalContext';
 import MapModal from '../Modal/MapModal';
@@ -22,8 +22,11 @@ import { UserLocationAtom, regionNameSelector } from '../../contexts/UserLocatio
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { NeedSelector, NeedValueAtom } from 'src/contexts/needValue';
 import { toast } from 'react-toastify';
+import { uploadType } from '../../pages/UploadStudy';
 
 interface iProps {
+  form: any;
+  isEdit: boolean;
   changeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectChange: (targetValue: any, targetName: any) => void;
   datePickerChange: (date: Date) => void;
@@ -35,13 +38,24 @@ const SelectContainer = (props: iProps) => {
   const [option, setOption] = useRecoilState(NeedValueAtom);
   const [isOffline, setIsOffline] = useState(true);
   const [location, setLocation] = useRecoilState(UserLocationAtom);
-  const openModalContext = useContext(modalContext);
+  const openModal = useContext(modalContext)?.openModal;
+  const context = useContext(modalContext);
 
   const handleKakaoOpenModal = () => {
-    openModalContext?.openModal?.(<MapModal />);
+    openModal?.(<MapModal closeModal={context?.closeModal} />);
   };
 
-  const { selectChange, datePickerChange, multiSelectChange } = props;
+  const { selectChange, datePickerChange, multiSelectChange, form, isEdit } = props;
+
+  const techsMemo = useMemo(
+    () => techTable.filter((el) => form.techStackIds.includes(el.value)),
+    [form.techStackIds]
+  );
+
+  const personnelMemo = useMemo(
+    () => UploadOptions.personnel.find((el) => el.value === String(form.personnel)),
+    [form.personnel]
+  );
 
   const handleOnOffline = (targetValue: any, targetName: any) => {
     selectChange(targetValue, targetName);
@@ -67,7 +81,11 @@ const SelectContainer = (props: iProps) => {
       <OnOfflineBlock>
         <WraponOffline>
           <Select
-            defaultValue={UploadOptions.onOffline[1]}
+            defaultValue={
+              isEdit
+                ? { value: form.offline, label: form.offline ? '오프라인' : '온라인' }
+                : UploadOptions.onOffline[1]
+            }
             id="offline"
             className="offlineSelect"
             name="offline"
@@ -78,7 +96,7 @@ const SelectContainer = (props: iProps) => {
             onChange={handleOnOffline}
           />
         </WraponOffline>
-        <WrapRegionSelect isOffline={!isOffline}>
+        <WrapRegionSelect isOffline={!form.offline}>
           <WrapMapInput>
             <GpsContainer onClick={handleKakaoOpenModal}>
               <GpsIcon />
@@ -98,6 +116,7 @@ const SelectContainer = (props: iProps) => {
         <WarnBox isHidden={isOffline && needValue === 'Location'}>지역을 입력해주세요</WarnBox>
         <WrapTechSelect>
           <Select
+            defaultValue={techsMemo}
             isMulti
             id="techStackIds"
             className="techStackIdsSelect"
@@ -113,12 +132,12 @@ const SelectContainer = (props: iProps) => {
             classNamePrefix="select"
           />
         </WrapTechSelect>
-        <WarnBox isHidden={needValue === 'techStackIds'}>기술을 선택해주세요</WarnBox>
+        <WarnBox isHidden={option.techStackIds}>기술을 선택해주세요</WarnBox>
       </OnOfflineBlock>
 
       <RestSelectBlock>
         <Select
-          isClearable
+          value={personnelMemo}
           id="personnel"
           className="personnelSelect"
           name="personnel"
@@ -126,9 +145,9 @@ const SelectContainer = (props: iProps) => {
           options={UploadOptions.personnel}
           onChange={selectChange}
         />
-        <WarnBox isHidden={needValue === 'personnel'}>모집인원을 선택해주세요</WarnBox>
-        <Calendar datePickerChangeDispatch={datePickerChange} />
-        <WarnBox isHidden={needValue === 'deadline'}>모집마감일을 선택해주세요</WarnBox>
+        <WarnBox isHidden={option.personnel}>모집인원을 선택해주세요</WarnBox>
+        <Calendar datePickerChangeDispatch={datePickerChange} form={form.deadline} />
+        <WarnBox isHidden={option.deadline}>모집마감일을 선택해주세요</WarnBox>
       </RestSelectBlock>
     </WrapSelects>
   );

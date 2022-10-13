@@ -19,6 +19,6 @@ const UploadPageMain = styled.section`
 const Heading = styled.h2`
   font-size: ${FontSizes.Study_Upload_Fontsize};
   font-weight: ${FontSizes.Study_Upload_FontWeight};
-  box-shadow: 2px 2px 2px ${COLOR.GRAY_100};
+  border-bottom: 2px solid rgb(0 0 0 / 8%);
 `;
 export { UploadPageMain, Heading };

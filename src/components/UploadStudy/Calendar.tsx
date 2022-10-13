@@ -10,11 +10,12 @@ import { NeedValueAtom } from 'src/contexts/needValue';
 const PopUp = styled.div``;
 
 interface iProps {
+  form: string;
   datePickerChangeDispatch: (date: Date) => void;
 }
 
 const Calendar = (props: iProps) => {
-  const { datePickerChangeDispatch } = props;
+  const { datePickerChangeDispatch, form } = props;
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [option, setOption] = useRecoilState(NeedValueAtom);
 
@@ -46,7 +47,7 @@ const Calendar = (props: iProps) => {
         className="calendar"
         locale={ko}
         dateFormat="yyyy.MM.dd"
-        selected={startDate}
+        selected={form === '' ? startDate : new Date(form)}
         onChange={handleOnChange}
         onBlur={handleBlurInput}
         calendarContainer={Container}

@@ -3,12 +3,14 @@ import COLOR from 'src/constants/colors';
 import Flex from '../../styles/Flex';
 
 const Title = styled.h1`
+  margin: 0 5rem;
   font-size: 40px;
 `;
 
 const AuthorBlock = styled.div`
   ${Flex({ alignItems: 'center' })}
-  margin: 2rem 0 2rem;
+  width:90%;
+  margin: 2rem 5rem 2rem;
   border-bottom: 3px solid #f2f2f2;
 `;
 
