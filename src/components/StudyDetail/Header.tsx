@@ -22,7 +22,7 @@ const Header = ({ gettedData }: IProps) => {
           <DateBox>{gettedData.deadline}</DateBox>
         </WrapAuthor>
         <RecruitingBtn className="모집버튼">
-          {gettedData.status === 'RECRUITING' ? '모집진행중!' : '모집마감'}
+          {gettedData.status === 'RECRUITING' ? '모집진행중' : '모집마감'}
         </RecruitingBtn>
       </AuthorBlock>
     </>
