@@ -75,21 +75,27 @@ const HeaderNavigation = () => {
     <>
       <NavigationContainer>
         <NavigationBlock>
-          <Wrapper>
+          <Wrapper className="test">
             <LogoTitle to="/">
               <img src={LogoImage} alt="" width="200px" height="60px" />
             </LogoTitle>
+            {pathname === '/' && (
+              <>
+                <TextSearch />
+              </>
+            )}
             <WrapRightNav onMouseLeave={() => setSearchIsOpen(false)}>
               <CategoryBlock>
                 {pathname === '/' && (
                   <>
-                    <TextSearch />
                     <NavMenu
                       widthProp={NavMenuWidth.search}
                       onMouseEnter={() => {
-                        setSearchIsOpen(true);
-                        setTextIsOpen(false);
-                        setIsHidden(false);
+                        if (!context?.isModalOpened) {
+                          setSearchIsOpen(true);
+                          setTextIsOpen(false);
+                          setIsHidden(false);
+                        }
                       }}
                       onClick={() => setSearchIsOpen(true)}
                     >
@@ -106,11 +112,13 @@ const HeaderNavigation = () => {
                     </GpsContainer>
                   </>
                 )}
-                <NavMenu>
-                  <UploadStudyLink to="/uploadStudy" onClick={reset}>
-                    공고 등록
-                  </UploadStudyLink>
-                </NavMenu>
+                {user.id && (
+                  <NavMenu>
+                    <UploadStudyLink to="/uploadStudy" onClick={reset}>
+                      공고 등록
+                    </UploadStudyLink>
+                  </NavMenu>
+                )}
               </CategoryBlock>
               <UserBlock>
                 {user.id ? (

@@ -5,6 +5,7 @@ import {
   WrapInput,
   SearchInput,
   Btn,
+  SearchBlock,
 } from './TextSearch.style';
 import { TextFilterAtom } from 'src/contexts/FilterOptionAtom';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';

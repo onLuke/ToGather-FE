@@ -10,9 +10,18 @@ interface iProps {
 
 const slowHidden = keyframes();
 
+const SearchBlock = styled.div`
+  width: 100%;
+`;
+
 const WrapSearch = styled.div`
-  width: 20rem;
-  ${Flex({ alignItems: 'center' })};
+  width: 21rem;
+  position: absolute;
+  ${Flex({ alignItems: 'center', justifyContent: 'space-between' })};
+  top: 1rem;
+  left: 40%;
+  transfrom: translateX(-40%);
+  flex-shrink: 0;
 `;
 
 const SelectCategory = styled.select`
@@ -53,4 +62,4 @@ const Btn = styled.button`
   ${Flex({ alignItems: 'center' })}
 `;
 
-export { WrapSearch, SelectCategory, Options, WrapInput, SearchInput, Btn };
+export { SearchBlock, WrapSearch, SelectCategory, Options, WrapInput, SearchInput, Btn };
