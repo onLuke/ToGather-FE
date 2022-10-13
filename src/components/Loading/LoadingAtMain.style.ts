@@ -1,9 +1,6 @@
 import styled from '@emotion/styled';
 
 export const Background = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
   background: #ffffffb7;
   z-index: 9999;
 

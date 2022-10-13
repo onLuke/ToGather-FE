@@ -81,11 +81,10 @@ const StudyList = () => {
     if (inView) fetchNextPage();
   }, [inView]);
 
+  console.log(status);
   return (
     <>
       <WrapStudy className="study">
-        {isLoading && <LoadingAtMain></LoadingAtMain>}
-
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.data.map((list: any) => (
@@ -103,7 +102,9 @@ const StudyList = () => {
           </React.Fragment>
         ))}
       </WrapStudy>
-      <CheckInfinity ref={ref} className="check" />
+      <CheckInfinity ref={ref} className="check">
+        {isLoading && <LoadingAtMain />}
+      </CheckInfinity>
     </>
   );
 };
