@@ -47,6 +47,7 @@ const MapModal = ({ closeModal }: any) => {
     setIsHidden(false);
     setOptions({ ...options, Location: false });
     setMarkerIsOpen({ ...markerIsOpen, open: false });
+    setCurrentMarker(true);
   };
 
   const handleSubmit = async () => {
@@ -87,29 +88,27 @@ const MapModal = ({ closeModal }: any) => {
         level={5}
         onZoomChanged={(map: any) => setLevel(map.getLevel())}
       >
-        {currentMarker && (
-          <Marker
-            position={
-              location && location.La !== 0
-                ? { lat: location.La, lng: location.Ma }
-                : { lat: initialLocation.La, lng: initialLocation.Ma }
-            }
-          >
-            {!isHidden && location && (
-              <>
-                <WrapMessage isMain={pathname === '/'} isHidden={isHidden}>
-                  {location.regionName}
-                </WrapMessage>
+        <Marker
+          position={
+            location && location.La !== 0
+              ? { lat: location.La, lng: location.Ma }
+              : { lat: initialLocation.La, lng: initialLocation.Ma }
+          }
+        >
+          {!isHidden && location && (
+            <>
+              <WrapMessage isMain={pathname === '/'} isHidden={isHidden}>
+                {location.regionName}
+              </WrapMessage>
 
-                <WrapBtn>
-                  <Btn isHidden={isHidden} onClick={pathname === '/' ? handleSubmit : handleClose}>
-                    제출하기
-                  </Btn>
-                </WrapBtn>
-              </>
-            )}
-          </Marker>
-        )}
+              <WrapBtn>
+                <Btn isHidden={isHidden} onClick={pathname === '/' ? handleSubmit : handleClose}>
+                  제출하기
+                </Btn>
+              </WrapBtn>
+            </>
+          )}
+        </Marker>
 
         {status &&
           status.map((el: any) => (
