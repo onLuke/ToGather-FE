@@ -1,7 +1,7 @@
 import { EditContainer, Btn } from './EditBlock.style';
 import { userAtom } from '../../contexts/UserAtom';
 import { useRecoilValue } from 'recoil';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { dataType } from '../../pages/StudyDetail';
 import { removeStudy } from 'src/apis/study';
 import NotificationAlert from '../Notification/NotificationAlert';
@@ -10,7 +10,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const EditBlock = ({ data }: { data: dataType }) => {
   const userData = useRecoilValue(userAtom);
-  const { id } = useParams();
+  const id = data.member.id;
   const navigate = useNavigate();
 
   const handleEdit = () => {

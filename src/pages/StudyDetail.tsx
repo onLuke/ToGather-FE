@@ -18,7 +18,7 @@ export interface dataType {
   id: string;
   content: string;
   comments: any[];
-  member: any[];
+  member: any;
   title: string;
   personnel: string;
   status: string;
