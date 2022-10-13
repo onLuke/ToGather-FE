@@ -15,6 +15,7 @@ import { useInView } from 'react-intersection-observer';
 import { getProjectAllByPage } from 'src/apis/project';
 import { isUploaded } from 'src/contexts/chachingOptionAtom';
 import { userAtom } from 'src/contexts/UserAtom';
+import LoadingAtMain from '../Loading/LoadingAtMain';
 
 const StudyList = () => {
   const recruitState = useRecoilValue(StatusFilterAtom);
@@ -55,7 +56,7 @@ const StudyList = () => {
   };
 
   const { ref, inView } = useInView();
-  let { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  let { data, status, fetchNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery(
     [
       'posts',
       recruitState,
@@ -70,7 +71,7 @@ const StudyList = () => {
       getNextPageParam: (lastPage) => {
         return !lastPage.isLast ? lastPage.nextPage : undefined;
       },
-      staleTime: uploadState ? 0 : 3 * 60 * 1000,
+      staleTime: 1000 * 20,
       refetchOnWindowFocus: false,
       refetchOnMount: 'always',
     }
@@ -83,6 +84,8 @@ const StudyList = () => {
   return (
     <>
       <WrapStudy className="study">
+        {isLoading && <LoadingAtMain></LoadingAtMain>}
+
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.data.map((list: any) => (
