@@ -92,6 +92,7 @@ const UploadStudy = () => {
   const editors = useMemo(() => {
     return { title: form.title, content: form.content };
   }, [form]);
+  console.log(form);
 
   return (
     <>
