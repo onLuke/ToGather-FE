@@ -12,7 +12,7 @@ import {
 import { Wrapper, ButtonBlock } from './UserInfo.styles';
 import useInput from 'src/hooks/useInput';
 import { useNavigate } from 'react-router-dom';
-import { useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userAtom } from 'src/contexts/UserAtom';
 import Select from 'react-select';
 import S3UploadImage from 'src/hooks/useS3UploadImage';
@@ -20,6 +20,8 @@ import ProfileImage from '../profileImage/ProfileImage';
 import techTable from 'src/contexts/TechsTable';
 import UserService from 'src/service/UserService';
 import { toast } from 'react-toastify';
+import { imageAtom } from 'src/contexts/ImageAtom';
+import Api from 'src/apis/Api';
 
 interface tech {
   value?: number;
@@ -37,9 +39,8 @@ interface props {
   };
 }
 
-const baseImageUrl = `${import.meta.env.VITE_AWS_S3_URL}/`;
-
 const UserInfoEdit = ({ user }: props) => {
+  const [imageFile, setImageFile] = useRecoilState(imageAtom);
   const { form, changeInput, multiSelectChange, idLabelToMultiSel1ect } = useInput({
     ...user,
   });
@@ -56,6 +57,10 @@ const UserInfoEdit = ({ user }: props) => {
 
   const handleCheckUserNickName = async (e: React.MouseEvent<HTMLElement>) => {
     const nickname = form.nickname;
+    if (!nickname) {
+      toast.error('이름을 입력해주세요.');
+      return;
+    }
     try {
       const response = await checkNickname(nickname);
 
@@ -75,10 +80,14 @@ const UserInfoEdit = ({ user }: props) => {
 
     try {
       let imageUrl = form.profileImage;
-      if (user.profileImage !== form.profileImage) {
-        // imageUrl = await handleUpload();
-        imageUrl = baseImageUrl + imageUrl;
-      }
+      const imgForm = new FormData();
+      imgForm.append('file', imageFile);
+
+      const file = await Api.post(`/image`, imgForm, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       const formTechStack = idLabelToMultiSel1ect(form.techStackDtos);
       const formData = { ...form, profileImage: imageUrl, techStackDtos: formTechStack };

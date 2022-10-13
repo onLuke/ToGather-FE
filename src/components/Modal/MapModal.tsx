@@ -18,6 +18,8 @@ const MapModal = ({ closeModal }: any) => {
   const [isHidden, setIsHidden] = useState(true);
   const reset = useResetRecoilState(UserLocationAtom);
   const [status, setStatus] = useState<any>(null);
+  const [markerIsOpen, setMarkerIsOpen] = useState(false);
+  const [markerIsOn, setMarkerIsOn] = useState(false);
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
@@ -50,6 +52,7 @@ const MapModal = ({ closeModal }: any) => {
       `https://dokuny.blog/projects/search/distance?distance=3&latitude=${location.La}&longitude=${location.Ma}`
     );
     setStatus(res.data);
+    setMarkerIsOn(true);
     return res;
   };
 
@@ -60,6 +63,10 @@ const MapModal = ({ closeModal }: any) => {
   const handleLink = (e: any, id: string) => {
     navigate(`/studyDetail/${id}`);
     closeModal();
+  };
+
+  const handleMarker = () => {
+    setMarkerIsOpen(!markerIsOpen);
   };
 
   return (
@@ -99,13 +106,19 @@ const MapModal = ({ closeModal }: any) => {
             <Marker
               key={el.location.latitude + el.location.longitude}
               position={{ lat: el.location.latitude, lng: el.location.longitude }}
+              onClick={handleMarker}
+              markerIsOn={markerIsOn}
             >
-              <>
-                <WrapMessage>{el.location.address}</WrapMessage>
-                <WrapBtn>
-                  <Btn onClick={(e: any) => handleLink(e, el.id)}>공고보러가기</Btn>
-                </WrapBtn>
-              </>
+              {markerIsOpen && (
+                <>
+                  <WrapMessage>{el.location.address}</WrapMessage>
+                  <WrapBtn>
+                    <Btn markerIsOpen={markerIsOpen} onClick={(e: any) => handleLink(e, el.id)}>
+                      공고보러가기
+                    </Btn>
+                  </WrapBtn>
+                </>
+              )}
             </Marker>
           ))}
       </MapContainer>

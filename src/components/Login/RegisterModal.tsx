@@ -9,13 +9,16 @@ import AuthService from 'src/service/AuthService';
 import ProfileImage from '../profileImage/ProfileImage';
 import { checkNickname } from 'src/apis/user';
 import techTable from 'src/contexts/TechsTable';
-
-const baseImageURL = `${import.meta.env.VITE_AWS_S3_URL}/profile/default.png`;
+import axios from 'axios';
+import Api from 'src/apis/Api';
+import { useRecoilState } from 'recoil';
+import { imageAtom } from 'src/contexts/ImageAtom';
+import { toast } from 'react-toastify';
 
 const RegisterModal = () => {
-  // const { handleFileInput, handleUpload } = S3UploadImage('profile/');
+  const [imageFile, setImageFile] = useRecoilState(imageAtom);
   const { form, changeInput, multiSelectChange, idNameToMultiSelect } = useInput({
-    profileImage: baseImageURL,
+    profileImage: '',
     nickname: '',
     techStackDtos: [],
   });
@@ -24,16 +27,22 @@ const RegisterModal = () => {
   const { registerService } = AuthService();
 
   const handleChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // handleFileInput(e);
-    changeInput(e);
+    if (e.target.files) {
+      changeInput(e);
+      setImageFile(e.target?.files[0]);
+    }
   };
 
   const handleCheckUserNickName = async (e: React.MouseEvent<HTMLElement>) => {
     const nickname = form.nickname;
+    if (!nickname) {
+      toast.error('이름을 입력해주세요.');
+      return;
+    }
     try {
       const response = await checkNickname(nickname);
 
-      alert(response.data ? '중복입니다' : '정상입니다.');
+      toast.info(response.data ? '중복입니다' : '정상입니다.');
 
       setNicknameCheck(response.data);
     } catch (e) {}
@@ -48,11 +57,17 @@ const RegisterModal = () => {
     }
     try {
       const formData = { ...form };
-      if (form.profileImage !== baseImageURL) {
-        // formData.profileImage = await handleUpload();
-        formData.profileImage = `${import.meta.env.VITE_AWS_S3_URL}/${formData.profileImage}`;
-      }
+      const imgForm = new FormData();
+      imgForm.append('file', imageFile);
+
+      const file = await Api.post(`/image`, imgForm, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       formData.techStackDtos = idNameToMultiSelect(form.techStackDtos);
+      formData.profileImage = file.data;
       const response = await registerService(formData);
     } catch (err) {
       console.error('전송 오류 form 데이터 확인');

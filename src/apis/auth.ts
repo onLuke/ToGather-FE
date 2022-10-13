@@ -11,8 +11,8 @@ export const signUp = (data: any, token: string) => {
   });
 };
 
-export const refresh = (refreshToken: string) =>
-  Api.post(`/oauth/refresh`, refreshToken, {
+export const refresh = async (refreshToken: string) =>
+  await Api.post(`/oauth/refresh`, refreshToken, {
     headers: {
       'Content-Type': 'text/plain',
     },
