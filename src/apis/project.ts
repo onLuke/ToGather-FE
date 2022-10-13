@@ -27,7 +27,7 @@ export const getProjectAllByPage = (
   location: string
 ) =>
   Api.get(
-    `/projects?limit=${limit}&pageNumber=${pageParam}&status=${status}${techs}${title}${content}${author}${location}`
+    `/projects?limit=${limit}&pageNumber=${pageParam}&projectStatus=${status}${techs}${title}${content}${author}${location}`
   );
 
 export const removeMyProject = (projectId: string) => Api.delete(`/projects/${projectId}`);
