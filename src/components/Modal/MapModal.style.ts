@@ -59,17 +59,14 @@ export const markAnimation = keyframes(
       transform: scale(1);
     }
 
-    25% {
+    37.5% {
       transform: scale(1.2);
-    }
-    50% {
-      transform: scale(1);
     }
     75% {
-      transform: scale(1.2);
+      transform: scale(1);
     }
     100% {
-      transform: scale(1);
+      transform: scale(1.1);
     }
   `
 );
@@ -94,7 +91,7 @@ const Btn = styled.button`
   animation: ${({ markerIsOpen }: { markerIsOpen: boolean }) =>
     markerIsOpen
       ? css`
-          ${markAnimation} 1s 0s forwards
+          ${markAnimation} 0.75s 0s forwards
         `
       : ''};
   width: 30%;
