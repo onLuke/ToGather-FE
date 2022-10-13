@@ -21,11 +21,7 @@ Api.interceptors.response.use(
     } catch (e) {
       console.error(e);
     }
-    // access token이 만료되어 발생하는 경우
-
-    console.log(originalRequest.url);
-
-    // originalRequest로 재요청 보내야 하는 로직 생각 해야함
+    // access token이 만료되어 발생하는 경우 or access token이 없는 경우 page reload
     if (errResStatus === 401 && !originalRequest.retry) {
       originalRequest.retry = true;
       const prevRefreshToken = getCookie('refreshToken');
