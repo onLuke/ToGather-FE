@@ -44,14 +44,14 @@ const HeaderNavigation = () => {
   const reset = useResetRecoilState(UserLocationAtom);
   const { refreshService, logoutService } = AuthService();
 
-  const refersh = async () => {
+  const refersh = () => {
     if (user.nickname) {
-      const response = await refreshService();
+      const response = refreshService();
     }
   };
 
   useEffect(() => {
-    refersh();
+    // refersh();
   }, [user.nickname]);
 
   const handleOpenModal = () => {
