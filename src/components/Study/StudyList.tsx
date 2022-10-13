@@ -81,6 +81,7 @@ const StudyList = () => {
     if (inView) fetchNextPage();
   }, [inView]);
 
+  console.log(status);
   return (
     <>
       <WrapStudy className="study">
@@ -103,7 +104,9 @@ const StudyList = () => {
           </React.Fragment>
         ))}
       </WrapStudy>
-      <CheckInfinity ref={ref} className="check" />
+      <CheckInfinity ref={ref} className="check">
+        {isLoading && <LoadingAtMain />}
+      </CheckInfinity>
     </>
   );
 };
