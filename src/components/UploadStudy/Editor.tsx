@@ -53,7 +53,7 @@ const Editor = (props: iProps) => {
           formats={formats}
           style={{ marginBottom: '3rem' }}
         ></ReactQuill>
-        <WarnBox isHidden={option.content}>공고 내용을 입력해주세요</WarnBox>
+        <WarnBox isHidden={vals === 'content'}>공고 내용을 입력해주세요</WarnBox>
       </WrapEditor>
     </>
   );

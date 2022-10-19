@@ -3,9 +3,11 @@ import COLOR from 'src/constants/colors';
 import Flex from 'src/styles/Flex';
 
 const WrapLabel = styled.div`
-  ${Flex({ justifyContent: 'flex-end' })};
+  ${Flex({ justifyContent: 'flex-end', alignItems: 'center' })};
+  font-size: 20px;
 `;
 const Label = styled.label`
+  margin-left: 1rem;
   justify-self: end;
   position: relative;
   display: inline-block;

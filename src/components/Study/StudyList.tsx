@@ -1,5 +1,5 @@
 import { WrapStudy } from './StudyList.style';
-import { useInfiniteQuery, useQueries } from 'react-query';
+import { useInfiniteQuery, useQueries, useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
 import StudyComponent from './StudyComponent';
@@ -15,6 +15,7 @@ import { useInView } from 'react-intersection-observer';
 import { getProjectAllByPage } from 'src/apis/project';
 import { isUploaded } from 'src/contexts/chachingOptionAtom';
 import { userAtom } from 'src/contexts/UserAtom';
+import LoadingAtMain from '../Loading/LoadingAtMain';
 
 const StudyList = () => {
   const recruitState = useRecoilValue(StatusFilterAtom);
@@ -55,7 +56,7 @@ const StudyList = () => {
   };
 
   const { ref, inView } = useInView();
-  let { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  let { data, status, fetchNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery(
     [
       'posts',
       recruitState,
@@ -70,7 +71,7 @@ const StudyList = () => {
       getNextPageParam: (lastPage) => {
         return !lastPage.isLast ? lastPage.nextPage : undefined;
       },
-      staleTime: 3 * 60 * 1000,
+      staleTime: 1000 * 20,
       refetchOnWindowFocus: false,
       refetchOnMount: 'always',
     }
@@ -80,9 +81,12 @@ const StudyList = () => {
     if (inView) fetchNextPage();
   }, [inView]);
 
+  console.log(status);
   return (
     <>
       <WrapStudy className="study">
+        {isLoading && <LoadingAtMain></LoadingAtMain>}
+
         {data?.pages.map((page, index) => (
           <React.Fragment key={index}>
             {page.data.map((list: any) => (
@@ -94,12 +98,15 @@ const StudyList = () => {
                 title={list.title}
                 image={list.member.profileImage}
                 author={list.member.nickname}
+                status={list.status}
               />
             ))}
           </React.Fragment>
         ))}
       </WrapStudy>
-      <CheckInfinity ref={ref} className="check" />
+      <CheckInfinity ref={ref} className="check">
+        {isLoading && <LoadingAtMain />}
+      </CheckInfinity>
     </>
   );
 };

@@ -8,6 +8,8 @@ import {
   StudyTitle,
   StudyViewer,
   AuthorSpan,
+  IsRecruiting,
+  WrapIsRecruiting,
 } from './StudyList.style';
 import StudyTechs from './StudyTechs';
 
@@ -18,11 +20,17 @@ interface Iprops {
   title: any;
   author: any;
   image: any;
+  status: any;
 }
 
-const StudyComponent = ({ id, techs, deadline, title, author, image }: Iprops) => {
+const StudyComponent = ({ id, techs, deadline, title, author, image, status }: Iprops) => {
   return (
     <Study to={`/studyDetail/${id}`}>
+      <WrapIsRecruiting>
+        <IsRecruiting isRecruiting={status === 'RECRUITING'}>
+          {status === 'RECRUITING' ? '모집중' : '모집마감'}
+        </IsRecruiting>
+      </WrapIsRecruiting>
       <StudyTechs techsList={techs} />
       <StudyDeadline>
         마감 예정일
@@ -35,7 +43,6 @@ const StudyComponent = ({ id, techs, deadline, title, author, image }: Iprops) =
           <img src={image} width="36px" height="36px" />
           <AuthorSpan>{author}</AuthorSpan>
         </StudyAuthor>
-        <StudyViewer>{author}</StudyViewer>
       </StudyFooter>
     </Study>
   );

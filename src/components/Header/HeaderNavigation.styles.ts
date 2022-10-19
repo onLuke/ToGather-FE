@@ -2,7 +2,7 @@ import COLOR from 'src/constants/colors';
 import styled from '@emotion/styled';
 import Flex from '../../styles/Flex';
 import { Link } from 'react-router-dom';
-import TextSearch from './TextSearch';
+import { css, keyframes } from '@emotion/react';
 
 interface favoriteProps {
   favoriteIsOpen: boolean;
@@ -16,7 +16,7 @@ const NavigationContainer = styled.nav`
   position: fixed;
   width: 100%;
   height: 4rem;
-  ${Flex({ alignItems: 'center' })}
+
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.08);
   z-index: 9999;
   background-color: white;
@@ -36,6 +36,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   padding: 0 1.5rem;
   top: 0px;
+  position: relative;
 `;
 
 const LoginButton = styled.button`
@@ -60,6 +61,7 @@ const CategoryBlock = styled.div`
 const WrapRightNav = styled.div`
   ${Flex({ justifyContent: 'space-between', columnGap: '2rem' })}
   height:100%;
+  flex-shrink: 0;
 `;
 
 const NavMenu = styled.div`
@@ -80,7 +82,7 @@ const MyPageMenu = styled.div`
 
 const MenuBtn = styled.div`
   font-weight: 700;
-  width: 100%;
+  width: calc(100% + 3rem);
   height: 50%;
   ${Flex({ alignItems: 'center', justifyContent: 'center' })}
   border-radius:15%;
@@ -112,6 +114,20 @@ const FavoriteList = styled.div`
   border: 1px solid blue;
 `;
 
+export const markAnimation = keyframes(
+  css`
+    0 {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.3);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  `
+);
 const GpsContainer = styled.div`
   ${Flex({ alignItems: 'center', justifyContent: 'center', flexDirection: 'column' })};
   width: ${({ widthProp }: menuWidthProp) => widthProp};
@@ -120,6 +136,11 @@ const GpsContainer = styled.div`
   .gps-icon {
     width: 20px;
     height: 20px;
+    :hover {
+      animation: ${css`
+        ${markAnimation} 0.5s ease-out 0s forwards
+      `};
+    }
   }
 `;
 

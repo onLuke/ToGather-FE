@@ -6,6 +6,7 @@ import {
   putUserMyProjectEnter,
   putUserMyProjectReject,
 } from 'src/apis/project';
+import { authAtom } from 'src/contexts/AuthAtom';
 import { userAtom } from 'src/contexts/UserAtom';
 import Breadcrumb from '../breadCrumb/Breadcrumb';
 import { MyProjectInner, Title } from '../chat/MyProjectList.stylese';
@@ -14,6 +15,7 @@ import UserIntoProject from './UserIntoProject';
 
 const MyProject = () => {
   const user = useRecoilValue(userAtom);
+  const auth = useRecoilValue(authAtom);
   const [project, setProject] = useState([]);
   const [confirmUserList, setConfirmUserList] = useState([]);
   const [confirmProjectId, setconfirmProjectId] = useState('');

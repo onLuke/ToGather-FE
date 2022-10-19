@@ -6,7 +6,6 @@ const useInfinityScroll = ({ target }: { target: RefObject<HTMLElement> }) => {
   const [page, setPage] = useRecoilState(pageNumber);
   useEffect(() => {
     const targetElement = target.current;
-    console.log(page);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
